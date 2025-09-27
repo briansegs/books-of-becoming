@@ -1,5 +1,10 @@
 import Image from 'next/image'
 
+/**
+ * Render the landing page containing the Next.js logo, a short getting-started list, call-to-action buttons, and footer links.
+ *
+ * @returns The JSX element for the home page with a responsive layout, CTA buttons, and footer navigation.
+ */
 export default function Home() {
   return (
     <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20">
