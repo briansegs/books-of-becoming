@@ -5,6 +5,15 @@ export default function Home() {
   return (
     <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20">
       <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
+        <article className="prose dark:prose-invert">
+          <h1>Hello</h1>
+          <p>This is a paragraph with Tailwind Typography applied.</p>
+          <ul>
+            <li>First item</li>
+            <li>Second item</li>
+          </ul>
+          <blockquote>Typography adds nice blockquote styles too.</blockquote>
+        </article>
         <Image
           className="dark:invert"
           src="/next.svg"
