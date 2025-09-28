@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 
 export default function Home() {
@@ -47,6 +48,13 @@ export default function Home() {
           >
             Read our docs
           </a>
+        </div>
+        <div className="flex w-full justify-between gap-4">
+          <Button>First</Button>
+          <Button variant="secondary">Second</Button>
+          <Button variant="outline">Third</Button>
+          <Button variant="ghost">Fourth</Button>
+          <Button variant="link">Fifth</Button>
         </div>
       </main>
       <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
