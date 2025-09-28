@@ -7,6 +7,7 @@ import {
   NavigationMenuList,
 } from '@/features/shared/components/ui/navigation-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
+import { ModeToggle } from './ModeToggle'
 
 // function Logo() {
 //   return <div className="h-12 w-12 rounded-full bg-primary"></div>
@@ -108,6 +109,8 @@ export default function Header() {
           <Button asChild size="sm" className="text-sm">
             <a href="#">Get Started</a>
           </Button>
+
+          <ModeToggle />
         </div>
       </div>
     </header>

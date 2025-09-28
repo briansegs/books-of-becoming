@@ -3,7 +3,7 @@
 
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, [data-theme='dark'] *));
 
 @theme inline {
   --color-background: var(--background);
@@ -126,7 +126,8 @@
   --tracking-normal: 0em;
 }
 
-.dark {
+.dark,
+[data-theme='dark'] {
   --background: oklch(0 0 0);
   --foreground: oklch(1 0 0);
   --card: oklch(0.14 0 0);
@@ -188,5 +189,15 @@
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+  }
+
+  html {
+    opacity: 0;
+  }
+
+  .dark,
+  html[data-theme='dark'],
+  html[data-theme='light'] {
+    opacity: initial;
   }
 }
