@@ -190,11 +190,4 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
-
-  .dark,
-  html[data-theme='dark'],
-  html[data-theme='light'] {
-    --background: oklch(0 0 0);
-    --foreground: oklch(1 0 0);
-  }
 }

@@ -9,10 +9,6 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
 import { ModeToggle } from './ModeToggle'
 
-// function Logo() {
-//   return <div className="h-12 w-12 rounded-full bg-primary"></div>
-// }
-
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: '#', label: 'Home', active: true },
