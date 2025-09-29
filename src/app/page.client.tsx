@@ -69,7 +69,7 @@ export function HomeClient({ initialUser }: { initialUser: UserType }) {
               <li>{`created: ${_creationTime?.toLocaleString()}`}</li>
               <li>{`id: ${_id}`}</li>
             </ul>
-            <blockquote>We hav taken one step is a longer journey.</blockquote>
+            <blockquote>We have taken one step is a longer journey.</blockquote>
           </article>
         </div>
       </Authenticated>
