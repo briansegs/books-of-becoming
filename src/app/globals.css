@@ -191,13 +191,10 @@
     letter-spacing: var(--tracking-normal);
   }
 
-  html {
-    opacity: 0;
-  }
-
   .dark,
   html[data-theme='dark'],
   html[data-theme='light'] {
-    opacity: initial;
+    --background: oklch(0 0 0);
+    --foreground: oklch(1 0 0);
   }
 }
