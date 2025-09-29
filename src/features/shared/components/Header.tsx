@@ -1,4 +1,4 @@
-import Logo from '@/components/navbar-components/logo'
+import Logo from '@/features/shared/components/navbar-components/logo'
 import { Button } from '@/features/shared/components/ui/button'
 import {
   NavigationMenu,
