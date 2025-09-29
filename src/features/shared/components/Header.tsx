@@ -31,7 +31,12 @@ export default function Header() {
             {/* Mobile menu trigger */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button className="group size-8" variant="ghost" size="icon">
+                <Button
+                  aria-label="Toggle navigation menu"
+                  className="group size-8"
+                  variant="ghost"
+                  size="icon"
+                >
                   <svg
                     className="pointer-events-none"
                     width={16}
