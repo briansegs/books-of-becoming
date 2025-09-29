@@ -49,7 +49,7 @@ export function Footer() {
             </Button>
           </div>
 
-          <p className="text-lg text-muted-foreground">
+          <p className="text-muted-foreground">
             © Book of Becoming. All rights reserved. 2025-present.
           </p>
         </div>

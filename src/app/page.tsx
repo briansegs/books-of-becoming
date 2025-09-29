@@ -9,7 +9,7 @@ export default function Home() {
           <li>A great place to start</li>
           <li>Auth next</li>
           <li>Then the database</li>
-          <li>Pages ofter that</li>
+          <li>Pages after that</li>
         </ul>
         <blockquote>From here --- We only go up from here!</blockquote>
       </article>
