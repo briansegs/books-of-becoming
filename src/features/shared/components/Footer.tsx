@@ -50,7 +50,7 @@ export function Footer() {
           </div>
 
           <p className="text-muted-foreground">
-            © Book of Becoming. All rights reserved. 2025-present.
+            © Books of Becoming. All rights reserved. 2025-present.
           </p>
         </div>
       </div>
