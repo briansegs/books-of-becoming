@@ -66,7 +66,7 @@ export function HomeClient({ initialUser }: { initialUser: UserType }) {
                 <img src={imageUrl} alt="user image" className="h-12 w-12 rounded-full" />
               </li>
               <li>{`username: ${username}`}</li>
-              <li>{`created: ${_creationTime?.toLocaleString()}`}</li>
+              <li>{`created: ${_creationTime ? new Date(_creationTime).toLocaleString() : 'N/A'}`}</li>
               <li>{`id: ${_id}`}</li>
             </ul>
             <blockquote>We have taken one step is a longer journey.</blockquote>
