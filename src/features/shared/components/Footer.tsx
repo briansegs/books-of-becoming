@@ -19,16 +19,16 @@ export function Footer() {
   return (
     <footer className="w-full border-t px-12 py-6">
       <div className="flex flex-col gap-6">
-        <a href="#" className="text-primary hover:text-primary/90">
+        <a href="#" className="px-6 text-primary hover:text-primary/90">
           <Logo />
         </a>
 
-        <p className="text-lg">
+        <p className="px-6 text-lg">
           Books of Becoming gives you a set of tools to awaken yourself, snap out of auto pilot, and
           live through your authentic self.
         </p>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 px-6">
           <FooterLink>Privacy Policy</FooterLink>
           <FooterLink>Terms of Service</FooterLink>
           <FooterLink>Cookie Policy</FooterLink>
@@ -36,7 +36,7 @@ export function Footer() {
 
         <Separator />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-6">
           <div className="flex gap-4">
             <Button variant="outline" size="icon">
               <Facebook className="h-8 w-8" />
