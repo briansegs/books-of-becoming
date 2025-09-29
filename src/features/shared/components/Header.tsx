@@ -106,7 +106,7 @@ export function Header() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <SignedOut>
-            <SignInButton>
+            <SignInButton mode="modal">
               <Button size="lg" className="text-base">
                 Sign In
               </Button>
