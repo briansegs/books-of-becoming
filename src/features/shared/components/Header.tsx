@@ -17,7 +17,7 @@ const navigationLinks = [
   { href: '#', label: 'About', active: false },
 ]
 
-export default function Header() {
+export function Header() {
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 justify-between gap-4">
@@ -92,7 +92,7 @@ export default function Header() {
                     <NavigationMenuLink
                       active={link.active}
                       href={link.href}
-                      className="h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium text-muted-foreground hover:border-b-primary hover:bg-transparent hover:text-primary data-[active]:border-b-primary data-[active]:bg-transparent!"
+                      className="h-full justify-center rounded-none border-y-2 border-transparent py-1.5 text-lg font-medium text-muted-foreground hover:border-b-primary hover:bg-transparent hover:text-primary data-[active]:border-b-primary data-[active]:bg-transparent!"
                     >
                       {link.label}
                     </NavigationMenuLink>
@@ -104,10 +104,10 @@ export default function Header() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
+          <Button asChild variant="ghost" size="lg" className="text-base">
             <a href="#">Sign In</a>
           </Button>
-          <Button asChild size="sm" className="text-sm">
+          <Button asChild size="lg" className="text-base">
             <a href="#">Get Started</a>
           </Button>
 
