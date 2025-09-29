@@ -8,7 +8,7 @@ import {
 } from '@/features/shared/components/ui/navigation-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
 import { ModeToggle } from './ModeToggle'
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
+import { HeaderUserItems } from './HeaderUserItems'
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -105,17 +105,7 @@ export function Header() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button size="lg" className="text-base">
-                Sign In
-              </Button>
-            </SignInButton>
-          </SignedOut>
-
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <HeaderUserItems />
 
           <ModeToggle />
         </div>
