@@ -7,7 +7,7 @@ import {
   NavigationMenuList,
 } from '@/features/shared/components/ui/navigation-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
-import { ModeToggle } from './ModeToggle'
+import { ThemeToggle } from './ThemeToggle'
 import { HeaderUserItems } from './HeaderUserItems'
 
 import Link from 'next/link'
@@ -41,7 +41,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <HeaderUserItems />
 
-          <ModeToggle />
+          <ThemeToggle />
         </div>
       </div>
     </header>
