@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ThemeProvider } from './ThemeProvider'
+import { ThemeProvider } from 'next-themes'
 import { ClerkProvider } from '@clerk/nextjs'
 import ConvexClientProvider from './ConvexClientProvider'
 
