@@ -21,7 +21,7 @@ export function HeaderUserItems() {
         <div className="flex items-center gap-2">
           <Link href="/dashboard">
             <Button variant="ghost">
-              <HomeIcon /> Dashboard
+              <HomeIcon /> <span className="hidden sm:block">Dashboard</span>
             </Button>
           </Link>
 

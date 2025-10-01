@@ -7,13 +7,10 @@ import {
   NavigationMenuList,
 } from '@/features/shared/components/ui/navigation-menu'
 import { usePathname } from 'next/navigation'
+import { NavLinks } from '.'
 
 type NavMenuProps = {
-  navLinks: {
-    href: string
-    label: string
-    key: number
-  }[]
+  navLinks: NavLinks
 }
 
 export function NavMenu({ navLinks }: NavMenuProps) {

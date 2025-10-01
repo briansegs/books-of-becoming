@@ -1,4 +1,5 @@
-import Logo from '@/features/shared/components/navbar-components/logo'
+'use client'
+
 import { Button } from '@/features/shared/components/ui/button'
 import {
   NavigationMenu,
@@ -7,48 +8,16 @@ import {
   NavigationMenuList,
 } from '@/features/shared/components/ui/navigation-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
-import { ThemeToggle } from './ThemeToggle'
-import { HeaderUserItems } from './HeaderUserItems'
+import { NavLinks } from '.'
+import { usePathname } from 'next/navigation'
 
-import Link from 'next/link'
-import { NavMenu } from './NavMenu'
-
-// Navigation links array to be used in both desktop and mobile menus
-const navLinks = [
-  { href: '/', label: 'Home', key: 1 },
-  { href: '#', label: 'Features', key: 2 },
-  { href: '#', label: 'Pricing', key: 3 },
-  { href: '#', label: 'About', key: 4 },
-]
-
-export function Header() {
-  return (
-    <header className="border-b px-4 md:px-6">
-      <div className="flex h-16 justify-between gap-4">
-        {/* Left side */}
-        <div className="flex gap-4">
-          <div className="flex items-center gap-6">
-            <Link href="/" className="text-primary hover:text-primary/90">
-              <Logo />
-            </Link>
-
-            <NavMenu navLinks={navLinks} />
-          </div>
-
-          <MobileMenu />
-        </div>
-        {/* Right side */}
-        <div className="flex items-center gap-2">
-          <HeaderUserItems />
-
-          <ThemeToggle />
-        </div>
-      </div>
-    </header>
-  )
+type MobileNavMenuProps = {
+  navLinks: NavLinks
 }
 
-function MobileMenu() {
+export function MobileNavMenu({ navLinks }: MobileNavMenuProps) {
+  const pathname = usePathname()
+
   return (
     <div className="flex items-center md:hidden">
       {/* Mobile menu trigger */}
@@ -92,7 +61,11 @@ function MobileMenu() {
             <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
               {navLinks.map((link) => (
                 <NavigationMenuItem key={link.key} className="w-full">
-                  <NavigationMenuLink href={link.href} className="py-1.5">
+                  <NavigationMenuLink
+                    href={link.href}
+                    active={pathname === link.href}
+                    className="py-1.5 hover:bg-accent data-[active]:bg-accent"
+                  >
                     {link.label}
                   </NavigationMenuLink>
                 </NavigationMenuItem>
