@@ -23,7 +23,7 @@ export function HeaderUserItems() {
             <HomeIcon /> <span className="hidden sm:block">Dashboard</span>
           </Button>
 
-          <div className="flex h-9 w-9 animate-pulse items-center rounded-full bg-muted">
+          <div className="flex h-9 w-9 animate-pulse items-center justify-center rounded-full bg-muted">
             <User className="text-muted-foreground/70" />
           </div>
         </div>
@@ -37,7 +37,7 @@ export function HeaderUserItems() {
             </Button>
           </Link>
 
-          <div className="flex h-9 w-9">
+          <div className="flex h-9 w-9 items-center justify-center">
             <UserButton />
           </div>
         </div>
