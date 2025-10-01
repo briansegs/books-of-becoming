@@ -1,4 +1,4 @@
-export default async function Home() {
+export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center gap-16 p-8 pb-20">
       <article className="prose dark:prose-invert">

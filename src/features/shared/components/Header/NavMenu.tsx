@@ -19,7 +19,7 @@ export function NavMenu({ navLinks }: NavMenuProps) {
   return (
     <NavigationMenu className="h-full *:h-full max-md:hidden">
       <NavigationMenuList className="h-full gap-2">
-        {navLinks?.map((link) => (
+        {navLinks.map((link) => (
           <NavigationMenuItem key={link.key} className="h-full">
             <NavigationMenuLink
               active={pathname === link.href}

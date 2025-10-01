@@ -15,11 +15,13 @@ const navLinks = [
   { href: '#', label: 'About', key: 4 },
 ]
 
-export type NavLinks = {
+export type NavLink = {
   href: string
   label: string
   key: number
-}[]
+}
+
+export type NavLinks = NavLink[]
 
 export function Header() {
   return (
