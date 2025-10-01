@@ -8,6 +8,7 @@ import {
 } from '@/features/shared/components/ui/navigation-menu'
 import { usePathname } from 'next/navigation'
 import { NavLinks } from '.'
+import Link from 'next/link'
 
 type NavMenuProps = {
   navLinks: NavLinks
@@ -22,11 +23,11 @@ export function NavMenu({ navLinks }: NavMenuProps) {
         {navLinks.map((link) => (
           <NavigationMenuItem key={link.key} className="h-full">
             <NavigationMenuLink
+              asChild
               active={pathname === link.href}
-              href={link.href}
-              className="h-full justify-center rounded-none border-y-2 border-transparent py-1.5 text-lg font-medium text-muted-foreground hover:border-b-primary hover:bg-transparent hover:text-primary data-[active]:border-b-primary data-[active]:bg-transparent!"
+              className="h-full justify-center rounded-none border-y-2 border-transparent py-1.5 text-lg font-medium text-muted-foreground hover:border-b-primary hover:bg-transparent hover:text-primary data-[active]:border-b-primary"
             >
-              {link.label}
+              <Link href={link.href}>{link.label}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
