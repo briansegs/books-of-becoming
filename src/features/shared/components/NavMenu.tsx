@@ -12,6 +12,7 @@ type NavMenuProps = {
   navLinks: {
     href: string
     label: string
+    key: number
   }[]
 }
 
@@ -21,8 +22,8 @@ export function NavMenu({ navLinks }: NavMenuProps) {
   return (
     <NavigationMenu className="h-full *:h-full max-md:hidden">
       <NavigationMenuList className="h-full gap-2">
-        {navLinks?.map((link, index) => (
-          <NavigationMenuItem key={index} className="h-full">
+        {navLinks?.map((link) => (
+          <NavigationMenuItem key={link.key} className="h-full">
             <NavigationMenuLink
               active={pathname === link.href}
               href={link.href}

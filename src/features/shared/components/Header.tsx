@@ -15,10 +15,10 @@ import { NavMenu } from './NavMenu'
 
 // Navigation links array to be used in both desktop and mobile menus
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '#', label: 'Features' },
-  { href: '#', label: 'Pricing' },
-  { href: '#', label: 'About' },
+  { href: '/', label: 'Home', key: 1 },
+  { href: '#', label: 'Features', key: 2 },
+  { href: '#', label: 'Pricing', key: 3 },
+  { href: '#', label: 'About', key: 4 },
 ]
 
 export function Header() {
@@ -90,8 +90,8 @@ function MobileMenu() {
         <PopoverContent align="start" className="w-36 p-1 md:hidden">
           <NavigationMenu className="max-w-none *:w-full">
             <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-              {navLinks.map((link, index) => (
-                <NavigationMenuItem key={index} className="w-full">
+              {navLinks.map((link) => (
+                <NavigationMenuItem key={link.key} className="w-full">
                   <NavigationMenuLink href={link.href} className="py-1.5">
                     {link.label}
                   </NavigationMenuLink>
