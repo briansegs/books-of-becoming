@@ -17,7 +17,7 @@ function FooterLink({ children }: { children: React.ReactNode }) {
 
 export function Footer() {
   return (
-    <footer className="w-full border-t px-12 py-6">
+    <footer className="w-full border-t px-2 py-6 sm:px-12">
       <div className="flex flex-col gap-6">
         <a href="#" className="px-6 text-primary hover:text-primary/90">
           <Logo />
@@ -36,7 +36,7 @@ export function Footer() {
 
         <Separator />
 
-        <div className="flex items-center justify-between px-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 px-6">
           <div className="flex gap-4">
             <Button variant="outline" size="icon">
               <Facebook className="h-8 w-8" />
