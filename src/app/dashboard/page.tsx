@@ -18,16 +18,24 @@ export default async function Dashboard() {
   }
 
   let convexUser: UserType = null
+  let fetchError = false
 
   try {
     convexUser = await fetchQuery(api.user.get, { clerkId: userId })
   } catch (error) {
-    console.log('Failed to fetch user:', error)
+    console.error('Failed to fetch user:', error)
+    fetchError = true
   }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
-      {convexUser ? <p> Dashboard for {convexUser?.username}</p> : <p>Loading user data...</p>}
+      {convexUser ? (
+        <p>Dashboard for {convexUser.username}</p>
+      ) : fetchError ? (
+        <p>Failed to load user data. Please try again later.</p>
+      ) : (
+        <p>Loading user data...</p>
+      )}
     </div>
   )
 }
