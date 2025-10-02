@@ -7,10 +7,16 @@ type getUserByClerkIdProps = {
 }
 
 export async function getUserByClerkId({ ctx, clerkId }: getUserByClerkIdProps) {
-  return await ctx.db
+  const user = await ctx.db
     .query('users')
     .withIndex('by_clerkId', (q) => q.eq('clerkId', clerkId))
     .unique()
+
+  if (!user) {
+    throw new ConvexError(`User not found with ClerkId: ${clerkId}`)
+  }
+
+  return user
 }
 
 export async function getAuthenticatedUser(ctx: QueryCtx | MutationCtx) {
@@ -24,10 +30,6 @@ export async function getAuthenticatedUser(ctx: QueryCtx | MutationCtx) {
     ctx,
     clerkId: identity.subject,
   })
-
-  if (!currentUser) {
-    throw new ConvexError('User not found')
-  }
 
   return currentUser
 }

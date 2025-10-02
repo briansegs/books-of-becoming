@@ -21,7 +21,7 @@ export default async function Dashboard() {
   let fetchError = false
 
   try {
-    convexUser = await fetchQuery(api.user.get, { clerkId: userId })
+    convexUser = await fetchQuery(api.user.getUser, { clerkId: userId })
   } catch (error) {
     console.error('Failed to fetch user:', error)
     fetchError = true
