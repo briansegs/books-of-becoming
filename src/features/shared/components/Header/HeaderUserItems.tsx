@@ -3,7 +3,7 @@
 import { Authenticated, Unauthenticated, AuthLoading } from 'convex/react'
 import { SignInButton, UserButton } from '@clerk/nextjs'
 import { Button } from '@/features/shared/components/ui/button'
-import { HomeIcon, User } from 'lucide-react'
+import { Book, HomeIcon, User } from 'lucide-react'
 import Link from 'next/link'
 
 export function HeaderUserItems() {
@@ -20,6 +20,10 @@ export function HeaderUserItems() {
       <AuthLoading>
         <div className="flex items-center gap-2">
           <Button variant="ghost" disabled>
+            <Book /> <span className="hidden sm:block">Journals</span>
+          </Button>
+
+          <Button variant="ghost" disabled>
             <HomeIcon /> <span className="hidden sm:block">Dashboard</span>
           </Button>
 
@@ -31,6 +35,12 @@ export function HeaderUserItems() {
 
       <Authenticated>
         <div className="flex items-center gap-2">
+          <Link href="/journals">
+            <Button variant="ghost">
+              <Book /> <span className="hidden sm:block">Journals</span>
+            </Button>
+          </Link>
+
           <Link href="/dashboard">
             <Button variant="ghost">
               <HomeIcon /> <span className="hidden sm:block">Dashboard</span>
