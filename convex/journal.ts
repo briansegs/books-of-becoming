@@ -2,7 +2,7 @@ import { v } from 'convex/values'
 import { mutation } from './_generated/server'
 import { getAuthenticatedUser, getCurrntUserJournal } from './_utils'
 
-export const createJournal = mutation({
+export const create = mutation({
   args: {
     title: v.string(),
   },
@@ -18,7 +18,7 @@ export const createJournal = mutation({
   },
 })
 
-export const deleteJournal = mutation({
+export const remove = mutation({
   args: { id: v.id('journals') },
   handler: async (ctx, { id }) => {
     const currentUser = await getAuthenticatedUser(ctx)
@@ -29,7 +29,7 @@ export const deleteJournal = mutation({
   },
 })
 
-export const updateJournal = mutation({
+export const update = mutation({
   args: {
     id: v.id('journals'),
     data: v.object({
