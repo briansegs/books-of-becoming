@@ -1,41 +1,14 @@
 import { auth } from '@clerk/nextjs/server'
-import { api } from 'convex/_generated/api'
+import { redirect } from 'next/navigation'
 
-import type { Doc } from 'convex/_generated/dataModel'
-import { fetchQuery } from 'convex/nextjs'
-
-type UserType = Doc<'users'> | null
-
-export default async function Dashboard() {
+export default async function page() {
   const { userId } = await auth()
 
   if (!userId) {
-    return (
-      <div className="flex min-h-screen w-full items-center justify-center">
-        <p>Please sign in to view your dashboard.</p>
-      </div>
-    )
+    redirect('/')
   }
 
-  let convexUser: UserType = null
-  let fetchError = false
+  redirect(`/dashboard/${userId}`)
 
-  try {
-    convexUser = await fetchQuery(api.user.getUser, { clerkId: userId })
-  } catch (error) {
-    console.error('Failed to fetch user:', error)
-    fetchError = true
-  }
-
-  return (
-    <div className="flex min-h-screen w-full items-center justify-center">
-      {convexUser ? (
-        <p>Dashboard for {convexUser.username}</p>
-      ) : fetchError ? (
-        <p>Failed to load user data. Please try again later.</p>
-      ) : (
-        <p>Loading user data...</p>
-      )}
-    </div>
-  )
+  return <div className="flex min-h-screen w-full items-center justify-center">dashboard page</div>
 }
