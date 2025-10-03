@@ -1,12 +1,14 @@
 'use client'
 
 import { Authenticated, Unauthenticated, AuthLoading } from 'convex/react'
-import { SignInButton, UserButton } from '@clerk/nextjs'
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs'
 import { Button } from '@/features/shared/components/ui/button'
 import { Book, HomeIcon, User } from 'lucide-react'
 import Link from 'next/link'
 
 export function HeaderUserItems() {
+  const { user } = useUser()
+
   return (
     <>
       <Unauthenticated>
@@ -35,13 +37,13 @@ export function HeaderUserItems() {
 
       <Authenticated>
         <div className="flex items-center gap-2">
-          <Link href="/journals">
+          <Link href={`/journals/${user?.id}`}>
             <Button variant="ghost">
               <Book /> <span className="hidden sm:block">Journals</span>
             </Button>
           </Link>
 
-          <Link href="/dashboard">
+          <Link href={`/dashboard/${user?.id}`}>
             <Button variant="ghost">
               <HomeIcon /> <span className="hidden sm:block">Dashboard</span>
             </Button>
