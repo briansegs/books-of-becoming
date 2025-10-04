@@ -54,7 +54,7 @@ export default async function Journals({ params }: Args) {
             )
           })
         ) : fetchError ? (
-          <p>Failed to load jounal data. Please try again later.</p>
+          <p>Failed to load journal data. Please try again later.</p>
         ) : (
           <p>Loading journals...</p>
         )}
