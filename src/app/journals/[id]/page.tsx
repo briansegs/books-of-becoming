@@ -1,4 +1,4 @@
-import { JournalCreateDialog } from '@/features/shared/components/journal/JournalCreateDialog'
+import { JournalCreateDialog } from '@/features/journal/components/JournalCreateDialog'
 import { Card, CardContent, CardFooter } from '@/features/shared/components/ui/card'
 
 import { auth } from '@clerk/nextjs/server'
