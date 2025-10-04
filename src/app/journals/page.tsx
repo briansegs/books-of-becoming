@@ -9,6 +9,4 @@ export default async function page() {
   }
 
   redirect(`/journals/${userId}`)
-
-  return <div className="flex min-h-screen w-full items-center justify-center">journals page</div>
 }

@@ -9,6 +9,4 @@ export default async function page() {
   }
 
   redirect(`/dashboard/${userId}`)
-
-  return <div className="flex min-h-screen w-full items-center justify-center">dashboard page</div>
 }
