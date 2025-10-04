@@ -8,5 +8,5 @@ export default async function page() {
     redirect('/')
   }
 
-  redirect(`/dashboard/${userId}`)
+  redirect(`/journals/${userId}`)
 }
