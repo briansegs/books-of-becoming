@@ -20,12 +20,17 @@ export default async function Journals({ params }: Args) {
   const { id: userIdFromPath } = await params
   const { userId, getToken } = await auth()
 
+  let journals: JournalsType = null
+  let fetchError = false
+
+  if (!userId) {
+    console.error('Failed to fetch Clerk user')
+    fetchError = true
+  }
+
   if (userId !== userIdFromPath) {
     redirect(`/journals/${userId}`)
   }
-
-  let journals: JournalsType = null
-  let fetchError = false
 
   try {
     const token = (await getToken({ template: 'convex' })) || ''

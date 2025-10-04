@@ -17,12 +17,17 @@ export default async function Dashboard({ params }: Args) {
   const { id: userIdFromPath } = await params
   const { userId } = await auth()
 
+  let convexUser: UserType = null
+  let fetchError = false
+
+  if (!userId) {
+    console.error('Failed to fetch Clerk user')
+    fetchError = true
+  }
+
   if (userId !== userIdFromPath) {
     redirect(`/dashboard/${userId}`)
   }
-
-  let convexUser: UserType = null
-  let fetchError = false
 
   try {
     convexUser = await fetchQuery(api.user.getUser, { clerkId: userId })
