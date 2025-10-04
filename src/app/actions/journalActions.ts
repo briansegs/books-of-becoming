@@ -12,6 +12,8 @@ export const createJournal = actionClient
   .inputSchema(createJournalFormSchema)
   .action(async ({ parsedInput: { title } }) => {
     const { userId, getToken } = await auth()
+    if (!userId) throw new Error('No userId found')
+
     const token = await getToken({ template: 'convex' })
 
     if (!token) throw new Error('No user token found')

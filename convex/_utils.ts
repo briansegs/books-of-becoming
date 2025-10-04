@@ -38,12 +38,12 @@ export async function getAuthenticatedUser(ctx: QueryCtx | MutationCtx) {
   return currentUser
 }
 
-type getCurrntUserJournalProps = Ctx & {
+type getCurrentUserJournalProps = Ctx & {
   currentUser: Doc<'users'>
   id: Id<'journals'>
 }
 
-export async function getCurrntUserJournal({ ctx, currentUser, id }: getCurrntUserJournalProps) {
+export async function getCurrentUserJournal({ ctx, currentUser, id }: getCurrentUserJournalProps) {
   const journal = await ctx.db.get(id)
 
   if (!journal) throw new ConvexError('Journal could not be found')
