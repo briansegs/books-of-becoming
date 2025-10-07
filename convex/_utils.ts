@@ -49,7 +49,7 @@ export async function getCurrentUserJournal({ ctx, currentUser, id }: getCurrent
   if (!journal) throw new ConvexError('Journal could not be found')
 
   if (journal.userId !== currentUser._id) {
-    throw new ConvexError('User not authorized to delete this journal')
+    throw new ConvexError('User not authorized to access this journal')
   }
 
   return journal
