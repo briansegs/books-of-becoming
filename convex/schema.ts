@@ -14,5 +14,10 @@ export default defineSchema({
   journals: defineTable({
     title: v.string(),
     userId: v.id('users'),
+    type: v.string(),
+    updatedAt: v.number(),
+    color: v.string(),
+    textColor: v.string(),
+    background: v.string(),
   }).index('by_userId', ['userId']),
 })

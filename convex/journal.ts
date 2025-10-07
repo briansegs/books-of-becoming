@@ -5,6 +5,11 @@ import { getAuthenticatedUser, getCurrentUserJournal } from './_utils'
 export const create = mutation({
   args: {
     title: v.string(),
+    updatedAt: v.number(),
+    type: v.string(),
+    color: v.string(),
+    textColor: v.string(),
+    background: v.string(),
   },
   handler: async (ctx, args) => {
     const currentUser = await getAuthenticatedUser(ctx)

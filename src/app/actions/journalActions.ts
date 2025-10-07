@@ -10,7 +10,7 @@ import { createJournalFormSchema } from './schemas'
 
 export const createJournal = actionClient
   .inputSchema(createJournalFormSchema)
-  .action(async ({ parsedInput: { title } }) => {
+  .action(async ({ parsedInput: { title, type, color, background, textColor } }) => {
     const { userId, getToken } = await auth()
     if (!userId) throw new Error('No userId found')
 
@@ -18,7 +18,18 @@ export const createJournal = actionClient
 
     if (!token) throw new Error('No user token found')
 
-    await fetchMutation(api.journal.create, { title }, { token })
+    await fetchMutation(
+      api.journal.create,
+      {
+        title,
+        updatedAt: Date.now(),
+        type,
+        color,
+        textColor,
+        background,
+      },
+      { token },
+    )
 
     revalidatePath(`/journals/${userId}`)
   })
