@@ -17,31 +17,33 @@ export default async function Journals({ params }: Args) {
   const { id: userIdFromPath } = await params
   const { userId, getToken } = await auth()
 
-  let journals: Journal[] | null = null
-  let fetchError = false
-
   if (!userId) {
-    console.error('Failed to fetch Clerk user')
-    fetchError = true
+    redirect('/')
   }
 
   if (userId !== userIdFromPath) {
     redirect(`/journals/${userId}`)
   }
 
+  let journals: Journal[] | null = null
+
   try {
     const token = (await getToken({ template: 'convex' })) || ''
     journals = await fetchQuery(api.journals.get, {}, { token })
   } catch (error) {
     console.error('Failed to fetch journals:', error)
-    fetchError = true
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <p>Failed to fetch journals. Please try again later.</p>
+      </div>
+    )
   }
 
   return (
     <div className="flex min-h-screen w-full flex-col gap-6 p-12">
       <JournalsHeader />
 
-      <JournalsContent journals={journals || []} fetchError={fetchError} />
+      <JournalsContent journals={journals || []} />
     </div>
   )
 }

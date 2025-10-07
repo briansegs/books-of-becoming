@@ -9,22 +9,16 @@ type Journals = {
   journals: Journal[]
 }
 
-type FetchError = {
-  fetchError: boolean
-}
-
-type JournalsWithFetchError = Journals & FetchError
-
 type FilterState = {
   filter: JournalFilterOptions
   setFilter: Dispatch<SetStateAction<JournalFilterOptions>>
 }
 
-export type JournalsContentProps = JournalsWithFetchError
+export type JournalsContentProps = Journals
 
 export type JournalFilterSelectProps = Journals & FilterState
 
-export type JournalsListProps = JournalsWithFetchError
+export type JournalsListProps = Journals
 
 export type JournalsMenuProps = Journals & FilterState
 
