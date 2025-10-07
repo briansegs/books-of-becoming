@@ -8,7 +8,7 @@ export function JournalsMenu({ journals, setFilter, filter }: JournalsMenuProps)
     <Card>
       <CardContent className="flex items-end justify-between pt-6">
         <div className="space-y-2">
-          <h3 className="flex items-center gap-2 text-lg font-bold">Filter</h3>
+          <h3 className="text-lg font-bold">Filter</h3>
           <JournalFilterSelect journals={journals} filter={filter} setFilter={setFilter} />
         </div>
 
