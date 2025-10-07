@@ -1,14 +1,11 @@
-import { JournalCreateDialog } from '@/features/journal/components/JournalCreateDialog'
-import { Card, CardContent, CardFooter } from '@/features/shared/components/ui/card'
+import { JournalsContent } from '@/features/journal/components/JournalsContent'
+import { JournalsHeader } from '@/features/journal/components/JournalsHeader'
+import type { Journal } from '@/features/journal/types'
 
 import { auth } from '@clerk/nextjs/server'
 import { api } from 'convex/_generated/api'
-import { Doc } from 'convex/_generated/dataModel'
 import { fetchQuery } from 'convex/nextjs'
-import { BookIcon } from 'lucide-react'
 import { redirect } from 'next/navigation'
-
-type JournalsType = Doc<'journals'>[] | null
 
 type Args = {
   params: Promise<{
@@ -20,7 +17,7 @@ export default async function Journals({ params }: Args) {
   const { id: userIdFromPath } = await params
   const { userId, getToken } = await auth()
 
-  let journals: JournalsType = null
+  let journals: Journal[] | null = null
   let fetchError = false
 
   if (!userId) {
@@ -41,39 +38,10 @@ export default async function Journals({ params }: Args) {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-12 p-12">
-      <div className="w-full text-center text-3xl">Journals</div>
-      <div className="flex w-full flex-wrap gap-6">
-        {journals ? (
-          journals.map((journal) => {
-            return (
-              <Card key={journal._id} className="flex flex-col items-center pt-4">
-                <CardContent>
-                  <BookIcon className="h-32 w-32" />
-                </CardContent>
+    <div className="flex min-h-screen w-full flex-col gap-6 p-12">
+      <JournalsHeader />
 
-                <CardFooter>
-                  <p className="text-xl font-semibold">{journal.title}</p>
-                </CardFooter>
-              </Card>
-            )
-          })
-        ) : fetchError ? (
-          <p>Failed to load journal data. Please try again later.</p>
-        ) : (
-          <p>Loading journals...</p>
-        )}
-
-        <Card className="flex flex-col items-center pt-4">
-          <CardContent>
-            <BookIcon className="h-32 w-32" />
-          </CardContent>
-
-          <CardFooter>
-            <JournalCreateDialog />
-          </CardFooter>
-        </Card>
-      </div>
+      <JournalsContent journals={journals || []} fetchError={fetchError} />
     </div>
   )
 }
