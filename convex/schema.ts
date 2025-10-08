@@ -1,5 +1,11 @@
 import { defineSchema, defineTable } from 'convex/server'
 import { v } from 'convex/values'
+import {
+  journalBackgrounds,
+  journalColors,
+  journalTextColors,
+  journalType,
+} from './lib/journalSchema'
 
 export default defineSchema({
   users: defineTable({
@@ -14,10 +20,10 @@ export default defineSchema({
   journals: defineTable({
     title: v.string(),
     userId: v.id('users'),
-    type: v.string(),
+    type: journalType,
     updatedAt: v.number(),
-    color: v.string(),
-    textColor: v.string(),
-    background: v.string(),
+    color: journalColors,
+    textColor: journalTextColors,
+    background: journalBackgrounds,
   }).index('by_userId', ['userId']),
 })

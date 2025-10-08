@@ -1,15 +1,21 @@
 import { v } from 'convex/values'
 import { mutation } from './_generated/server'
 import { getAuthenticatedUser, getCurrentUserJournal } from './_utils'
+import {
+  journalBackgrounds,
+  journalColors,
+  journalTextColors,
+  journalType,
+} from './lib/journalSchema'
 
 export const create = mutation({
   args: {
     title: v.string(),
     updatedAt: v.number(),
-    type: v.string(),
-    color: v.string(),
-    textColor: v.string(),
-    background: v.string(),
+    type: journalType,
+    color: journalColors,
+    textColor: journalTextColors,
+    background: journalBackgrounds,
   },
   handler: async (ctx, args) => {
     const currentUser = await getAuthenticatedUser(ctx)
