@@ -1,3 +1,5 @@
+import { JSX } from 'react'
+
 const BgWovenFabric = () => (
   <div
     className="pointer-events-none absolute inset-0 z-0"
@@ -82,12 +84,20 @@ const BgPaperTexture = () => (
   />
 )
 
-export const journalBackgrounds = {
+const backgroundComponents = {
   none: null,
-  wovenFabric: <BgWovenFabric />,
-  diagonalGrid: <BgDiagonalGrid />,
-  crosshatchArt: <BgCrosshatchArt />,
-  zigzagLightning: <BgZigzagLightning />,
-  circuitBoard: <BgCircuitBoard />,
-  paperTexture: <BgPaperTexture />,
+  wovenFabric: BgWovenFabric,
+  diagonalGrid: BgDiagonalGrid,
+  crosshatchArt: BgCrosshatchArt,
+  zigzagLightning: BgZigzagLightning,
+  circuitBoard: BgCircuitBoard,
+  paperTexture: BgPaperTexture,
 }
+
+export const journalBackgrounds = Object.entries(backgroundComponents).reduce(
+  (acc, [key, Component]) => ({
+    ...acc,
+    [key]: Component ? <Component /> : null,
+  }),
+  {} as Record<keyof typeof backgroundComponents, JSX.Element | null>,
+)
