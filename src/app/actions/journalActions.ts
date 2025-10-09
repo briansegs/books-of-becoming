@@ -22,7 +22,6 @@ export const createJournal = actionClient
       api.journal.create,
       {
         title,
-        updatedAt: Date.now(),
         type,
         color,
         textColor,

@@ -46,7 +46,7 @@ export function JournalsCard({ journal }: JournalsCardProps) {
         </div>
 
         <div className="w-full space-y-2 px-6 pb-6">
-          <p className={cn(textColor)}>{`Entries: 0`}</p>
+          <p className={cn(textColor)}>{`Entries: ${journal.entriesCount}`}</p>
           <p
             className={cn('text-sm', textColor)}
           >{`Updated: ${formatDistanceToNow(new Date(journal.updatedAt), { addSuffix: true })}`}</p>

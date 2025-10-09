@@ -11,7 +11,6 @@ import {
 export const create = mutation({
   args: {
     title: v.string(),
-    updatedAt: v.number(),
     type: journalType,
     color: journalColors,
     textColor: journalTextColors,
@@ -22,6 +21,8 @@ export const create = mutation({
 
     const journal = await ctx.db.insert('journals', {
       userId: currentUser._id,
+      updatedAt: Date.now(),
+      entriesCount: 0,
       ...args,
     })
 
