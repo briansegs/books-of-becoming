@@ -15,3 +15,7 @@ export const createJournalFormSchema = z.object({
     'paperTexture',
   ]),
 })
+
+export const deleteJournalSchema = z.object({
+  journalId: z.string(),
+})
