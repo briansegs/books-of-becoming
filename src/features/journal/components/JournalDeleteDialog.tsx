@@ -30,7 +30,7 @@ export function JournalDeleteDialog({ journalId, open, setOpen }: JournalDeleteD
 
   async function handleDeleteJournal() {
     if (!journalId) {
-      console.error('Cant handle delete. Missing journal Id.')
+      console.error("Can't handle delete. Missing journal Id.")
       toast.error('Unable to delete journal. Please try again.')
       return
     }
