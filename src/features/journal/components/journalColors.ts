@@ -49,7 +49,7 @@ export const journalColors = {
   },
   yellow: {
     bg: 'bg-yellow-300',
-    border: 'border-yellow-400',
+    border: 'border-yellow-500',
     textColors: {
       black: textColors.black,
       white: textColors.white,
