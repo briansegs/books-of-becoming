@@ -1,13 +1,13 @@
 import { Card } from '@/features/shared/components/ui/card'
 import { formatDistanceToNow } from 'date-fns'
-import { EllipsisVertical } from 'lucide-react'
-import { Button } from '@/features/shared/components/ui/button'
+
 import { cn } from '@/lib/utils'
 import { journalBackgrounds } from './journalBackgrounds'
 import { buttonColors, journalColors } from './journalColors'
 import { JournalsCardProps } from '../types'
+import { JournalsCardMenu } from './JournalsCardMenu'
 
-export function JournalsCard({ journal }: JournalsCardProps) {
+export function JournalsCard({ journal, setOpen, setJournalId }: JournalsCardProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const textColors = selectedColor.textColors
   const textColor = textColors[journal.textColor as keyof typeof textColors]
@@ -28,18 +28,12 @@ export function JournalsCard({ journal }: JournalsCardProps) {
               {journal.type === 'default' ? 'Journal' : 'Future Self Journal'}
             </p>
 
-            <Button
-              variant="outline"
-              className={cn(
-                'rounded-full border-none bg-transparent',
-                'hover:border-none',
-                'shadow-none',
-                buttonColor,
-              )}
-              size="icon"
-            >
-              <EllipsisVertical className="size-6" />
-            </Button>
+            <JournalsCardMenu
+              buttonColor={buttonColor}
+              setOpen={setOpen}
+              setJournalId={setJournalId}
+              journalId={journal._id}
+            />
           </div>
 
           <h3 className={cn('text-center text-xl font-bold', textColor)}>{journal.title}</h3>

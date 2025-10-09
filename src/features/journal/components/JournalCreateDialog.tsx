@@ -274,10 +274,10 @@ export function JournalCreateDialog() {
             />
 
             <DialogFooter>
-              <Button disabled={isPending} type="submit">
+              <Button className="w-32" disabled={isPending} type="submit">
                 {isPending ? (
                   <span className="flex gap-2">
-                    <Spinner /> pending...
+                    <Spinner /> Creating...
                   </span>
                 ) : (
                   'Create'
