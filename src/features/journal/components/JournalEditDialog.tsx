@@ -211,6 +211,7 @@ export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogP
                 />
               )}
             />
+
             <JournalDialogSelectField
               label="Background"
               control={form.control}

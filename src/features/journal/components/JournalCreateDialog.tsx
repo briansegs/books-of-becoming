@@ -40,6 +40,7 @@ import {
 import { cn } from '@/lib/utils'
 import { journalColors } from './journalColors'
 import { journalBackgrounds } from './journalBackgrounds'
+import { JournalDialogSelectField } from './JournalDialogSelectField'
 
 export const journalBackgroundsLabelMap = {
   none: 'None',
@@ -49,14 +50,20 @@ export const journalBackgroundsLabelMap = {
   zigzagLightning: 'Zigzag Lightning',
   circuitBoard: 'Circuit Board',
   paperTexture: 'Paper Texture',
-}
+} as const
 
 export const textColorsBgMap = {
   black: 'bg-black',
   white: 'bg-white',
   gold: 'bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-600',
   silver: 'bg-gradient-to-r from-zinc-500 via-zinc-400 to-zinc-600',
-}
+} as const
+
+type JournalColors = keyof typeof journalColors
+
+type JournalBackgrounds = keyof typeof journalBackgrounds
+
+type TextColorsBgMap = keyof typeof textColorsBgMap
 
 type CreateJournalFormData = z.infer<typeof createJournalFormSchema>
 
@@ -86,13 +93,7 @@ export function JournalCreateDialog() {
   })
 
   async function handleSubmit(values: z.infer<typeof createJournalFormSchema>) {
-    execute({
-      title: values.title,
-      type: values.type,
-      color: values.color,
-      textColor: values.textColor,
-      background: values.background,
-    })
+    execute(values)
   }
 
   return (
@@ -159,117 +160,45 @@ export function JournalCreateDialog() {
               )}
             />
 
-            <FormField
+            <JournalDialogSelectField
+              label="Journal Color"
               control={form.control}
               name="color"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Journal Color</FormLabel>
-
-                  <div className="flex w-full items-center justify-between">
-                    <div
-                      className={cn('size-12 rounded-md border', journalColors[field.value].bg)}
-                    />
-
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="w-[180px] capitalize">
-                          {field.value}
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.entries(journalColors).map(([key, value]) => {
-                          return (
-                            <SelectItem className="capitalize" key={key} value={key}>
-                              <div className={cn('size-8 rounded-md border', value.bg)} />
-                              {key}
-                            </SelectItem>
-                          )
-                        })}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <FormMessage />
-                </FormItem>
+              items={journalColors}
+              preview={(key) => (
+                <div
+                  className={cn(
+                    'size-12 rounded-md border',
+                    journalColors[key as JournalColors].bg,
+                  )}
+                />
               )}
             />
 
-            <FormField
+            <JournalDialogSelectField
+              label="Text Color"
               control={form.control}
               name="textColor"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Journal Text Color</FormLabel>
-
-                  <div className="flex w-full items-center justify-between">
-                    <div
-                      className={cn('size-12 rounded-md border', textColorsBgMap[field.value])}
-                    />
-
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="w-[180px] capitalize">
-                          {field.value}
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.entries(textColorsBgMap).map(([key, value]) => {
-                          return (
-                            <SelectItem className="capitalize" key={key} value={key}>
-                              <div className={cn('size-8 rounded-md border', value)} />
-                              {key}
-                            </SelectItem>
-                          )
-                        })}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <FormMessage />
-                </FormItem>
+              items={textColorsBgMap}
+              preview={(key) => (
+                <div
+                  className={cn(
+                    'size-12 rounded-md border',
+                    textColorsBgMap[key as TextColorsBgMap],
+                  )}
+                />
               )}
             />
 
-            <FormField
+            <JournalDialogSelectField
+              label="Background"
               control={form.control}
               name="background"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Journal Background</FormLabel>
-
-                  <div className="flex w-full items-center justify-between">
-                    <div className={cn('relative size-12 rounded-md border bg-zinc-100')}>
-                      {journalBackgrounds[field.value]}
-                    </div>
-
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="w-[180px] capitalize">
-                          {field.value}
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.entries(journalBackgrounds).map(([key, value]) => {
-                          return (
-                            <SelectItem className="capitalize" key={key} value={key}>
-                              <div className={cn('relative size-8 rounded-md border bg-zinc-100')}>
-                                {value}
-                              </div>
-                              {
-                                journalBackgroundsLabelMap[
-                                  key as keyof typeof journalBackgroundsLabelMap
-                                ]
-                              }
-                            </SelectItem>
-                          )
-                        })}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <FormMessage />
-                </FormItem>
+              items={journalBackgrounds}
+              preview={(key) => (
+                <div className="relative size-12 rounded-md border bg-zinc-100">
+                  {journalBackgrounds[key as JournalBackgrounds]}
+                </div>
               )}
             />
 
