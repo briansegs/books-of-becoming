@@ -120,7 +120,16 @@ export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogP
       onOpenChange={(isOpen) => {
         setOpen(isOpen)
         if (!isOpen) {
-          form.reset()
+          if (journal?.title) {
+            form.reset({
+              id: journal._id,
+              title: journal.title,
+              type: journal.type,
+              color: journal.color,
+              textColor: journal.textColor,
+              background: journal.background,
+            })
+          }
         }
       }}
     >
