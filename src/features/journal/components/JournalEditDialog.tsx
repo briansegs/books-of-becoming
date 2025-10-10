@@ -139,7 +139,7 @@ export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogP
             <FormField
               control={form.control}
               name="id"
-              render={({ field }) => <input type="hidden" {...field} value={journal?._id || ''} />}
+              render={({ field }) => <input type="hidden" {...field} />}
             />
 
             <FormField
