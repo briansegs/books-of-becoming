@@ -11,7 +11,7 @@ import { JournalEditDialog } from './JournalEditDialog'
 export function JournalsList({ journals }: JournalsListProps) {
   const [openJournalDeleteDialog, setOpenJournalDeleteDialog] = useState(false)
   const [openJournalEditDialog, setOpenJournalEditDialog] = useState(false)
-  const [curretJournal, setCurrentJournal] = useState<Journal | null | undefined>(null)
+  const [currentJournal, setCurrentJournal] = useState<Journal | null | undefined>(null)
 
   return (
     <>
@@ -34,13 +34,13 @@ export function JournalsList({ journals }: JournalsListProps) {
           <JournalDeleteDialog
             open={openJournalDeleteDialog}
             setOpen={setOpenJournalDeleteDialog}
-            journal={curretJournal}
+            journal={currentJournal}
           />
 
           <JournalEditDialog
             open={openJournalEditDialog}
             setOpen={setOpenJournalEditDialog}
-            journal={curretJournal}
+            journal={currentJournal}
           />
         </Card>
       ) : (

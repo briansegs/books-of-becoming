@@ -97,10 +97,9 @@ export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogP
   })
 
   async function handleSubmit(values: z.infer<typeof editJournalFormSchema>) {
-    console.log('click!', journal)
-
     if (!journal) {
-      console.warn('No journal selected!')
+      console.error("Can't handle edit. Missing journal.")
+      toast.error('Unable to edit journal. Please try again.')
       return
     }
 
@@ -137,7 +136,7 @@ export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogP
         <DialogHeader>
           <DialogTitle>Edit Journal</DialogTitle>
           <DialogDescription>
-            Edit this jounal by Changing the information in a field.
+            Edit this journal by changing the information in any field.
           </DialogDescription>
         </DialogHeader>
 
