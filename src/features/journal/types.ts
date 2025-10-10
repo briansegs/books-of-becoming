@@ -34,14 +34,19 @@ export type JournalsListProps = Journals
 
 export type JournalsMenuProps = Journals & FilterState
 
-export type JournalsCardProps = Pick<OpenJournalCardMenuState, 'setOpen'> &
-  Pick<JournalIdState, 'setJournalId'> & {
-    journal: Journal
-  }
+export type JournalsCardProps = Pick<JournalIdState, 'setJournalId'> & {
+  journal: Journal
+  setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>>
+  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
+  setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>>
+}
 
 export type JournalDeleteDialogProps = OpenJournalCardMenuState & Pick<JournalIdState, 'journalId'>
 
-export type JournalsCardMenuProps = JournalIdState &
-  Pick<OpenJournalCardMenuState, 'setOpen'> & {
-    buttonColor: string
-  }
+export type JournalsCardMenuProps = JournalIdState & {
+  buttonColor: string
+  setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>>
+  journal: Journal
+  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
+  setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>>
+}

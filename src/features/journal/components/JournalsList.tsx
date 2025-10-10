@@ -1,15 +1,18 @@
 'use client'
 
 import { Card } from '@/features/shared/components/ui/card'
-import { JournalId, JournalsListProps } from '../types'
+import { Journal, JournalId, JournalsListProps } from '../types'
 import { JournalsCard } from './JournalsCard'
 import { JournalsListEmptyCard } from './JournalsListEmptyCard'
 import { useState } from 'react'
 import { JournalDeleteDialog } from './JournalDeleteDialog'
+import { JournalEditDialog } from './JournalEditDialog'
 
 export function JournalsList({ journals }: JournalsListProps) {
   const [openJournalDeleteDialog, setOpenJournalDeleteDialog] = useState(false)
+  const [openJournalEditDialog, setOpenJournalEditDialog] = useState(false)
   const [journalId, setJournalId] = useState<JournalId>(null)
+  const [curretJournal, setCurrentJournal] = useState<Journal | null | undefined>(null)
 
   return (
     <>
@@ -21,8 +24,10 @@ export function JournalsList({ journals }: JournalsListProps) {
                 <JournalsCard
                   key={journal._id}
                   journal={journal}
-                  setOpen={setOpenJournalDeleteDialog}
+                  setOpenJournalDeleteDialog={setOpenJournalDeleteDialog}
+                  setOpenJournalEditDialog={setOpenJournalEditDialog}
                   setJournalId={setJournalId}
+                  setCurrentJournal={setCurrentJournal}
                 />
               )
             })}
@@ -32,6 +37,12 @@ export function JournalsList({ journals }: JournalsListProps) {
             open={openJournalDeleteDialog}
             setOpen={setOpenJournalDeleteDialog}
             journalId={journalId}
+          />
+
+          <JournalEditDialog
+            open={openJournalEditDialog}
+            setOpen={setOpenJournalEditDialog}
+            journal={curretJournal}
           />
         </Card>
       ) : (

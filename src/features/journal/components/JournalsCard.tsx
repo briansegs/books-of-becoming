@@ -7,7 +7,13 @@ import { buttonColors, journalColors } from './journalColors'
 import { JournalsCardProps } from '../types'
 import { JournalsCardMenu } from './JournalsCardMenu'
 
-export function JournalsCard({ journal, setOpen, setJournalId }: JournalsCardProps) {
+export function JournalsCard({
+  journal,
+  setOpenJournalDeleteDialog,
+  setOpenJournalEditDialog,
+  setJournalId,
+  setCurrentJournal,
+}: JournalsCardProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const textColors = selectedColor.textColors
   const textColor = textColors[journal.textColor as keyof typeof textColors]
@@ -30,9 +36,12 @@ export function JournalsCard({ journal, setOpen, setJournalId }: JournalsCardPro
 
             <JournalsCardMenu
               buttonColor={buttonColor}
-              setOpen={setOpen}
               setJournalId={setJournalId}
               journalId={journal._id}
+              setCurrentJournal={setCurrentJournal}
+              journal={journal}
+              setOpenJournalDeleteDialog={setOpenJournalDeleteDialog}
+              setOpenJournalEditDialog={setOpenJournalEditDialog}
             />
           </div>
 

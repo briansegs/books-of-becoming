@@ -12,8 +12,11 @@ import { JournalsCardMenuProps } from '../types'
 export function JournalsCardMenu({
   buttonColor,
   setJournalId,
-  setOpen,
+  setOpenJournalDeleteDialog,
+  setOpenJournalEditDialog,
   journalId,
+  setCurrentJournal,
+  journal,
 }: JournalsCardMenuProps) {
   return (
     <DropdownMenu>
@@ -36,10 +39,23 @@ export function JournalsCardMenu({
         <DropdownMenuItem asChild className="cursor-pointer">
           <Button
             variant="ghost"
+            className="w-full"
+            onClick={() => {
+              setCurrentJournal(journal)
+              setOpenJournalEditDialog(true)
+            }}
+          >
+            Edit
+          </Button>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Button
+            variant="ghost"
             className="w-full text-red-400"
             onClick={() => {
               setJournalId(journalId)
-              setOpen(true)
+              setOpenJournalDeleteDialog(true)
             }}
           >
             Delete
