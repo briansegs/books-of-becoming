@@ -1,11 +1,9 @@
-import { Doc, Id } from 'convex/_generated/dataModel'
+import { Doc } from 'convex/_generated/dataModel'
 import { Dispatch, SetStateAction } from 'react'
 
 export type JournalFilterOptions = 'title' | 'asc' | 'desc' | ''
 
 export type Journal = Doc<'journals'>
-
-export type JournalId = Id<'journals'> | null | undefined
 
 type Journals = {
   journals: Journal[]
@@ -16,12 +14,15 @@ type FilterState = {
   setFilter: Dispatch<SetStateAction<JournalFilterOptions>>
 }
 
-type JournalIdState = {
-  setJournalId: Dispatch<SetStateAction<JournalId>>
-  journalId: JournalId
+type SetCurrentJournal = { setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>> }
+
+type SetOpenJournalDeleteDialog = {
+  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
 }
 
-type OpenJournalCardMenuState = {
+type SetOpenJournalEditDialog = { setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>> }
+
+type DialogOpenState = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -34,14 +35,23 @@ export type JournalsListProps = Journals
 
 export type JournalsMenuProps = Journals & FilterState
 
-export type JournalsCardProps = Pick<OpenJournalCardMenuState, 'setOpen'> &
-  Pick<JournalIdState, 'setJournalId'> & {
+export type JournalsCardProps = SetCurrentJournal &
+  SetOpenJournalDeleteDialog &
+  SetOpenJournalEditDialog & {
     journal: Journal
   }
 
-export type JournalDeleteDialogProps = OpenJournalCardMenuState & Pick<JournalIdState, 'journalId'>
+export type JournalDeleteDialogProps = DialogOpenState & {
+  journal?: Journal | null
+}
 
-export type JournalsCardMenuProps = JournalIdState &
-  Pick<OpenJournalCardMenuState, 'setOpen'> & {
+export type JournalsCardMenuProps = SetCurrentJournal &
+  SetOpenJournalDeleteDialog &
+  SetOpenJournalEditDialog & {
+    journal: Journal
     buttonColor: string
   }
+
+export type JournalEditDialogProps = DialogOpenState & {
+  journal?: Journal | null
+}

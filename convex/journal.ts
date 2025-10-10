@@ -46,6 +46,10 @@ export const update = mutation({
     id: v.id('journals'),
     data: v.object({
       title: v.string(),
+      type: journalType,
+      color: journalColors,
+      textColor: journalTextColors,
+      background: journalBackgrounds,
     }),
   },
   handler: async (ctx, { id, data }) => {
@@ -53,6 +57,9 @@ export const update = mutation({
 
     const journal = await getCurrentUserJournal({ ctx, currentUser, id })
 
-    await ctx.db.patch(journal._id, data)
+    await ctx.db.patch(journal._id, {
+      updatedAt: Date.now(),
+      ...data,
+    })
   },
 })

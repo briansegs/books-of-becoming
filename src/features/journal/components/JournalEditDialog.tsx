@@ -7,10 +7,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/features/shared/components/ui/dialog'
 import { Button } from '@/features/shared/components/ui/button'
-import { Plus } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -24,10 +22,10 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import { useState } from 'react'
-import { createJournal } from '@/app/actions/journalActions'
+import { useCallback, useEffect } from 'react'
+import { editJournal } from '@/app/actions/journalActions'
 import { useAction } from 'next-safe-action/hooks'
-import { createJournalFormSchema } from '@/app/actions/schemas'
+import { editJournalFormSchema } from '@/app/actions/schemas'
 import { parseActionError } from '@/utilities/parseActionError'
 import { Spinner } from '@/features/shared/components/ui/spinner'
 import {
@@ -40,6 +38,8 @@ import {
 import { cn } from '@/lib/utils'
 import { journalColors } from './journalColors'
 import { journalBackgrounds } from './journalBackgrounds'
+import { JournalEditDialogProps } from '../types'
+
 import { JournalDialogSelectField } from './JournalDialogSelectField'
 
 export const journalBackgroundsLabelMap = {
@@ -65,14 +65,13 @@ type JournalBackgrounds = keyof typeof journalBackgrounds
 
 type TextColorsBgMap = keyof typeof textColorsBgMap
 
-type CreateJournalFormData = z.infer<typeof createJournalFormSchema>
+type EditJournalFormData = z.infer<typeof editJournalFormSchema>
 
-export function JournalCreateDialog() {
-  const [open, setOpen] = useState(false)
-
-  const form = useForm<CreateJournalFormData>({
-    resolver: zodResolver(createJournalFormSchema),
+export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogProps) {
+  const form = useForm<EditJournalFormData>({
+    resolver: zodResolver(editJournalFormSchema),
     defaultValues: {
+      id: '',
       title: '',
       type: 'default',
       color: 'white',
@@ -81,10 +80,27 @@ export function JournalCreateDialog() {
     },
   })
 
-  const { execute, isPending } = useAction(createJournal, {
+  const resetWithJournal = useCallback(() => {
+    if (journal) {
+      form.reset({
+        id: journal._id,
+        title: journal.title,
+        type: journal.type,
+        color: journal.color,
+        textColor: journal.textColor,
+        background: journal.background,
+      })
+    }
+  }, [journal, form])
+
+  useEffect(() => {
+    resetWithJournal()
+  }, [resetWithJournal])
+
+  const { execute, isPending } = useAction(editJournal, {
     onSuccess: () => {
       form.reset()
-      toast.success('Journal created!')
+      toast.success('Journal edited!')
       setOpen(false)
     },
     onError: (actionError) => {
@@ -92,7 +108,13 @@ export function JournalCreateDialog() {
     },
   })
 
-  async function handleSubmit(values: z.infer<typeof createJournalFormSchema>) {
+  async function handleSubmit(values: z.infer<typeof editJournalFormSchema>) {
+    if (!journal) {
+      console.error("Can't handle edit. Missing journal.")
+      toast.error('Unable to edit journal. Please try again.')
+      return
+    }
+
     execute(values)
   }
 
@@ -101,25 +123,25 @@ export function JournalCreateDialog() {
       open={open}
       onOpenChange={(isOpen) => {
         setOpen(isOpen)
-        if (!isOpen) {
-          form.reset()
-        }
+        if (!isOpen) resetWithJournal()
       }}
     >
-      <DialogTrigger asChild>
-        <Button>
-          <Plus /> Create a Journal
-        </Button>
-      </DialogTrigger>
-
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a Journal</DialogTitle>
-          <DialogDescription>Add a journal to make daily entries in</DialogDescription>
+          <DialogTitle>Edit Journal</DialogTitle>
+          <DialogDescription>
+            Edit this journal by changing the information in any field.
+          </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="id"
+              render={({ field }) => <input type="hidden" {...field} />}
+            />
+
             <FormField
               control={form.control}
               name="title"
@@ -206,10 +228,10 @@ export function JournalCreateDialog() {
               <Button className="w-32" disabled={isPending} type="submit">
                 {isPending ? (
                   <span className="flex gap-2">
-                    <Spinner /> Creating...
+                    <Spinner /> Editing...
                   </span>
                 ) : (
-                  'Create'
+                  'Edit'
                 )}
               </Button>
             </DialogFooter>
