@@ -42,7 +42,7 @@ export type JournalsCardProps = SetCurrentJournal &
   }
 
 export type JournalDeleteDialogProps = DialogOpenState & {
-  journal: Journal | null | undefined
+  journal?: Journal | null
 }
 
 export type JournalsCardMenuProps = SetCurrentJournal &
@@ -53,5 +53,5 @@ export type JournalsCardMenuProps = SetCurrentJournal &
   }
 
 export type JournalEditDialogProps = DialogOpenState & {
-  journal: Journal | null | undefined
+  journal?: Journal | null
 }
