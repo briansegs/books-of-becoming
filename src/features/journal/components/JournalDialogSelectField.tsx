@@ -38,7 +38,7 @@ export function JournalDialogSelectField<T extends FieldValues>({
           <FormLabel>{label}</FormLabel>
           <div className="flex w-full items-center justify-between">
             {preview?.(field.value)}
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="w-[180px] capitalize">{field.value}</SelectTrigger>
               </FormControl>
