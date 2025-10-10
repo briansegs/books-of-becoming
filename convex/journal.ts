@@ -1,5 +1,5 @@
 import { v } from 'convex/values'
-import { mutation } from './_generated/server'
+import { mutation, query } from './_generated/server'
 import { getAuthenticatedUser, getCurrentUserJournal } from './_utils'
 import {
   journalBackgrounds,
@@ -61,5 +61,18 @@ export const update = mutation({
       updatedAt: Date.now(),
       ...data,
     })
+  },
+})
+
+export const get = query({
+  args: {
+    id: v.id('journals'),
+  },
+  handler: async (ctx, { id }) => {
+    await getAuthenticatedUser(ctx)
+
+    const journal = await ctx.db.get(id)
+
+    return journal
   },
 })
