@@ -12,7 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from '@/features/shared/components/ui/select'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
+import { ScrollArea } from '@/features/shared/components/ui/scroll-area'
 
 export type SelectFieldProps<T extends FieldValues> = {
   label: string
@@ -42,8 +42,8 @@ export function JournalDialogSelectField<T extends FieldValues>({
               <FormControl>
                 <SelectTrigger className="w-[180px] capitalize">{field.value}</SelectTrigger>
               </FormControl>
-              <SelectContent>
-                <ScrollArea className="max-h-72">
+              <SelectContent className="max-h-80">
+                <ScrollArea>
                   {Object.entries(items).map(([key, _value]) => (
                     <SelectItem key={key} value={key} className="capitalize">
                       {preview ? (
