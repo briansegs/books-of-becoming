@@ -22,7 +22,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { useEffect } from 'react'
 import { editJournal } from '@/app/actions/journalActions'
 import { useAction } from 'next-safe-action/hooks'
 import { editJournalFormSchema } from '@/app/actions/schemas'
@@ -38,7 +38,7 @@ import {
 import { cn } from '@/lib/utils'
 import { journalColors } from './journalColors'
 import { journalBackgrounds } from './journalBackgrounds'
-import { Journal } from '../types'
+import { JournalEditDialogProps } from '../types'
 
 export const journalBackgroundsLabelMap = {
   none: 'None',
@@ -58,12 +58,6 @@ export const textColorsBgMap = {
 }
 
 type EditJournalFormData = z.infer<typeof editJournalFormSchema>
-
-type JournalEditDialogProps = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  journal: Journal | null | undefined
-}
 
 export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogProps) {
   const form = useForm<EditJournalFormData>({

@@ -1,11 +1,9 @@
-import { Doc, Id } from 'convex/_generated/dataModel'
+import { Doc } from 'convex/_generated/dataModel'
 import { Dispatch, SetStateAction } from 'react'
 
 export type JournalFilterOptions = 'title' | 'asc' | 'desc' | ''
 
 export type Journal = Doc<'journals'>
-
-export type JournalId = Id<'journals'> | null | undefined
 
 type Journals = {
   journals: Journal[]
@@ -16,7 +14,15 @@ type FilterState = {
   setFilter: Dispatch<SetStateAction<JournalFilterOptions>>
 }
 
-type OpenJournalCardMenuState = {
+type SetCurrentJournal = { setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>> }
+
+type SetOpenJournalDeleteDialog = {
+  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
+}
+
+type SetOpenJournalEditDialog = { setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>> }
+
+type DialogOpenState = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -29,21 +35,23 @@ export type JournalsListProps = Journals
 
 export type JournalsMenuProps = Journals & FilterState
 
-export type JournalsCardProps = {
-  journal: Journal
-  setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>>
-  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
-  setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>>
-}
+export type JournalsCardProps = SetCurrentJournal &
+  SetOpenJournalDeleteDialog &
+  SetOpenJournalEditDialog & {
+    journal: Journal
+  }
 
-export type JournalDeleteDialogProps = OpenJournalCardMenuState & {
+export type JournalDeleteDialogProps = DialogOpenState & {
   journal: Journal | null | undefined
 }
 
-export type JournalsCardMenuProps = {
-  buttonColor: string
-  setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>>
-  journal: Journal
-  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
-  setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>>
+export type JournalsCardMenuProps = SetCurrentJournal &
+  SetOpenJournalDeleteDialog &
+  SetOpenJournalEditDialog & {
+    journal: Journal
+    buttonColor: string
+  }
+
+export type JournalEditDialogProps = DialogOpenState & {
+  journal: Journal | null | undefined
 }
