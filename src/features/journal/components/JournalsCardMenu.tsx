@@ -11,10 +11,8 @@ import { JournalsCardMenuProps } from '../types'
 
 export function JournalsCardMenu({
   buttonColor,
-  setJournalId,
   setOpenJournalDeleteDialog,
   setOpenJournalEditDialog,
-  journalId,
   setCurrentJournal,
   journal,
 }: JournalsCardMenuProps) {
@@ -54,7 +52,7 @@ export function JournalsCardMenu({
             variant="ghost"
             className="w-full text-red-400"
             onClick={() => {
-              setJournalId(journalId)
+              setCurrentJournal(journal)
               setOpenJournalDeleteDialog(true)
             }}
           >

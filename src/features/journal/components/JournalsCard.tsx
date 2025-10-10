@@ -11,7 +11,6 @@ export function JournalsCard({
   journal,
   setOpenJournalDeleteDialog,
   setOpenJournalEditDialog,
-  setJournalId,
   setCurrentJournal,
 }: JournalsCardProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
@@ -36,8 +35,6 @@ export function JournalsCard({
 
             <JournalsCardMenu
               buttonColor={buttonColor}
-              setJournalId={setJournalId}
-              journalId={journal._id}
               setCurrentJournal={setCurrentJournal}
               journal={journal}
               setOpenJournalDeleteDialog={setOpenJournalDeleteDialog}

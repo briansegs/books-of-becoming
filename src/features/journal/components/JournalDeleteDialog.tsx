@@ -17,7 +17,7 @@ import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
 import { JournalDeleteDialogProps } from '../types'
 
-export function JournalDeleteDialog({ journalId, open, setOpen }: JournalDeleteDialogProps) {
+export function JournalDeleteDialog({ journal, open, setOpen }: JournalDeleteDialogProps) {
   const { execute, isPending } = useAction(deleteJournal, {
     onSuccess: () => {
       toast.success('Journal deleted!')
@@ -29,13 +29,13 @@ export function JournalDeleteDialog({ journalId, open, setOpen }: JournalDeleteD
   })
 
   async function handleDeleteJournal() {
-    if (!journalId) {
+    if (!journal?._id) {
       console.error("Can't handle delete. Missing journal Id.")
       toast.error('Unable to delete journal. Please try again.')
       return
     }
 
-    execute({ journalId })
+    execute({ journalId: journal._id })
   }
 
   return (

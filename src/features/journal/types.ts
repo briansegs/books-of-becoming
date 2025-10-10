@@ -16,11 +16,6 @@ type FilterState = {
   setFilter: Dispatch<SetStateAction<JournalFilterOptions>>
 }
 
-type JournalIdState = {
-  setJournalId: Dispatch<SetStateAction<JournalId>>
-  journalId: JournalId
-}
-
 type OpenJournalCardMenuState = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -34,16 +29,18 @@ export type JournalsListProps = Journals
 
 export type JournalsMenuProps = Journals & FilterState
 
-export type JournalsCardProps = Pick<JournalIdState, 'setJournalId'> & {
+export type JournalsCardProps = {
   journal: Journal
   setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>>
   setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
   setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>>
 }
 
-export type JournalDeleteDialogProps = OpenJournalCardMenuState & Pick<JournalIdState, 'journalId'>
+export type JournalDeleteDialogProps = OpenJournalCardMenuState & {
+  journal: Journal | null | undefined
+}
 
-export type JournalsCardMenuProps = JournalIdState & {
+export type JournalsCardMenuProps = {
   buttonColor: string
   setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>>
   journal: Journal
