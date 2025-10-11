@@ -1,6 +1,6 @@
-import { JournalsContent } from '@/features/journal/components/JournalsContent'
-import { JournalsHeader } from '@/features/journal/components/JournalsHeader'
-import type { Journal } from '@/features/journal/types'
+import { JournalsContent } from '@/features/journals/components/JournalsContent'
+import { JournalsHeader } from '@/features/journals/components/JournalsHeader'
+import type { Journal } from '@/features/journals/types'
 
 import { auth } from '@clerk/nextjs/server'
 import { api } from 'convex/_generated/api'

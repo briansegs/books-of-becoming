@@ -7,7 +7,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/features/shared/components/ui/empty'
-import { JournalCreateDialog } from '@/features/journal/components/JournalCreateDialog'
+import { JournalCreateDialog } from '@/features/journals/components/JournalCreateDialog'
 import { BookIcon } from 'lucide-react'
 
 export function JournalsListEmptyCard() {

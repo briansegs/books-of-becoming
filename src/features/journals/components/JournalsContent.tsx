@@ -1,7 +1,7 @@
 'use client'
 
-import { JournalsList } from '@/features/journal/components/JournalsList'
-import { JournalsMenu } from '@/features/journal/components/JournalsMenu'
+import { JournalsList } from '@/features/journals/components/JournalsList'
+import { JournalsMenu } from '@/features/journals/components/JournalsMenu'
 import { useMemo, useState } from 'react'
 import { JournalFilterOptions, JournalsContentProps } from '../types'
 
