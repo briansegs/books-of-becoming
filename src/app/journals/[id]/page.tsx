@@ -40,7 +40,7 @@ export default async function Journals({ params }: Args) {
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-6 p-12">
+    <div className="flex min-h-screen w-full flex-col gap-6 px-12 py-6">
       <JournalsHeader />
 
       <JournalsContent journals={journals || []} />

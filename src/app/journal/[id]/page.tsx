@@ -1,4 +1,6 @@
-import { Journal } from '@/features/journal/types'
+import { JournalHeader } from '@/features/journal/components/JournalHeader'
+
+import { Journal } from '@/features/journals/types'
 import { auth } from '@clerk/nextjs/server'
 import { api } from 'convex/_generated/api'
 import { Id } from 'convex/_generated/dataModel'
@@ -33,9 +35,17 @@ export default async function JournalPage({ params }: Args) {
     )
   }
 
+  if (!journal) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <p>Missing journal. Please try again later.</p>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex min-h-screen w-full items-center justify-center">
-      Journal {journal?.title}
+    <div className="flex min-h-screen w-full px-12 py-6">
+      <JournalHeader journal={journal} />
     </div>
   )
 }
