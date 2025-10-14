@@ -62,8 +62,8 @@ export default async function JournalPage({ params }: Args) {
           { id: '2', date: '2025-10-02T00:00:00Z', title: '' },
           { id: '6', date: '2025-10-06T00:00:00Z', title: 'Ok ok...' },
           { id: '9', date: '2025-10-13T02:00:00Z', title: 'Ok ok...' },
-          { id: '10', date: '2025-10-13T03:00:00Z', title: 'Ok ok...' },
-          { id: '11', date: '2025-10-13T01:00:00Z', title: 'Ok ok...' },
+          { id: '10', date: '2025-10-14T03:00:00Z', title: 'Ok ok...' },
+          { id: '11', date: '2025-10-14T01:00:00Z', title: 'Ok ok...' },
         ]}
         type={journal.type}
       />

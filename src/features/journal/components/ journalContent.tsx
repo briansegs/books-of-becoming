@@ -6,7 +6,7 @@ import { Journal } from '@/features/journals/types'
 import { JournalContentMenu } from './JournalContentMenu'
 import { JournalSuggestions } from './JournalSuggestions'
 import { JournalEntriesCarousel } from './JournalEntriesCarousel'
-import { format } from 'date-fns'
+import { JournalTextEditor } from './JournalTextEditor'
 
 export type JournalEntry = {
   id: string
@@ -59,9 +59,6 @@ export function JournalContent({ entries, type }: JournalContentProps) {
     (g) => g.date === todayDate.toISOString().split('T')[0] || '',
   )
 
-  console.log('todayDate: ', todayDate)
-  // console.log("format(todayDate, 'yyyy-MM-dd')", format(todayDate, 'yyyy-MM-dd'))
-
   return (
     <div className="relative w-full space-y-4">
       <JournalContentMenu
@@ -86,8 +83,9 @@ export function JournalContent({ entries, type }: JournalContentProps) {
       />
 
       {isToday ? (
-        <div>
-          <div>Make an entry</div>
+        <div className="space-y-4">
+          <JournalTextEditor />
+
           {todayEntries && (
             <div>
               {todayEntries.entries.map((entry) => {
@@ -102,9 +100,6 @@ export function JournalContent({ entries, type }: JournalContentProps) {
             const dateSplit = new Date(entry.date).toISOString().split('T')[0] || ''
 
             const todayDateSplit = todayDate.toISOString().split('T')[0] || ''
-
-            // console.log('entry.date: ', dateSplit)
-            // console.log('todayDate: ', todayDateSplit)
 
             if (dateSplit === todayDateSplit) return null
 
