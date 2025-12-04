@@ -8,6 +8,11 @@ import { api } from 'convex/_generated/api'
 import { Id } from 'convex/_generated/dataModel'
 import { fetchQuery } from 'convex/nextjs'
 import { redirect } from 'next/navigation'
+import { Doc } from 'convex/_generated/dataModel'
+import { format } from 'date-fns'
+
+export type JournalEntry = Doc<'entries'>
+export type DailyEntryGroup = { date: string; entries: JournalEntry[] }
 
 type Args = {
   params: Promise<{
@@ -45,28 +50,47 @@ export default async function JournalPage({ params }: Args) {
     )
   }
 
+  let dailyEntries: DailyEntryGroup[] = []
+
+  try {
+    const token = (await getToken({ template: 'convex' })) || ''
+    const ungroupedEntries = await fetchQuery(
+      api.entries.get,
+      { id: journalId as Id<'journals'> },
+      { token },
+    )
+
+    const initialGroup = { date: format(new Date(), 'yyyy-MM-dd'), entries: [] } as DailyEntryGroup
+
+    const dailyEntryGroups: DailyEntryGroup[] = [initialGroup]
+
+    ungroupedEntries.forEach((entry) => {
+      const dateKey = format(new Date(entry._creationTime), 'yyyy-MM-dd')
+
+      let entryGroup = dailyEntryGroups.find((group) => group.date === dateKey)
+
+      if (!entryGroup) {
+        entryGroup = { date: dateKey, entries: [] } as DailyEntryGroup
+        dailyEntryGroups.push(entryGroup)
+      }
+
+      entryGroup.entries.push(entry)
+    })
+
+    dailyEntries = dailyEntryGroups.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    )
+  } catch (error) {
+    console.error('Failed to fetch journal entries:', error)
+  }
+
   return (
     <div className="min-h-screen w-full space-y-6 px-12 py-6">
       <JournalHeader journal={journal} />
 
       <Separator />
 
-      <JournalContent
-        entries={[
-          { id: '3', date: '2025-10-03T03:00:00Z', title: 'Looking forward...' },
-          { id: '7', date: '2025-10-03T07:00:00Z', title: 'Looking forward...7' },
-          { id: '8', date: '2025-10-03T01:00:00Z', title: 'Looking forward...8' },
-          { id: '4', date: '2025-10-04T00:00:00Z', title: '' },
-          { id: '5', date: '2025-10-05T00:00:00Z', title: 'We were friends' },
-          { id: '1', date: '2025-10-01T00:00:00Z', title: 'Im tired' },
-          { id: '2', date: '2025-10-02T00:00:00Z', title: '' },
-          { id: '6', date: '2025-10-06T00:00:00Z', title: 'Ok ok...' },
-          { id: '9', date: '2025-10-13T02:00:00Z', title: 'Ok ok...' },
-          { id: '10', date: '2025-10-14T03:00:00Z', title: 'Ok ok...' },
-          { id: '11', date: '2025-10-14T01:00:00Z', title: 'Ok ok...' },
-        ]}
-        type={journal.type}
-      />
+      <JournalContent dailyEntries={dailyEntries} journal={journal} />
     </div>
   )
 }
