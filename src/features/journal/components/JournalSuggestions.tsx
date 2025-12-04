@@ -6,16 +6,14 @@ export type JournalSuggestionsProps = {
   type: string
   showSuggestions: boolean
   setShowSuggestions: Dispatch<SetStateAction<boolean>>
-  isToday: boolean
 }
 
 export function JournalSuggestions({
   type,
-  isToday,
   showSuggestions,
   setShowSuggestions,
 }: JournalSuggestionsProps) {
-  if (type === 'future' && isToday && showSuggestions) {
+  if (type === 'future' && showSuggestions) {
     return (
       <div className="">
         <div className="flex w-full items-center justify-between bg-accent p-2">

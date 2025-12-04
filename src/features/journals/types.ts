@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react'
 export type JournalFilterOptions = 'title' | 'asc' | 'desc' | ''
 
 export type Journal = Doc<'journals'>
+export type Entry = Doc<'entries'>
 
 type Journals = {
   journals: Journal[]

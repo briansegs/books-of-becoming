@@ -1,111 +1,71 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Journal } from '@/features/journals/types'
 
 import { JournalContentMenu } from './JournalContentMenu'
 import { JournalSuggestions } from './JournalSuggestions'
-import { JournalEntriesCarousel } from './JournalEntriesCarousel'
 import { JournalTextEditor } from './JournalTextEditor'
+import { format } from 'date-fns'
 
-export type JournalEntry = {
-  id: string
-  date: string
-  content?: string
-  title?: string
+import { JournalContentNav } from './JournalContentNav'
+import { JournalContentForToday } from './JournalContentForToday'
+import { JournalContentForSelectedDay } from './JournalContentForSelectedDay'
+import { DailyEntryGroup } from '@/app/journal/[id]/page'
+
+type JournalContentProps = {
+  dailyEntries: DailyEntryGroup[]
+  journal: Journal
 }
 
-type JournalContentProps = Pick<Journal, 'type'> & {
-  entries: JournalEntry[]
-}
-
-export type Group = { date: string; entries: JournalEntry[] }
-
-export function JournalContent({ entries, type }: JournalContentProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
+  const [currentIndex, setCurrentIndex] = useState(
+    dailyEntries.length > 0 ? dailyEntries.length - 1 : 0,
+  )
   const [showSuggestions, setShowSuggestions] = useState(true)
 
-  const sortedEntries = useMemo(
-    () => [...entries].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
-    [entries],
-  )
+  const todaysKey = format(new Date(), 'yyyy-MM-dd')
+  const foundEntryIndex = dailyEntries.findIndex((group) => group.date === todaysKey)
+  const todaysIndex = foundEntryIndex >= 0 ? foundEntryIndex : 0
 
-  const groupedEntries = useMemo(() => {
-    const groups: Group[] = []
+  const isToday = currentIndex === todaysIndex
 
-    sortedEntries.forEach((entry) => {
-      const dateKey = new Date(entry.date).toISOString().split('T')[0] || ''
+  const currentEntry = dailyEntries[currentIndex]
 
-      let group = groups.find((g) => g.date === dateKey)
-
-      if (!group) {
-        group = { date: dateKey, entries: [] } as Group
-        groups.push(group)
-      }
-
-      group.entries.push(entry)
-    })
-
-    return groups
-  }, [sortedEntries])
-
-  const currentEntry = groupedEntries[currentIndex]
-
-  const isToday = currentIndex === groupedEntries.length
-
-  const todayDate = new Date()
-
-  const todayEntries = groupedEntries.find(
-    (g) => g.date === todayDate.toISOString().split('T')[0] || '',
-  )
+  const todaysDate = new Date()
 
   return (
     <div className="relative w-full space-y-4">
       <JournalContentMenu
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
-        type={type}
+        type={journal.type}
         isToday={isToday}
       />
 
-      <JournalEntriesCarousel
+      <JournalContentNav
         currentEntry={currentEntry}
-        groupedEntries={groupedEntries}
+        currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
-        todayDate={todayDate}
-      />
-
-      <JournalSuggestions
-        showSuggestions={showSuggestions}
-        setShowSuggestions={setShowSuggestions}
+        dailyEntries={dailyEntries}
         isToday={isToday}
-        type={type}
+        todaysDate={todaysDate}
       />
 
       {isToday ? (
         <div className="space-y-4">
-          <JournalTextEditor />
+          <JournalSuggestions
+            showSuggestions={showSuggestions}
+            setShowSuggestions={setShowSuggestions}
+            type={journal.type}
+          />
 
-          {todayEntries && (
-            <div>
-              {todayEntries.entries.map((entry) => {
-                return <div key={entry.id}>{entry.date}</div>
-              })}
-            </div>
-          )}
+          <JournalTextEditor journalId={journal._id} />
+
+          <JournalContentForToday dailyEntries={dailyEntries} todaysDate={todaysDate} />
         </div>
       ) : (
-        <div>
-          {currentEntry?.entries.map((entry) => {
-            const dateSplit = new Date(entry.date).toISOString().split('T')[0] || ''
-
-            const todayDateSplit = todayDate.toISOString().split('T')[0] || ''
-
-            if (dateSplit === todayDateSplit) return null
-
-            return <div key={entry.id}>{entry.date}</div>
-          })}
-        </div>
+        <JournalContentForSelectedDay currentEntry={currentEntry} />
       )}
     </div>
   )
