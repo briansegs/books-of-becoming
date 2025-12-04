@@ -1,8 +1,4 @@
-import { DailyEntryGroup } from '@/app/journal/[id]/page'
-
-export type JournalContentForSelectedDayProps = {
-  currentEntry?: DailyEntryGroup
-}
+import { JournalContentForSelectedDayProps } from '../types'
 
 export function JournalContentForSelectedDay({ currentEntry }: JournalContentForSelectedDayProps) {
   return (

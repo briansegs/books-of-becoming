@@ -1,14 +1,8 @@
 import { journalBackgrounds } from '@/features/journals/components/journalBackgrounds'
 import { journalColors } from '@/features/journals/components/journalColors'
 import { cn } from '@/lib/utils'
-import { Doc } from 'convex/_generated/dataModel'
 import { format } from 'date-fns'
-
-type Journal = Doc<'journals'>
-
-export type JournalHeaderProps = {
-  journal: Journal
-}
+import { JournalHeaderProps } from '../types'
 
 export function JournalHeader({ journal }: JournalHeaderProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]

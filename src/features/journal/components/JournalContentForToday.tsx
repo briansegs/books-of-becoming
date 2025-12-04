@@ -1,11 +1,6 @@
-import { DailyEntryGroup } from '@/app/journal/[id]/page'
 import { Separator } from '@/features/shared/components/ui/separator'
 import { format } from 'date-fns'
-
-export type JournalContentForTodayProps = {
-  dailyEntries: DailyEntryGroup[]
-  todaysDate: Date
-}
+import { JournalContentForTodayProps } from '../types'
 
 export function JournalContentForToday({ dailyEntries, todaysDate }: JournalContentForTodayProps) {
   const todaysEntries = dailyEntries.find((g) => {

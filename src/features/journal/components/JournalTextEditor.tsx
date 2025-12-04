@@ -25,9 +25,9 @@ import { createEntrySchema } from '@/app/actions/schemas'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
 import { useState } from 'react'
-import { Id } from 'convex/_generated/dataModel'
 import { Input } from '@/features/shared/components/ui/input'
 import { Placeholder } from '@tiptap/extensions'
+import { JournalTextEditorProps } from '../types'
 
 const extensions = [
   StarterKit.configure({
@@ -68,10 +68,6 @@ const extensions = [
     showOnlyWhenEditable: true,
   }),
 ]
-
-export type JournalTextEditorProps = {
-  journalId: Id<'journals'>
-}
 
 export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
   const [title, setTitle] = useState<string>('')

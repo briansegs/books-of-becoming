@@ -1,12 +1,6 @@
-import { Dispatch, SetStateAction } from 'react'
 import { Check, Lightbulb, Sparkles, X } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
-
-export type JournalSuggestionsProps = {
-  type: string
-  showSuggestions: boolean
-  setShowSuggestions: Dispatch<SetStateAction<boolean>>
-}
+import { JournalSuggestionsProps } from '../types'
 
 export function JournalSuggestions({
   type,

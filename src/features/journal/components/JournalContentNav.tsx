@@ -1,16 +1,7 @@
-import { DailyEntryGroup } from '@/app/journal/[id]/page'
 import { Button } from '@/features/shared/components/ui/button'
 import { format } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-
-type JournalContentNavProps = {
-  currentEntry?: DailyEntryGroup
-  currentIndex: number
-  setCurrentIndex: (index: (prev: number) => number) => void
-  dailyEntries: { date: string }[]
-  isToday: boolean
-  todaysDate: Date
-}
+import { JournalContentNavProps } from '../types'
 
 export function JournalContentNav({
   currentEntry,

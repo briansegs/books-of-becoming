@@ -1,13 +1,6 @@
-import { Dispatch, SetStateAction } from 'react'
 import { Lightbulb, LightbulbOff, Settings } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
-
-export type JournalContentMenuProps = {
-  showSuggestions: boolean
-  setShowSuggestions: Dispatch<SetStateAction<boolean>>
-  type: string
-  isToday: boolean
-}
+import { JournalContentMenuProps } from '../types'
 
 export function JournalContentMenu({
   showSuggestions,

@@ -8,11 +8,8 @@ import { api } from 'convex/_generated/api'
 import { Id } from 'convex/_generated/dataModel'
 import { fetchQuery } from 'convex/nextjs'
 import { redirect } from 'next/navigation'
-import { Doc } from 'convex/_generated/dataModel'
 import { format } from 'date-fns'
-
-export type JournalEntry = Doc<'entries'>
-export type DailyEntryGroup = { date: string; entries: JournalEntry[] }
+import { DailyEntryGroup } from '@/features/journal/types'
 
 type Args = {
   params: Promise<{

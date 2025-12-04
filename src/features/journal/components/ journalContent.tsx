@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Journal } from '@/features/journals/types'
 
 import { JournalContentMenu } from './JournalContentMenu'
 import { JournalSuggestions } from './JournalSuggestions'
@@ -11,12 +10,7 @@ import { format } from 'date-fns'
 import { JournalContentNav } from './JournalContentNav'
 import { JournalContentForToday } from './JournalContentForToday'
 import { JournalContentForSelectedDay } from './JournalContentForSelectedDay'
-import { DailyEntryGroup } from '@/app/journal/[id]/page'
-
-type JournalContentProps = {
-  dailyEntries: DailyEntryGroup[]
-  journal: Journal
-}
+import { JournalContentProps } from '../types'
 
 export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
   const [currentIndex, setCurrentIndex] = useState(
