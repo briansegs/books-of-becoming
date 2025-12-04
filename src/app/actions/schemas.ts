@@ -36,3 +36,9 @@ export const editJournalFormSchema = z.object({
     'paperTexture',
   ]),
 })
+
+export const createEntrySchema = z.object({
+  title: z.optional(z.string()),
+  content: z.string().trim().min(1, { message: "This field can't be empty" }),
+  journalId: z.string(),
+})
