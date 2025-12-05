@@ -23,6 +23,12 @@ type IsToday = {
   isToday: boolean
 }
 
+type NarrowedJournalType = 'default' | 'future'
+
+type JournalType = {
+  type: NarrowedJournalType
+}
+
 export type JournalHeaderProps = {
   journal: Journal
 }
@@ -33,10 +39,7 @@ export type JournalContentProps = DailyEntries & {
 
 export type JournalContentForSelectedDayProps = CurrentEntry
 
-export type JournalContentMenuProps = SuggestionsState &
-  IsToday & {
-    type: string
-  }
+export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
 
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
@@ -48,9 +51,7 @@ export type JournalContentNavProps = DailyEntries &
 
 export type JournalContentForTodayProps = DailyEntries & TodaysDate
 
-export type JournalSuggestionsProps = SuggestionsState & {
-  type: string
-}
+export type JournalSuggestionsProps = SuggestionsState & JournalType
 
 export type JournalTextEditorProps = {
   journalId: Id<'journals'>
