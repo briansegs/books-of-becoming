@@ -82,6 +82,12 @@ export default async function JournalPage({ params }: Args) {
     )
   } catch (error) {
     console.error('Failed to fetch journal entries:', error)
+
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <p>Missing journal entries. Please try again later.</p>
+      </div>
+    )
   }
 
   return (
