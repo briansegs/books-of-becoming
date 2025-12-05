@@ -80,6 +80,8 @@ export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
   const { execute, isPending } = useAction(createEntry, {
     onSuccess: () => {
       toast.success('Entry Saved!')
+      editor?.commands.clearContent()
+      setTitle('')
     },
     onError: (actionError) => {
       toast.error(parseActionError(actionError.error))
@@ -92,8 +94,6 @@ export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
 
   async function handleSubmit(values: z.infer<typeof createEntrySchema>) {
     execute(values)
-    editor?.commands.clearContent()
-    setTitle('')
   }
 
   return (
