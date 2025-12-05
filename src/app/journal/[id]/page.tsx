@@ -57,9 +57,8 @@ export default async function JournalPage({ params }: Args) {
       { token },
     )
 
-    const initialGroup = { date: format(new Date(), 'yyyy-MM-dd'), entries: [] } as DailyEntryGroup
-
-    const dailyEntryGroups: DailyEntryGroup[] = [initialGroup]
+    const todayKey = format(new Date(), 'yyyy-MM-dd')
+    const dailyEntryGroups: DailyEntryGroup[] = []
 
     ungroupedEntries.forEach((entry) => {
       const dateKey = format(new Date(entry._creationTime), 'yyyy-MM-dd')
@@ -73,6 +72,10 @@ export default async function JournalPage({ params }: Args) {
 
       entryGroup.entries.push(entry)
     })
+
+    if (!dailyEntryGroups.find((group) => group.date === todayKey)) {
+      dailyEntryGroups.push({ date: todayKey, entries: [] })
+    }
 
     dailyEntries = dailyEntryGroups.sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
