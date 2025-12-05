@@ -27,4 +27,10 @@ export default defineSchema({
     background: journalBackgrounds,
     entriesCount: v.number(),
   }).index('by_userId', ['userId']),
+
+  entries: defineTable({
+    title: v.optional(v.string()),
+    content: v.string(),
+    journalId: v.id('journals'),
+  }).index('by_journalId', ['journalId']),
 })

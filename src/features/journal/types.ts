@@ -1,57 +1,58 @@
-import { Doc } from 'convex/_generated/dataModel'
+import { Doc, Id } from 'convex/_generated/dataModel'
 import { Dispatch, SetStateAction } from 'react'
 
-export type JournalFilterOptions = 'title' | 'asc' | 'desc' | ''
+type Journal = Doc<'journals'>
+type JournalEntry = Doc<'entries'>
 
-export type Journal = Doc<'journals'>
+export type DailyEntryGroup = { date: string; entries: JournalEntry[] }
 
-type Journals = {
-  journals: Journal[]
+type DailyEntries = {
+  dailyEntries: DailyEntryGroup[]
+}
+type CurrentEntry = {
+  currentEntry?: DailyEntryGroup
+}
+type SuggestionsState = {
+  showSuggestions: boolean
+  setShowSuggestions: Dispatch<SetStateAction<boolean>>
+}
+type TodaysDate = {
+  todaysDate: Date
+}
+type IsToday = {
+  isToday: boolean
 }
 
-type FilterState = {
-  filter: JournalFilterOptions
-  setFilter: Dispatch<SetStateAction<JournalFilterOptions>>
+type NarrowedJournalType = 'default' | 'future'
+
+type JournalType = {
+  type: NarrowedJournalType
 }
 
-type SetCurrentJournal = { setCurrentJournal: Dispatch<SetStateAction<Journal | null | undefined>> }
-
-type SetOpenJournalDeleteDialog = {
-  setOpenJournalDeleteDialog: Dispatch<SetStateAction<boolean>>
+export type JournalHeaderProps = {
+  journal: Journal
 }
 
-type SetOpenJournalEditDialog = { setOpenJournalEditDialog: Dispatch<SetStateAction<boolean>> }
-
-type DialogOpenState = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
+export type JournalContentProps = DailyEntries & {
+  journal: Journal
 }
 
-export type JournalsContentProps = Journals
+export type JournalContentForSelectedDayProps = CurrentEntry
 
-export type JournalFilterSelectProps = Journals & FilterState
+export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
 
-export type JournalsListProps = Journals
-
-export type JournalsMenuProps = Journals & FilterState
-
-export type JournalsCardProps = SetCurrentJournal &
-  SetOpenJournalDeleteDialog &
-  SetOpenJournalEditDialog & {
-    journal: Journal
+export type JournalContentNavProps = DailyEntries &
+  TodaysDate &
+  IsToday &
+  CurrentEntry & {
+    currentIndex: number
+    setCurrentIndex: Dispatch<SetStateAction<number>>
   }
 
-export type JournalDeleteDialogProps = DialogOpenState & {
-  journal?: Journal | null
-}
+export type JournalContentForTodayProps = DailyEntries & TodaysDate
 
-export type JournalsCardMenuProps = SetCurrentJournal &
-  SetOpenJournalDeleteDialog &
-  SetOpenJournalEditDialog & {
-    journal: Journal
-    buttonColor: string
-  }
+export type JournalSuggestionsProps = SuggestionsState & JournalType
 
-export type JournalEditDialogProps = DialogOpenState & {
-  journal?: Journal | null
+export type JournalTextEditorProps = {
+  journalId: Id<'journals'>
 }
