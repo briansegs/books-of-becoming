@@ -24,6 +24,7 @@ export function JournalContentNav({
       <Button
         onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
         disabled={!canGoBack}
+        aria-label="Previous day"
       >
         <ChevronLeft />
       </Button>
@@ -49,6 +50,7 @@ export function JournalContentNav({
       <Button
         onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, dailyEntries.length - 1))}
         disabled={!canGoForward}
+        aria-label="Next day"
       >
         <ChevronRight />
       </Button>
