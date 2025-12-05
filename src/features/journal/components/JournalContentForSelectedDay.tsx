@@ -1,3 +1,4 @@
+import { SafeHtml } from '@/utilities/SafeHtml'
 import { JournalContentForSelectedDayProps } from '../types'
 
 export function JournalContentForSelectedDay({ currentEntry }: JournalContentForSelectedDayProps) {
@@ -7,9 +8,9 @@ export function JournalContentForSelectedDay({ currentEntry }: JournalContentFor
         return (
           <div key={entry._creationTime}>
             <h2 className="text-2xl">{entry.title}</h2>
-            <div
+            <SafeHtml
+              html={entry.content}
               className="prose prose-sm max-w-none dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: entry.content }}
             />
           </div>
         )

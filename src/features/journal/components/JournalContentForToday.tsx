@@ -1,6 +1,7 @@
 import { Separator } from '@/features/shared/components/ui/separator'
 import { format } from 'date-fns'
 import { JournalContentForTodayProps } from '../types'
+import { SafeHtml } from '@/utilities/SafeHtml'
 
 export function JournalContentForToday({ dailyEntries, todaysDate }: JournalContentForTodayProps) {
   const todaysEntries = dailyEntries.find((g) => {
@@ -18,9 +19,9 @@ export function JournalContentForToday({ dailyEntries, todaysDate }: JournalCont
           <div key={entry._creationTime} className="px-8">
             <h2 className="mb-4 text-2xl">{entry.title}</h2>
 
-            <div
-              className="prose prose-sm mb-8 max-w-none dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: entry.content }}
+            <SafeHtml
+              html={entry.content}
+              className="prose prose-sm max-w-none dark:prose-invert"
             />
 
             {index !== todaysEntries.entries.length - 1 && <Separator />}
