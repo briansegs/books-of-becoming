@@ -13,7 +13,7 @@ export function JournalSuggestions({
         <div className="flex w-full items-center justify-between bg-accent p-2">
           <div className="flex items-center gap-2">
             <Lightbulb className="text-muted-foreground" />
-            <p className="font-semibold text-primary">Future Self Journaling Starter:</p>
+            <p className="font-semibold text-primary">Future Self Journal Starter:</p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -37,7 +37,7 @@ export function JournalSuggestions({
               <li>Today I am practicing...</li>
               <li>I am grateful for...</li>
               <li>Today, I am...</li>
-              <li>Change in ths area allows me to feel...</li>
+              <li>Change in this area allows me to feel...</li>
               <li>Today I am practicing when...</li>
             </ul>
           </article>
