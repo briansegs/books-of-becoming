@@ -9,7 +9,7 @@ export function JournalSuggestions({
 }: JournalSuggestionsProps) {
   if (type === 'future' && showSuggestions) {
     return (
-      <div className="">
+      <div>
         <div className="flex w-full items-center justify-between bg-accent p-2">
           <div className="flex items-center gap-2">
             <Lightbulb className="text-muted-foreground" />
