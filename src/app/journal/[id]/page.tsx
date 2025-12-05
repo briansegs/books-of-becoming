@@ -27,8 +27,9 @@ export default async function JournalPage({ params }: Args) {
 
   let journal: Journal | null = null
 
+  const token = (await getToken({ template: 'convex' })) || ''
+
   try {
-    const token = (await getToken({ template: 'convex' })) || ''
     journal = await fetchQuery(api.journal.get, { id: journalId as Id<'journals'> }, { token })
   } catch (error) {
     console.error('Failed to fetch journal:', error)
@@ -50,7 +51,6 @@ export default async function JournalPage({ params }: Args) {
   let dailyEntries: DailyEntryGroup[] = []
 
   try {
-    const token = (await getToken({ template: 'convex' })) || ''
     const ungroupedEntries = await fetchQuery(
       api.entries.get,
       { id: journalId as Id<'journals'> },
