@@ -1,4 +1,4 @@
-import { JournalContent } from '@/features/journal/components/ journalContent'
+import { JournalContent } from '@/features/journal/components/journalContent'
 import { JournalHeader } from '@/features/journal/components/JournalHeader'
 
 import { Journal } from '@/features/journals/types'
