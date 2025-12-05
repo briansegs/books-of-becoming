@@ -69,9 +69,9 @@ export const get = query({
     id: v.id('journals'),
   },
   handler: async (ctx, { id }) => {
-    await getAuthenticatedUser(ctx)
+    const currentUser = await getAuthenticatedUser(ctx)
 
-    const journal = await ctx.db.get(id)
+    const journal = await getCurrentUserJournal({ ctx, currentUser, id })
 
     return journal
   },
