@@ -16,7 +16,7 @@ export function JournalContentNav({
 
   function parseLocalDate(dateString: string) {
     const [y, m, d] = dateString.split('-').map(Number)
-    return new Date(y ?? 1, (m ?? 1) - 1, d)
+    return new Date(y ?? 1, (m ?? 1) - 1, d ?? 1)
   }
 
   return (
