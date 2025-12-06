@@ -1,17 +1,7 @@
 'use client'
-import type { RefObject } from 'react'
 
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useRef } from 'react'
-
-type UseClickableCardType<T extends HTMLElement> = {
-  card: {
-    ref: RefObject<T | null>
-  }
-  link: {
-    ref: RefObject<HTMLAnchorElement | null>
-  }
-}
+import { useCallback, useRef, RefObject, useEffect } from 'react'
 
 interface Props {
   external?: boolean
@@ -19,90 +9,51 @@ interface Props {
   scroll?: boolean
 }
 
-function useClickableCard<T extends HTMLElement>({
+type UseClickableCardType<T extends HTMLElement> = {
+  card: RefObject<T | null>
+  link: RefObject<HTMLAnchorElement | null>
+}
+
+export function useClickableCard<T extends HTMLElement>({
   external = false,
   newTab = false,
   scroll = true,
 }: Props): UseClickableCardType<T> {
   const router = useRouter()
-  const card = useRef<T>(null)
-  const link = useRef<HTMLAnchorElement>(null)
+  const card = useRef<T | null>(null)
+  const link = useRef<HTMLAnchorElement | null>(null)
   const timeDown = useRef<number>(0)
-  const hasActiveParent = useRef<boolean>(false)
-  const pressedButton = useRef<number>(0)
 
-  const handleMouseDown = useCallback(
-    (e: MouseEvent) => {
-      if (e.target) {
-        const target = e.target as Element
-
-        const timeNow = +new Date()
-        const parent = target?.closest('a')
-
-        pressedButton.current = e.button
-
-        if (!parent) {
-          hasActiveParent.current = false
-          timeDown.current = timeNow
-        } else {
-          hasActiveParent.current = true
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [router, card, link, timeDown],
-  )
+  const handleMouseDown = useCallback((_e: MouseEvent) => {
+    timeDown.current = Date.now()
+  }, [])
 
   const handleMouseUp = useCallback(
     (e: MouseEvent) => {
-      if (link.current?.href) {
-        const timeNow = +new Date()
-        const difference = timeNow - timeDown.current
+      if (!link.current?.href) return
 
-        if (link.current?.href && difference <= 250) {
-          if (!hasActiveParent.current && pressedButton.current === 0 && !e.ctrlKey) {
-            if (external) {
-              const target = newTab ? '_blank' : '_self'
-              window.open(link.current.href, target)
-            } else {
-              router.push(link.current.href, { scroll })
-            }
-          }
+      const elapsed = Date.now() - timeDown.current
+      if (elapsed <= 250 && e.button === 0 && !e.ctrlKey) {
+        if (external) {
+          window.open(link.current.href, newTab ? '_blank' : '_self')
+        } else {
+          router.push(link.current.href, { scroll })
         }
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [router, card, link, timeDown],
+    [external, newTab, scroll, router],
   )
 
   useEffect(() => {
-    const cardNode = card.current
-
-    const abortController = new AbortController()
-
-    if (cardNode) {
-      cardNode.addEventListener('mousedown', handleMouseDown, {
-        signal: abortController.signal,
-      })
-      cardNode.addEventListener('mouseup', handleMouseUp, {
-        signal: abortController.signal,
-      })
-    }
-
+    const el = card.current
+    if (!el) return
+    el.addEventListener('mousedown', handleMouseDown)
+    el.addEventListener('mouseup', handleMouseUp)
     return () => {
-      abortController.abort()
+      el.removeEventListener('mousedown', handleMouseDown)
+      el.removeEventListener('mouseup', handleMouseUp)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [card, link, router])
+  }, [handleMouseDown, handleMouseUp])
 
-  return {
-    card: {
-      ref: card,
-    },
-    link: {
-      ref: link,
-    },
-  }
+  return { card, link }
 }
-
-export default useClickableCard

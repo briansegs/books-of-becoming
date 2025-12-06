@@ -1,21 +1,12 @@
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
-import reactHooks from 'eslint-plugin-react-hooks'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTypescript from 'eslint-config-next/typescript'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const config = defineConfig([
+  ...nextVitals,
+  ...nextTypescript,
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:@next/next/recommended'),
   {
-    plugins: {
-      'react-hooks': reactHooks,
-    },
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
@@ -32,13 +23,14 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
+
+      // React Hooks rules (Next already loads the plugin)
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
-  {
-    ignores: ['.next/'],
-  },
-]
 
-export default eslintConfig
+  globalIgnores(['.next/**']),
+])
+
+export default config

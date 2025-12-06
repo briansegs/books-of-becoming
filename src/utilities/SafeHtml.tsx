@@ -1,7 +1,14 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import createDOMPurify from 'dompurify'
+
+const getDOMPurify = () => {
+  if (typeof window !== 'undefined') {
+    return createDOMPurify(window)
+  }
+  return null
+}
 
 type SafeHtmlProps = {
   html: string | null | undefined
@@ -9,25 +16,19 @@ type SafeHtmlProps = {
 }
 
 export function SafeHtml({ html, className }: SafeHtmlProps) {
-  const [isMounted, setIsMounted] = useState(false)
-
-  // Prevent SSR mismatch by delaying any DOMPurify usage
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  const DOMPurify = useMemo(() => {
-    if (typeof window !== 'undefined') {
-      return createDOMPurify(window)
-    }
-    return null
-  }, [])
-
+  // Only sanitize if we are on the client
   const sanitized = useMemo(() => {
-    if (!isMounted || !html || !DOMPurify) return ''
-    return DOMPurify.sanitize(html)
-  }, [isMounted, html, DOMPurify])
+    const DOMPurify = getDOMPurify()
+    if (!DOMPurify || !html) return ''
 
-  // During SSR + first client render: return empty container
-  return <div className={className} dangerouslySetInnerHTML={{ __html: sanitized }} />
+    return DOMPurify.sanitize(html)
+  }, [html])
+
+  return (
+    <div
+      className={className}
+      dangerouslySetInnerHTML={{ __html: sanitized }}
+      suppressHydrationWarning
+    />
+  )
 }
