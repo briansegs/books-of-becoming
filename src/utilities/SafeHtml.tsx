@@ -24,7 +24,6 @@ export function SafeHtml({ html, className }: SafeHtmlProps) {
     return DOMPurify.sanitize(html)
   }, [html])
 
-  // Return empty div during SSR (avoids mismatch)
   return (
     <div
       className={className}
