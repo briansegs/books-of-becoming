@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import createDOMPurify from 'dompurify'
 
 type SafeHtmlProps = {
@@ -9,25 +9,13 @@ type SafeHtmlProps = {
 }
 
 export function SafeHtml({ html, className }: SafeHtmlProps) {
-  const [isMounted, setIsMounted] = useState(false)
-
-  // Prevent SSR mismatch by delaying any DOMPurify usage
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  const DOMPurify = useMemo(() => {
-    if (typeof window !== 'undefined') {
-      return createDOMPurify(window)
-    }
-    return null
-  }, [])
-
+  // Only sanitize if we are on the client
   const sanitized = useMemo(() => {
-    if (!isMounted || !html || !DOMPurify) return ''
+    if (typeof window === 'undefined' || !html) return ''
+    const DOMPurify = createDOMPurify(window)
     return DOMPurify.sanitize(html)
-  }, [isMounted, html, DOMPurify])
+  }, [html])
 
-  // During SSR + first client render: return empty container
+  // Return empty div during SSR (avoids mismatch)
   return <div className={className} dangerouslySetInnerHTML={{ __html: sanitized }} />
 }

@@ -6,7 +6,7 @@ import { journalBackgrounds } from './journalBackgrounds'
 import { buttonColors, journalColors } from './journalColors'
 import { JournalsCardProps } from '../types'
 import { JournalsCardMenu } from './JournalsCardMenu'
-import useClickableCard from '@/hooks/useClickableCard'
+import { useClickableCard } from '@/hooks/useClickableCard'
 import Link from 'next/link'
 
 export function JournalsCard({
@@ -15,7 +15,11 @@ export function JournalsCard({
   setOpenJournalEditDialog,
   setCurrentJournal,
 }: JournalsCardProps) {
-  const { card, link } = useClickableCard({})
+  const { card, link } = useClickableCard({
+    external: false,
+    newTab: false,
+    scroll: true,
+  })
 
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const textColors = selectedColor.textColors
@@ -28,7 +32,7 @@ export function JournalsCard({
   return (
     <Card key={journal._id} className={cn('flex h-96 w-72 cursor-pointer rounded-md shadow-xl')}>
       <article
-        ref={card.ref}
+        ref={card}
         className={cn('relative flex h-full w-full rounded-md', selectedColor.bg)}
       >
         {background}
@@ -49,7 +53,7 @@ export function JournalsCard({
               />
             </div>
 
-            <Link href={href} ref={link.ref}>
+            <Link href={href} ref={link}>
               <h3 className={cn('text-center text-xl font-bold', textColor)}>{journal.title}</h3>
             </Link>
           </div>

@@ -1,13 +1,12 @@
-import reactHooks from 'eslint-plugin-react-hooks'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTypescript from 'eslint-config-next/typescript'
 
-const config = [
+const config = defineConfig([
+  ...nextVitals,
+  ...nextTypescript,
+
   {
-    extends: ['next'],
-  },
-  {
-    plugins: {
-      'react-hooks': reactHooks,
-    },
     rules: {
       '@typescript-eslint/ban-ts-comment': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
@@ -24,13 +23,14 @@ const config = [
           caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
+
+      // React Hooks rules (Next already loads the plugin)
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
-  {
-    ignores: ['.next/'],
-  },
-]
+
+  globalIgnores(['.next/**']),
+])
 
 export default config
