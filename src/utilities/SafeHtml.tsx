@@ -25,5 +25,11 @@ export function SafeHtml({ html, className }: SafeHtmlProps) {
   }, [html])
 
   // Return empty div during SSR (avoids mismatch)
-  return <div className={className} dangerouslySetInnerHTML={{ __html: sanitized }} />
+  return (
+    <div
+      className={className}
+      dangerouslySetInnerHTML={{ __html: sanitized }}
+      suppressHydrationWarning
+    />
+  )
 }
