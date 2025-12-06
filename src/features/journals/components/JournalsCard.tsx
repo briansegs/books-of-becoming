@@ -15,11 +15,7 @@ export function JournalsCard({
   setOpenJournalEditDialog,
   setCurrentJournal,
 }: JournalsCardProps) {
-  const { card, link } = useClickableCard({
-    external: false,
-    newTab: false,
-    scroll: true,
-  })
+  const { card, link } = useClickableCard({})
 
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const textColors = selectedColor.textColors

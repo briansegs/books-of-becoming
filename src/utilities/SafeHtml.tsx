@@ -3,6 +3,13 @@
 import { useMemo } from 'react'
 import createDOMPurify from 'dompurify'
 
+const getDOMPurify = () => {
+  if (typeof window !== 'undefined') {
+    return createDOMPurify(window)
+  }
+  return null
+}
+
 type SafeHtmlProps = {
   html: string | null | undefined
   className?: string
@@ -11,8 +18,9 @@ type SafeHtmlProps = {
 export function SafeHtml({ html, className }: SafeHtmlProps) {
   // Only sanitize if we are on the client
   const sanitized = useMemo(() => {
-    if (typeof window === 'undefined' || !html) return ''
-    const DOMPurify = createDOMPurify(window)
+    const DOMPurify = getDOMPurify()
+    if (!DOMPurify || !html) return ''
+
     return DOMPurify.sanitize(html)
   }, [html])
 
