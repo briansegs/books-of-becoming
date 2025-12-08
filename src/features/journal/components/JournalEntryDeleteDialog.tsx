@@ -34,10 +34,10 @@ export function JournalEntryDeleteDialog({
     },
   })
 
-  async function handleDeleteJournal() {
+  function handleDeleteJournal() {
     if (!entryId || !journalId) {
       console.error("Can't handle delete. Missing entry Id or journal Id.")
-      toast.error('Unable to delete entrry. Please try again.')
+      toast.error('Unable to delete entry. Please try again.')
       return
     }
 
