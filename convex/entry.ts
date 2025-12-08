@@ -1,6 +1,6 @@
 import { v } from 'convex/values'
 import { mutation } from './_generated/server'
-import { getAuthenticatedUser, getCurrentUserEntry, getCurrentUserJournal } from './_utils'
+import { getAuthenticatedUser, getCurrentUserEntry } from './_utils'
 
 export const create = mutation({
   args: {
@@ -11,21 +11,12 @@ export const create = mutation({
   handler: async (ctx, { title, content, journalId }) => {
     const currentUser = await getAuthenticatedUser(ctx)
 
-    const entry = await ctx.db.insert('entries', {
+    await ctx.db.insert('entries', {
       title: title || '',
       content: content,
       journalId: journalId,
       userId: currentUser._id,
     })
-
-    if (entry) {
-      const journal = await getCurrentUserJournal({ ctx, currentUser, id: journalId })
-
-      await ctx.db.patch(journal._id, {
-        updatedAt: Date.now(),
-        entriesCount: (journal.entriesCount ?? 0) + 1,
-      })
-    }
   },
 })
 

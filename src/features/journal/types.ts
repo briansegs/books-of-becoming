@@ -31,6 +31,7 @@ type JournalType = {
 
 export type JournalHeaderProps = {
   journal: Journal
+  entriesCount: number
 }
 
 export type JournalContentProps = DailyEntries & {

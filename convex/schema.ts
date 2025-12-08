@@ -25,7 +25,6 @@ export default defineSchema({
     color: journalColors,
     textColor: journalTextColors,
     background: journalBackgrounds,
-    entriesCount: v.number(),
   }).index('by_userId', ['userId']),
 
   entries: defineTable({

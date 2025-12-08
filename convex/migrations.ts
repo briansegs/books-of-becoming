@@ -17,6 +17,15 @@ export const migrations = new Migrations<DataModel>(components.migrations)
 //   },
 // })
 
-// to run migrations, from CLI: npx convex run migrations:runIt '{fn: "migrations:backfillEntryUserId"}'
+// export const removeEntriesCount = migrations.define({
+//   table: 'journals',
+//   migrateOne: async (ctx, journal) => {
+//     if ('entriesCount' in journal) {
+//       await ctx.db.patch(journal._id, { entriesCount: undefined })
+//     }
+//   },
+// })
+
+// to run migrations, from CLI: npx convex run migrations:runIt '{fn: "migrations:removeEntriesCount"}'
 
 export const runIt = migrations.runner()
