@@ -37,10 +37,17 @@ export type JournalContentProps = DailyEntries & {
   journal: Journal
 }
 
-export type JournalContentForSelectedDayProps = CurrentEntry & {
+type SetOpenDeleteDialog = {
   setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
+}
+
+type SetSelectedEntry = {
   setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
 }
+
+export type JournalContentForSelectedDayProps = CurrentEntry &
+  SetOpenDeleteDialog &
+  SetSelectedEntry
 
 export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
 
@@ -53,10 +60,9 @@ export type JournalContentNavProps = DailyEntries &
   }
 
 export type JournalContentForTodayProps = DailyEntries &
-  TodaysDate & {
-    setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
-    setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
-  }
+  TodaysDate &
+  SetOpenDeleteDialog &
+  SetSelectedEntry
 
 export type JournalSuggestionsProps = SuggestionsState & JournalType
 
@@ -72,9 +78,9 @@ export type JournalEntryDeleteDialogProps = {
   selectedEntry: SelectedEntry
 }
 
-export type JournalDailyEntryProps = CurrentEntry & {
-  entry: SelectedEntry
-  index: number
-  setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
-  setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
-}
+export type JournalDailyEntryProps = CurrentEntry &
+  SetOpenDeleteDialog &
+  SetSelectedEntry & {
+    entry: SelectedEntry
+    index: number
+  }
