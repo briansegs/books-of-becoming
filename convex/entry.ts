@@ -1,6 +1,6 @@
 import { v } from 'convex/values'
 import { mutation } from './_generated/server'
-import { getAuthenticatedUser, getCurrentUserEntry } from './_utils'
+import { getAuthenticatedUser, getCurrentUserEntry, getCurrentUserJournal } from './_utils'
 
 export const create = mutation({
   args: {
@@ -17,6 +17,16 @@ export const create = mutation({
       journalId: journalId,
       userId: currentUser._id,
     })
+
+    const journal = await getCurrentUserJournal({
+      ctx,
+      currentUser,
+      id: journalId,
+    })
+
+    await ctx.db.patch(journal._id, {
+      updatedAt: Date.now(),
+    })
   },
 })
 
@@ -30,5 +40,15 @@ export const remove = mutation({
     const entry = await getCurrentUserEntry({ ctx, currentUser, id: entryId })
 
     await ctx.db.delete(entry._id)
+
+    const journal = await getCurrentUserJournal({
+      ctx,
+      currentUser,
+      id: entry.journalId,
+    })
+
+    await ctx.db.patch(journal._id, {
+      updatedAt: Date.now(),
+    })
   },
 })
