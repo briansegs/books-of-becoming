@@ -67,7 +67,11 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
           />
         </div>
       ) : (
-        <JournalContentForSelectedDay currentEntry={currentEntry} />
+        <JournalContentForSelectedDay
+          currentEntry={currentEntry}
+          setOpenDeleteDialog={setOpenDeleteDialog}
+          setSelectedEntry={setSelectedEntry}
+        />
       )}
 
       <JournalEntryDeleteDialog

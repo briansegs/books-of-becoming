@@ -37,7 +37,10 @@ export type JournalContentProps = DailyEntries & {
   journal: Journal
 }
 
-export type JournalContentForSelectedDayProps = CurrentEntry
+export type JournalContentForSelectedDayProps = CurrentEntry & {
+  setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
+  setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
+}
 
 export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
 
