@@ -32,5 +32,8 @@ export default defineSchema({
     title: v.optional(v.string()),
     content: v.string(),
     journalId: v.id('journals'),
-  }).index('by_journalId', ['journalId']),
+    userId: v.id('users'),
+  })
+    .index('by_journalId', ['journalId'])
+    .index('by_userId', ['userId']),
 })

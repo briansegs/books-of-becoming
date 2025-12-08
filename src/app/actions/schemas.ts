@@ -42,3 +42,8 @@ export const createEntrySchema = z.object({
   content: z.string().trim().min(1, { message: "This field can't be empty" }),
   journalId: z.string(),
 })
+
+export const deleteEntrySchema = z.object({
+  entryId: z.string(),
+  journalId: z.string(),
+})
