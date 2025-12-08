@@ -2,8 +2,14 @@ import { Separator } from '@/features/shared/components/ui/separator'
 import { format } from 'date-fns'
 import { JournalContentForTodayProps } from '../types'
 import { SafeHtml } from '@/utilities/SafeHtml'
+import { Button } from '@/features/shared/components/ui/button'
 
-export function JournalContentForToday({ dailyEntries, todaysDate }: JournalContentForTodayProps) {
+export function JournalContentForToday({
+  dailyEntries,
+  todaysDate,
+  setOpenDeleteDialog,
+  setSelectedEntry,
+}: JournalContentForTodayProps) {
   const todaysEntries = dailyEntries.find((g) => {
     const groupDate = g.date
     const today = format(new Date(todaysDate), 'yyyy-MM-dd')
@@ -23,6 +29,20 @@ export function JournalContentForToday({ dailyEntries, todaysDate }: JournalCont
               html={entry.content}
               className="prose prose-sm max-w-none dark:prose-invert"
             />
+
+            <div className="flex gap-4 py-4">
+              <Button>Edit</Button>
+
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  setOpenDeleteDialog(true)
+                  setSelectedEntry(entry)
+                }}
+              >
+                Delete
+              </Button>
+            </div>
 
             {index !== todaysEntries.entries.length - 1 && <Separator />}
           </div>
