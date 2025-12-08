@@ -71,3 +71,10 @@ export type JournalEntryDeleteDialogProps = {
   setOpen: Dispatch<SetStateAction<boolean>>
   selectedEntry: SelectedEntry
 }
+
+export type JournalDailyEntryProps = CurrentEntry & {
+  entry: SelectedEntry
+  index: number
+  setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
+  setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
+}

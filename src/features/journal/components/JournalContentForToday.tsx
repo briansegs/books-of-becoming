@@ -1,8 +1,7 @@
 import { Separator } from '@/features/shared/components/ui/separator'
 import { format } from 'date-fns'
 import { JournalContentForTodayProps } from '../types'
-import { SafeHtml } from '@/utilities/SafeHtml'
-import { Button } from '@/features/shared/components/ui/button'
+import { JournalDailyEntry } from './JournalDailyEntry'
 
 export function JournalContentForToday({
   dailyEntries,
@@ -22,30 +21,14 @@ export function JournalContentForToday({
 
       {todaysEntries?.entries.map((entry, index) => {
         return (
-          <div key={entry._creationTime} className="px-8">
-            <h2 className="mb-4 text-2xl">{entry.title}</h2>
-
-            <SafeHtml
-              html={entry.content}
-              className="prose prose-sm max-w-none dark:prose-invert"
-            />
-
-            <div className="flex gap-4 py-4">
-              <Button>Edit</Button>
-
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  setOpenDeleteDialog(true)
-                  setSelectedEntry(entry)
-                }}
-              >
-                Delete
-              </Button>
-            </div>
-
-            {index !== todaysEntries.entries.length - 1 && <Separator />}
-          </div>
+          <JournalDailyEntry
+            key={entry._creationTime}
+            entry={entry}
+            index={index}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+            setSelectedEntry={setSelectedEntry}
+            currentEntry={todaysEntries}
+          />
         )
       })}
     </div>
