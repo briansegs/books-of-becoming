@@ -92,7 +92,7 @@ export function JournalCreateDialog() {
     },
   })
 
-  async function handleSubmit(values: z.infer<typeof createJournalFormSchema>) {
+  function handleSubmit(values: z.infer<typeof createJournalFormSchema>) {
     execute(values)
   }
 

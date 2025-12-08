@@ -108,7 +108,7 @@ export function JournalEditDialog({ journal, open, setOpen }: JournalEditDialogP
     },
   })
 
-  async function handleSubmit(values: z.infer<typeof editJournalFormSchema>) {
+  function handleSubmit(values: z.infer<typeof editJournalFormSchema>) {
     if (!journal) {
       console.error("Can't handle edit. Missing journal.")
       toast.error('Unable to edit journal. Please try again.')

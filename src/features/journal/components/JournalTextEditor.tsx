@@ -92,7 +92,7 @@ export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
     return null
   }
 
-  async function handleSubmit(values: z.infer<typeof createEntrySchema>) {
+  function handleSubmit(values: z.infer<typeof createEntrySchema>) {
     execute(values)
   }
 
