@@ -12,6 +12,8 @@ export function JournalContentForSelectedDay({
 }: JournalContentForSelectedDayProps) {
   return (
     <div>
+      <Separator />
+
       {currentEntry?.entries.map((entry, index) => {
         return (
           <JournalDailyEntry
