@@ -71,6 +71,8 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
           currentEntry={currentEntry}
           setOpenDeleteDialog={setOpenDeleteDialog}
           setSelectedEntry={setSelectedEntry}
+          setCurrentIndex={setCurrentIndex}
+          todaysIndex={todaysIndex}
         />
       )}
 

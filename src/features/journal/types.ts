@@ -46,18 +46,25 @@ type SetSelectedEntry = {
   setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
 }
 
+type SetCurrentIndex = {
+  setCurrentIndex: Dispatch<SetStateAction<number>>
+}
+
 export type JournalContentForSelectedDayProps = CurrentEntry &
   SetOpenDeleteDialog &
-  SetSelectedEntry
+  SetSelectedEntry &
+  SetCurrentIndex & {
+    todaysIndex: number
+  }
 
 export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
 
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
   IsToday &
-  CurrentEntry & {
+  CurrentEntry &
+  SetCurrentIndex & {
     currentIndex: number
-    setCurrentIndex: Dispatch<SetStateAction<number>>
   }
 
 export type JournalContentForTodayProps = DailyEntries &
@@ -85,3 +92,7 @@ export type JournalDailyEntryProps = CurrentEntry &
     entry: SelectedEntry
     index: number
   }
+
+export type JournalStartNewEntryButtonProps = SetCurrentIndex & {
+  todaysIndex: number
+}
