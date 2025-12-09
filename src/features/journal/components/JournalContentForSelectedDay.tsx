@@ -1,10 +1,14 @@
-import { JournalContentForSelectedDayProps } from '../types'
+import { Separator } from '@/features/shared/components/ui/separator'
+import { JournalContentForSelectedDayProps, JournalStartNewEntryButtonProps } from '../types'
 import { JournalDailyEntry } from './JournalDailyEntry'
+import { Button } from '@/features/shared/components/ui/button'
 
 export function JournalContentForSelectedDay({
   currentEntry,
   setOpenDeleteDialog,
   setSelectedEntry,
+  setCurrentIndex,
+  todaysIndex,
 }: JournalContentForSelectedDayProps) {
   return (
     <div className="space-y-4">
@@ -20,6 +24,19 @@ export function JournalContentForSelectedDay({
           />
         )
       })}
+
+      <div className="flex flex-col items-center gap-6">
+        <Separator />
+
+        <JournalStartNewEntryButton setCurrentIndex={setCurrentIndex} todaysIndex={todaysIndex} />
+      </div>
     </div>
   )
+}
+
+export function JournalStartNewEntryButton({
+  setCurrentIndex,
+  todaysIndex,
+}: JournalStartNewEntryButtonProps) {
+  return <Button onClick={() => setCurrentIndex(todaysIndex)}>Start new entry</Button>
 }
