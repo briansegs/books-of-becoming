@@ -5,5 +5,14 @@ export function JournalStartNewEntryButton({
   setCurrentIndex,
   todaysIndex,
 }: JournalStartNewEntryButtonProps) {
-  return <Button onClick={() => setCurrentIndex(todaysIndex)}>Start new entry</Button>
+  function handleClick() {
+    setCurrentIndex(todaysIndex)
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
+  return <Button onClick={handleClick}>Start new entry</Button>
 }
