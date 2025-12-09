@@ -17,7 +17,7 @@ import { UndoToolbar } from '@/components/toolbars/undo'
 import { EditorContent, type Extension, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useAction } from 'next-safe-action/hooks'
-import { createEntry } from '@/app/actions/EntryActions'
+import { createEntry } from '@/app/actions/entryActions'
 import { parseActionError } from '@/utilities/parseActionError'
 import { toast } from 'sonner'
 import z from 'zod'
@@ -92,7 +92,7 @@ export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
     return null
   }
 
-  async function handleSubmit(values: z.infer<typeof createEntrySchema>) {
+  function handleSubmit(values: z.infer<typeof createEntrySchema>) {
     execute(values)
   }
 

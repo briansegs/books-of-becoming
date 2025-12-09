@@ -10,13 +10,16 @@ import { format } from 'date-fns'
 import { JournalContentNav } from './JournalContentNav'
 import { JournalContentForToday } from './JournalContentForToday'
 import { JournalContentForSelectedDay } from './JournalContentForSelectedDay'
-import { JournalContentProps } from '../types'
+import { JournalContentProps, SelectedEntry } from '../types'
+import { JournalEntryDeleteDialog } from './JournalEntryDeleteDialog'
 
 export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
   const [currentIndex, setCurrentIndex] = useState(
     dailyEntries.length > 0 ? dailyEntries.length - 1 : 0,
   )
   const [showSuggestions, setShowSuggestions] = useState(true)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
+  const [selectedEntry, setSelectedEntry] = useState<SelectedEntry>(null)
 
   const todaysKey = format(new Date(), 'yyyy-MM-dd')
   const foundEntryIndex = dailyEntries.findIndex((group) => group.date === todaysKey)
@@ -56,11 +59,26 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
 
           <JournalTextEditor journalId={journal._id} />
 
-          <JournalContentForToday dailyEntries={dailyEntries} todaysDate={todaysDate} />
+          <JournalContentForToday
+            dailyEntries={dailyEntries}
+            todaysDate={todaysDate}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+            setSelectedEntry={setSelectedEntry}
+          />
         </div>
       ) : (
-        <JournalContentForSelectedDay currentEntry={currentEntry} />
+        <JournalContentForSelectedDay
+          currentEntry={currentEntry}
+          setOpenDeleteDialog={setOpenDeleteDialog}
+          setSelectedEntry={setSelectedEntry}
+        />
       )}
+
+      <JournalEntryDeleteDialog
+        open={openDeleteDialog}
+        setOpen={setOpenDeleteDialog}
+        selectedEntry={selectedEntry}
+      />
     </div>
   )
 }

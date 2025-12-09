@@ -49,6 +49,7 @@ export default async function JournalPage({ params }: Args) {
   }
 
   let dailyEntries: DailyEntryGroup[] = []
+  let entriesCount: number = 0
 
   try {
     const ungroupedEntries = await fetchQuery(
@@ -56,6 +57,8 @@ export default async function JournalPage({ params }: Args) {
       { id: journalId as Id<'journals'> },
       { token },
     )
+
+    entriesCount = ungroupedEntries.length
 
     const todayKey = format(new Date(), 'yyyy-MM-dd')
     const dailyEntryGroups: DailyEntryGroup[] = []
@@ -92,7 +95,7 @@ export default async function JournalPage({ params }: Args) {
 
   return (
     <div className="min-h-screen w-full space-y-6 px-12 py-6">
-      <JournalHeader journal={journal} />
+      <JournalHeader journal={journal} entriesCount={entriesCount} />
 
       <Separator />
 

@@ -1,18 +1,23 @@
-import { SafeHtml } from '@/utilities/SafeHtml'
 import { JournalContentForSelectedDayProps } from '../types'
+import { JournalDailyEntry } from './JournalDailyEntry'
 
-export function JournalContentForSelectedDay({ currentEntry }: JournalContentForSelectedDayProps) {
+export function JournalContentForSelectedDay({
+  currentEntry,
+  setOpenDeleteDialog,
+  setSelectedEntry,
+}: JournalContentForSelectedDayProps) {
   return (
     <div className="space-y-4">
-      {currentEntry?.entries.map((entry) => {
+      {currentEntry?.entries.map((entry, index) => {
         return (
-          <div key={entry._creationTime}>
-            <h2 className="text-2xl">{entry.title}</h2>
-            <SafeHtml
-              html={entry.content}
-              className="prose prose-sm max-w-none dark:prose-invert"
-            />
-          </div>
+          <JournalDailyEntry
+            key={entry._creationTime}
+            entry={entry}
+            index={index}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+            setSelectedEntry={setSelectedEntry}
+            currentEntry={currentEntry}
+          />
         )
       })}
     </div>

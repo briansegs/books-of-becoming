@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { JournalHeaderProps } from '../types'
 
-export function JournalHeader({ journal }: JournalHeaderProps) {
+export function JournalHeader({ journal, entriesCount }: JournalHeaderProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const background = journalBackgrounds[journal.background as keyof typeof journalBackgrounds]
   const textColors = selectedColor.textColors
@@ -43,7 +43,7 @@ export function JournalHeader({ journal }: JournalHeaderProps) {
 
           <h1 className="text-4xl font-bold">{journal.title}</h1>
 
-          <p className="font-medium">{`Entries: ${journal.entriesCount}`}</p>
+          <p className="font-medium">{`Entries: ${entriesCount}`}</p>
 
           <div className="flex items-center gap-4 text-muted-foreground">
             <p>{`Updated: ${updatedDate}`}</p>

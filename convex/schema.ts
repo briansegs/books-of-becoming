@@ -25,12 +25,14 @@ export default defineSchema({
     color: journalColors,
     textColor: journalTextColors,
     background: journalBackgrounds,
-    entriesCount: v.number(),
   }).index('by_userId', ['userId']),
 
   entries: defineTable({
     title: v.optional(v.string()),
     content: v.string(),
     journalId: v.id('journals'),
-  }).index('by_journalId', ['journalId']),
+    userId: v.id('users'),
+  })
+    .index('by_journalId', ['journalId'])
+    .index('by_userId', ['userId']),
 })

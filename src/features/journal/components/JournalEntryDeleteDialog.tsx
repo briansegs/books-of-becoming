@@ -1,6 +1,3 @@
-'use client'
-
-import { toast } from 'sonner'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,16 +8,25 @@ import {
   AlertDialogTitle,
 } from '@/features/shared/components/ui/alert-dialog'
 import { useAction } from 'next-safe-action/hooks'
-import { deleteJournal } from '@/app/actions/journalActions'
+import { deleteEntry } from '@/app/actions/entryActions'
 import { parseActionError } from '@/utilities/parseActionError'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
-import { JournalDeleteDialogProps } from '../types'
+import { toast } from 'sonner'
+import { JournalEntryDeleteDialogProps } from '../types'
+import { Id } from 'convex/_generated/dataModel'
 
-export function JournalDeleteDialog({ journal, open, setOpen }: JournalDeleteDialogProps) {
-  const { execute, isPending } = useAction(deleteJournal, {
+export function JournalEntryDeleteDialog({
+  open,
+  setOpen,
+  selectedEntry,
+}: JournalEntryDeleteDialogProps) {
+  const journalId = selectedEntry?.journalId
+  const entryId = selectedEntry?._id
+
+  const { execute, isPending } = useAction(deleteEntry, {
     onSuccess: () => {
-      toast.success('Journal deleted!')
+      toast.success('Entry deleted!')
       setOpen(false)
     },
     onError: (actionError) => {
@@ -29,13 +35,13 @@ export function JournalDeleteDialog({ journal, open, setOpen }: JournalDeleteDia
   })
 
   function handleDeleteJournal() {
-    if (!journal?._id) {
-      console.error("Can't handle delete. Missing journal Id.")
-      toast.error('Unable to delete journal. Please try again.')
+    if (!entryId || !journalId) {
+      console.error("Can't handle delete. Missing entry Id or journal Id.")
+      toast.error('Unable to delete entry. Please try again.')
       return
     }
 
-    execute({ journalId: journal._id })
+    execute({ entryId: entryId as Id<'entries'>, journalId: journalId as Id<'journals'> })
   }
 
   return (
@@ -45,7 +51,7 @@ export function JournalDeleteDialog({ journal, open, setOpen }: JournalDeleteDia
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
 
           <AlertDialogDescription>
-            This action cannot be undone. This journal will be deleted and you will not be able to
+            This action cannot be undone. This entry will be deleted and you will not be able to
             view or edit it again.
           </AlertDialogDescription>
         </AlertDialogHeader>

@@ -1,6 +1,6 @@
 import { JournalsContent } from '@/features/journals/components/JournalsContent'
 import { JournalsHeader } from '@/features/journals/components/JournalsHeader'
-import type { Journal } from '@/features/journals/types'
+import type { JournalWithEntriesCount } from '@/features/journals/types'
 
 import { auth } from '@clerk/nextjs/server'
 import { api } from 'convex/_generated/api'
@@ -25,11 +25,11 @@ export default async function Journals({ params }: Args) {
     redirect(`/journals/${userId}`)
   }
 
-  let journals: Journal[] | null = null
+  let journals: JournalWithEntriesCount[] | null = null
 
   try {
     const token = (await getToken({ template: 'convex' })) || ''
-    journals = await fetchQuery(api.journals.get, {}, { token })
+    journals = await fetchQuery(api.journals.getJournalsWithEntriesCount, {}, { token })
   } catch (error) {
     console.error('Failed to fetch journals:', error)
     return (
@@ -43,7 +43,7 @@ export default async function Journals({ params }: Args) {
     <div className="flex min-h-screen w-full flex-col gap-6 px-12 py-6">
       <JournalsHeader />
 
-      <JournalsContent journals={journals || []} />
+      <JournalsContent journals={journals} />
     </div>
   )
 }

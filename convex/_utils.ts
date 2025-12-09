@@ -54,3 +54,20 @@ export async function getCurrentUserJournal({ ctx, currentUser, id }: getCurrent
 
   return journal
 }
+
+type getCurrentUserEntryProps = Ctx & {
+  currentUser: Doc<'users'>
+  id: Id<'entries'>
+}
+
+export async function getCurrentUserEntry({ ctx, currentUser, id }: getCurrentUserEntryProps) {
+  const entry = await ctx.db.get(id)
+
+  if (!entry) throw new ConvexError('Entry could not be found')
+
+  if (entry.userId !== currentUser._id) {
+    throw new ConvexError('User not authorized to access this entry')
+  }
+
+  return entry
+}

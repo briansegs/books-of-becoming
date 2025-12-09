@@ -22,7 +22,6 @@ export const create = mutation({
     const journal = await ctx.db.insert('journals', {
       userId: currentUser._id,
       updatedAt: Date.now(),
-      entriesCount: 0,
       ...args,
     })
 

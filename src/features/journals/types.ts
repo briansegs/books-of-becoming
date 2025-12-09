@@ -7,7 +7,7 @@ export type Journal = Doc<'journals'>
 export type Entry = Doc<'entries'>
 
 type Journals = {
-  journals: Journal[]
+  journals: JournalWithEntriesCount[]
 }
 
 type FilterState = {
@@ -30,16 +30,15 @@ type DialogOpenState = {
 
 export type JournalsContentProps = Journals
 
-export type JournalFilterSelectProps = Journals & FilterState
-
+export type JournalFilterSelectProps = FilterState & Journals
 export type JournalsListProps = Journals
 
-export type JournalsMenuProps = Journals & FilterState
+export type JournalsMenuProps = FilterState & Journals
 
 export type JournalsCardProps = SetCurrentJournal &
   SetOpenJournalDeleteDialog &
   SetOpenJournalEditDialog & {
-    journal: Journal
+    journal: JournalWithEntriesCount
   }
 
 export type JournalDeleteDialogProps = DialogOpenState & {
@@ -49,10 +48,12 @@ export type JournalDeleteDialogProps = DialogOpenState & {
 export type JournalsCardMenuProps = SetCurrentJournal &
   SetOpenJournalDeleteDialog &
   SetOpenJournalEditDialog & {
-    journal: Journal
+    journal: JournalWithEntriesCount
     buttonColor: string
   }
 
 export type JournalEditDialogProps = DialogOpenState & {
   journal?: Journal | null
 }
+
+export type JournalWithEntriesCount = Journal & { entriesCount: number }

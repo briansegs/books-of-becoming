@@ -1,6 +1,6 @@
 import { v } from 'convex/values'
 import { mutation } from './_generated/server'
-import { getAuthenticatedUser, getCurrentUserJournal } from './_utils'
+import { getAuthenticatedUser, getCurrentUserEntry, getCurrentUserJournal } from './_utils'
 
 export const create = mutation({
   args: {
@@ -11,19 +11,44 @@ export const create = mutation({
   handler: async (ctx, { title, content, journalId }) => {
     const currentUser = await getAuthenticatedUser(ctx)
 
-    const entry = await ctx.db.insert('entries', {
+    const journal = await getCurrentUserJournal({
+      ctx,
+      currentUser,
+      id: journalId,
+    })
+
+    await ctx.db.insert('entries', {
       title: title || '',
       content: content,
       journalId: journalId,
+      userId: currentUser._id,
     })
 
-    if (entry) {
-      const journal = await getCurrentUserJournal({ ctx, currentUser, id: journalId })
+    await ctx.db.patch(journal._id, {
+      updatedAt: Date.now(),
+    })
+  },
+})
 
-      await ctx.db.patch(journal._id, {
-        updatedAt: Date.now(),
-        entriesCount: (journal.entriesCount ?? 0) + 1,
-      })
-    }
+export const remove = mutation({
+  args: {
+    entryId: v.id('entries'),
+  },
+  handler: async (ctx, { entryId }) => {
+    const currentUser = await getAuthenticatedUser(ctx)
+
+    const entry = await getCurrentUserEntry({ ctx, currentUser, id: entryId })
+
+    await ctx.db.delete(entry._id)
+
+    const journal = await getCurrentUserJournal({
+      ctx,
+      currentUser,
+      id: entry.journalId,
+    })
+
+    await ctx.db.patch(journal._id, {
+      updatedAt: Date.now(),
+    })
   },
 })
