@@ -16,8 +16,8 @@ export function JournalContentForToday({
   })
 
   return (
-    <div className="space-y-8">
-      <Separator className="my-10" />
+    <div>
+      <Separator />
 
       {todaysEntries?.entries.map((entry, index) => {
         return (
