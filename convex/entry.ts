@@ -11,17 +11,17 @@ export const create = mutation({
   handler: async (ctx, { title, content, journalId }) => {
     const currentUser = await getAuthenticatedUser(ctx)
 
+    const journal = await getCurrentUserJournal({
+      ctx,
+      currentUser,
+      id: journalId,
+    })
+
     await ctx.db.insert('entries', {
       title: title || '',
       content: content,
       journalId: journalId,
       userId: currentUser._id,
-    })
-
-    const journal = await getCurrentUserJournal({
-      ctx,
-      currentUser,
-      id: journalId,
     })
 
     await ctx.db.patch(journal._id, {
