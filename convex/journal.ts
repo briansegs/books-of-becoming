@@ -36,7 +36,15 @@ export const remove = mutation({
 
     const journal = await getCurrentUserJournal({ ctx, currentUser, id })
 
-    await ctx.db.delete(journal._id)
+    const entries = await ctx.db
+      .query('entries')
+      .withIndex('by_journalId', (q) => q.eq('journalId', journal._id))
+      .collect()
+
+    await Promise.all([
+      ctx.db.delete(journal._id),
+      ...entries.map((entry) => ctx.db.delete(entry._id)),
+    ])
   },
 })
 
