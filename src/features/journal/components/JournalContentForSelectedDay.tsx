@@ -1,12 +1,11 @@
 import { Separator } from '@/features/shared/components/ui/separator'
 import { JournalContentForSelectedDayProps } from '../types'
-import { JournalDailyEntry } from './JournalDailyEntry'
 import { JournalStartNewEntryButton } from './JournalStartNewEntryButton'
+import { JournalDailyEntryItem } from './JournalDailyEntryItem'
 
 export function JournalContentForSelectedDay({
-  currentEntry,
+  currentEntryGroup,
   setOpenDeleteDialog,
-  setSelectedEntry,
   setCurrentIndex,
   todaysIndex,
 }: JournalContentForSelectedDayProps) {
@@ -14,15 +13,15 @@ export function JournalContentForSelectedDay({
     <div>
       <Separator />
 
-      {currentEntry?.entries.map((entry, index) => {
+      {currentEntryGroup?.entries.map((entry, index) => {
         return (
-          <JournalDailyEntry
+          <JournalDailyEntryItem
             key={entry._creationTime}
             entry={entry}
             index={index}
             setOpenDeleteDialog={setOpenDeleteDialog}
-            setSelectedEntry={setSelectedEntry}
-            currentEntry={currentEntry}
+            currentEntryGroup={currentEntryGroup}
+            editorLabel="Editing Entry:"
           />
         )
       })}

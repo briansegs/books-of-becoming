@@ -4,14 +4,15 @@ import { useState } from 'react'
 
 import { JournalContentMenu } from './JournalContentMenu'
 import { JournalSuggestions } from './JournalSuggestions'
-import { JournalTextEditor } from './JournalTextEditor'
 import { format } from 'date-fns'
 
 import { JournalContentNav } from './JournalContentNav'
 import { JournalContentForToday } from './JournalContentForToday'
 import { JournalContentForSelectedDay } from './JournalContentForSelectedDay'
-import { JournalContentProps, SelectedEntry } from '../types'
+import { JournalContentProps, JournalEntry, NewEntryEditorWithHeaderProps } from '../types'
 import { JournalEntryDeleteDialog } from './JournalEntryDeleteDialog'
+import { Badge } from '@/features/shared/components/ui/badge'
+import { JournalNewEntryEditor } from './JournalNewEntryEditor'
 
 export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
   const [currentIndex, setCurrentIndex] = useState(
@@ -19,7 +20,7 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
   )
   const [showSuggestions, setShowSuggestions] = useState(true)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
-  const [selectedEntry, setSelectedEntry] = useState<SelectedEntry>(null)
+  const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null)
 
   const todaysKey = format(new Date(), 'yyyy-MM-dd')
   const foundEntryIndex = dailyEntries.findIndex((group) => group.date === todaysKey)
@@ -27,7 +28,7 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
 
   const isToday = currentIndex === todaysIndex
 
-  const currentEntry = dailyEntries[currentIndex]
+  const currentEntryGroup = dailyEntries[currentIndex]
 
   const todaysDate = new Date()
 
@@ -41,7 +42,7 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
       />
 
       <JournalContentNav
-        currentEntry={currentEntry}
+        currentEntryGroup={currentEntryGroup}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
         dailyEntries={dailyEntries}
@@ -57,7 +58,7 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
             type={journal.type}
           />
 
-          <JournalTextEditor journalId={journal._id} />
+          <NewEntryEditorWithHeader journal={journal} />
 
           <JournalContentForToday
             dailyEntries={dailyEntries}
@@ -68,9 +69,8 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
         </div>
       ) : (
         <JournalContentForSelectedDay
-          currentEntry={currentEntry}
+          currentEntryGroup={currentEntryGroup}
           setOpenDeleteDialog={setOpenDeleteDialog}
-          setSelectedEntry={setSelectedEntry}
           setCurrentIndex={setCurrentIndex}
           todaysIndex={todaysIndex}
         />
@@ -81,6 +81,19 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
         setOpen={setOpenDeleteDialog}
         selectedEntry={selectedEntry}
       />
+    </div>
+  )
+}
+
+function NewEntryEditorWithHeader({ journal }: NewEntryEditorWithHeaderProps) {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <Badge>New Entry</Badge>
+        <p className="text-sm text-muted-foreground">Add a journal entry for today</p>
+      </div>
+
+      <JournalNewEntryEditor journalId={journal._id} />
     </div>
   )
 }

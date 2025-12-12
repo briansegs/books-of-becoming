@@ -1,5 +1,3 @@
-'use client'
-
 import { Separator } from '@/features/shared/components/ui/separator'
 import { BlockquoteToolbar } from '@/components/toolbars/blockquote'
 import { BoldToolbar } from '@/components/toolbars/bold'
@@ -14,22 +12,14 @@ import { RedoToolbar } from '@/components/toolbars/redo'
 import { StrikeThroughToolbar } from '@/components/toolbars/strikethrough'
 import { ToolbarProvider } from '@/components/toolbars/toolbar-provider'
 import { UndoToolbar } from '@/components/toolbars/undo'
-import { EditorContent, type Extension, useEditor } from '@tiptap/react'
+import { EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { useAction } from 'next-safe-action/hooks'
-import { createEntry } from '@/app/actions/entryActions'
-import { parseActionError } from '@/utilities/parseActionError'
-import { toast } from 'sonner'
-import z from 'zod'
-import { createEntrySchema } from '@/app/actions/schemas'
-import { Button } from '@/features/shared/components/ui/button'
-import { Spinner } from '@/features/shared/components/ui/spinner'
-import { useState } from 'react'
+
 import { Input } from '@/features/shared/components/ui/input'
 import { Placeholder } from '@tiptap/extensions'
 import { JournalTextEditorProps } from '../types'
 
-const extensions = [
+export const extensions = [
   StarterKit.configure({
     orderedList: {
       HTMLAttributes: {
@@ -69,31 +59,9 @@ const extensions = [
   }),
 ]
 
-export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
-  const [title, setTitle] = useState<string>('')
-
-  const editor = useEditor({
-    extensions: extensions as Extension[],
-    immediatelyRender: false,
-  })
-
-  const { execute, isPending } = useAction(createEntry, {
-    onSuccess: () => {
-      toast.success('Entry Saved!')
-      editor?.commands.clearContent()
-      setTitle('')
-    },
-    onError: (actionError) => {
-      toast.error(parseActionError(actionError.error))
-    },
-  })
-
+export function JournalTextEditor({ editor, title, setTitle }: JournalTextEditorProps) {
   if (!editor) {
     return null
-  }
-
-  function handleSubmit(values: z.infer<typeof createEntrySchema>) {
-    execute(values)
   }
 
   return (
@@ -137,20 +105,6 @@ export function JournalTextEditor({ journalId }: JournalTextEditorProps) {
           <EditorContent className="outline-none" editor={editor} />
         </div>
       </div>
-
-      <Button
-        type="submit"
-        disabled={isPending}
-        onClick={() => handleSubmit({ title, content: editor?.getHTML(), journalId })}
-      >
-        {isPending ? (
-          <span className="flex gap-2">
-            <Spinner /> Saving...
-          </span>
-        ) : (
-          'Save'
-        )}
-      </Button>
     </div>
   )
 }

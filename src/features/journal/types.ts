@@ -1,16 +1,17 @@
 import { Doc, Id } from 'convex/_generated/dataModel'
 import { Dispatch, SetStateAction } from 'react'
+import type { Editor } from '@tiptap/react'
 
 type Journal = Doc<'journals'>
-type JournalEntry = Doc<'entries'>
+export type JournalEntry = Doc<'entries'>
 
 export type DailyEntryGroup = { date: string; entries: JournalEntry[] }
 
 type DailyEntries = {
   dailyEntries: DailyEntryGroup[]
 }
-type CurrentEntry = {
-  currentEntry?: DailyEntryGroup
+type CurrentEntryGroup = {
+  currentEntryGroup?: DailyEntryGroup
 }
 type SuggestionsState = {
   showSuggestions: boolean
@@ -29,32 +30,43 @@ type JournalType = {
   type: NarrowedJournalType
 }
 
-export type JournalHeaderProps = {
+type JournalItem = {
   journal: Journal
+}
+
+export type JournalHeaderProps = JournalItem & {
   entriesCount: number
 }
 
-export type JournalContentProps = DailyEntries & {
-  journal: Journal
-}
+export type JournalContentProps = DailyEntries & JournalItem
 
 type SetOpenDeleteDialog = {
   setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
 }
 
 type SetSelectedEntry = {
-  setSelectedEntry: Dispatch<SetStateAction<SelectedEntry>>
+  setSelectedEntry: Dispatch<SetStateAction<JournalEntry | null>>
 }
 
 type SetCurrentIndex = {
   setCurrentIndex: Dispatch<SetStateAction<number>>
 }
 
-export type JournalContentForSelectedDayProps = CurrentEntry &
+type SetEditMode = {
+  setEditMode: Dispatch<SetStateAction<boolean>>
+}
+
+export type JournalContentForSelectedDayProps = CurrentEntryGroup &
   SetOpenDeleteDialog &
-  SetSelectedEntry &
   SetCurrentIndex & {
     todaysIndex: number
+  }
+
+export type JournalDailyEntryItemProps = CurrentEntryGroup &
+  SetOpenDeleteDialog & {
+    entry: JournalEntry | null
+    index: number
+    editorLabel: string
   }
 
 export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
@@ -62,7 +74,7 @@ export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
   IsToday &
-  CurrentEntry &
+  CurrentEntryGroup &
   SetCurrentIndex & {
     currentIndex: number
   }
@@ -75,24 +87,34 @@ export type JournalContentForTodayProps = DailyEntries &
 export type JournalSuggestionsProps = SuggestionsState & JournalType
 
 export type JournalTextEditorProps = {
-  journalId: Id<'journals'>
+  editor: Editor | null
+  title: string
+  setTitle: Dispatch<SetStateAction<string>>
 }
 
-export type SelectedEntry = JournalEntry | null
+export type JournalEditEntryEditorProps = SetEditMode & {
+  selectedEntry: JournalEntry
+}
+
+export type JournalNewEntryEditorProps = {
+  journalId: Id<'journals'>
+}
 
 export type JournalEntryDeleteDialogProps = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  selectedEntry: SelectedEntry
+  selectedEntry: JournalEntry | null
 }
 
-export type JournalDailyEntryProps = CurrentEntry &
+export type JournalDailyEntryProps = CurrentEntryGroup &
   SetOpenDeleteDialog &
-  SetSelectedEntry & {
-    entry: SelectedEntry
+  SetEditMode & {
+    entry: JournalEntry | null
     index: number
   }
 
 export type JournalStartNewEntryButtonProps = SetCurrentIndex & {
   todaysIndex: number
 }
+
+export type NewEntryEditorWithHeaderProps = JournalItem

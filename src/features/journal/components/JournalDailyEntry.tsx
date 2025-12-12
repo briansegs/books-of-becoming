@@ -8,8 +8,8 @@ export function JournalDailyEntry({
   entry,
   index,
   setOpenDeleteDialog,
-  setSelectedEntry,
-  currentEntry,
+  currentEntryGroup,
+  setEditMode,
 }: JournalDailyEntryProps) {
   if (!entry) {
     return null
@@ -26,22 +26,34 @@ export function JournalDailyEntry({
 
         <p className="text-sm text-muted-foreground">{createdTime}</p>
 
-        <div className="flex gap-4">
-          <Button>Edit</Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => {
+              setEditMode(true)
+            }}
+          >
+            Edit
+          </Button>
 
           <Button
             variant="destructive"
             onClick={() => {
               setOpenDeleteDialog(true)
-              setSelectedEntry(entry)
             }}
           >
             Delete
           </Button>
+
+          {entry.updatedAt && (
+            <p className="text-sm text-muted-foreground">
+              <span className="font-bold">Updated: </span>
+              {format(new Date(entry.updatedAt), 'M/d/yyyy @ h:mm a')}
+            </p>
+          )}
         </div>
       </div>
 
-      {currentEntry && index !== currentEntry.entries.length - 1 && <Separator />}
+      {currentEntryGroup && index !== currentEntryGroup.entries.length - 1 && <Separator />}
     </div>
   )
 }
