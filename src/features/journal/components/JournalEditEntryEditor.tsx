@@ -11,7 +11,7 @@ import { updateEntrySchema } from '@/app/actions/schemas'
 import { extensions, JournalTextEditor } from './JournalTextEditor'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
-import z from 'zod'
+import { z } from 'zod'
 
 export function JournalEditEntryEditor({
   setEditMode,
@@ -55,7 +55,7 @@ export function JournalEditEntryEditor({
 
       <div className="flex gap-2">
         <Button
-          type="submit"
+          type="button"
           disabled={updateIsPending}
           onClick={() =>
             handleEdit({
@@ -75,7 +75,7 @@ export function JournalEditEntryEditor({
           )}
         </Button>
 
-        <Button variant="secondary" onClick={handleCancel}>
+        <Button type="button" variant="secondary" onClick={handleCancel}>
           Cancel
         </Button>
       </div>

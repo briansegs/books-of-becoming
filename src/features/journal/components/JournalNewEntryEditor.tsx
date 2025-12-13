@@ -11,7 +11,7 @@ import { createEntrySchema } from '@/app/actions/schemas'
 import { extensions, JournalTextEditor } from './JournalTextEditor'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
-import z from 'zod'
+import { z } from 'zod'
 
 export function JournalNewEntryEditor({ journalId }: JournalNewEntryEditorProps) {
   const [title, setTitle] = useState('')
@@ -41,7 +41,7 @@ export function JournalNewEntryEditor({ journalId }: JournalNewEntryEditorProps)
       <JournalTextEditor editor={editor} title={title} setTitle={setTitle} />
 
       <Button
-        type="submit"
+        type="button"
         disabled={saveIsPending}
         onClick={() => handleSave({ title, content: editor?.getHTML() || '', journalId })}
       >
