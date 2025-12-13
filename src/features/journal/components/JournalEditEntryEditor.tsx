@@ -11,7 +11,7 @@ import { updateEntrySchema } from '@/app/actions/schemas'
 import { extensions, JournalTextEditor } from './JournalTextEditor'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
-import { z } from 'zod'
+import * as z from 'zod'
 
 export function JournalEditEntryEditor({
   setEditMode,
