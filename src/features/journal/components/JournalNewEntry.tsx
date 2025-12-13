@@ -1,15 +1,21 @@
+'use client'
+
 import { JournalNewEntryProps } from '../types'
 import { type Extension, useEditor } from '@tiptap/react'
 import { extensions } from './JournalTextEditor'
 import { Badge } from '@/features/shared/components/ui/badge'
 import { JournalNewEntryEditor } from './JournalNewEntryEditor'
 import { FutureSelfJournalSuggestions } from './FutureSelfJournalSuggestions'
+import { useState } from 'react'
+import { FutureSelfJournalExamplesDialog } from './FutureSelfJournalExamplesDialog'
 
 export function JournalNewEntry({
   journal,
   showSuggestions,
   setShowSuggestions,
 }: JournalNewEntryProps) {
+  const [openExamplesDialog, setOpenExamplesDialog] = useState(false)
+
   const editor = useEditor({
     extensions: extensions as Extension[],
     immediatelyRender: false,
@@ -22,6 +28,7 @@ export function JournalNewEntry({
         setShowSuggestions={setShowSuggestions}
         type={journal.type}
         editor={editor}
+        setOpenExamplesDialog={setOpenExamplesDialog}
       />
 
       <div className="flex items-center gap-2">
@@ -31,7 +38,11 @@ export function JournalNewEntry({
 
       <JournalNewEntryEditor journalId={journal._id} editor={editor} />
 
-      {/* TODO: Create ExamplesDialog component to show writing examples */}
+      <FutureSelfJournalExamplesDialog
+        open={openExamplesDialog}
+        setOpen={setOpenExamplesDialog}
+        editor={editor}
+      />
     </div>
   )
 }

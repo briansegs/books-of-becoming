@@ -87,6 +87,7 @@ export type JournalContentForTodayProps = DailyEntries &
 export type FutureSelfJournalSuggestionsProps = SuggestionsState &
   JournalType & {
     editor: Editor | null
+    setOpenExamplesDialog: Dispatch<SetStateAction<boolean>>
   }
 
 export type JournalTextEditorProps = {
@@ -122,3 +123,9 @@ export type JournalStartNewEntryButtonProps = SetCurrentIndex & {
 }
 
 export type JournalNewEntryProps = JournalItem & SuggestionsState
+
+export type FutureSelfJournalExamplesDialogProps = {
+  open: boolean
+  setOpen: Dispatch<React.SetStateAction<boolean>>
+  editor: Editor | null
+}

@@ -10,11 +10,16 @@ export function FutureSelfJournalSuggestions({
   showSuggestions,
   setShowSuggestions,
   editor,
+  setOpenExamplesDialog,
 }: FutureSelfJournalSuggestionsProps) {
   function insertStarterText() {
     if (editor) {
       editor.chain().focus().insertContent(starterText).run()
     }
+  }
+
+  function openExamples() {
+    setOpenExamplesDialog(true)
   }
 
   if (type === 'future' && showSuggestions) {
@@ -23,7 +28,10 @@ export function FutureSelfJournalSuggestions({
         <div className="flex w-full items-center justify-between bg-accent p-2">
           <div className="flex items-center gap-2">
             <Lightbulb className="text-muted-foreground" />
-            <p className="font-semibold text-primary">Future Self Journal Starter:</p>
+            <p className="font-semibold text-primary">Future Self Journal Starter:</p>{' '}
+            <p className="text-sm text-muted-foreground">
+              {'Click "use" button to add the starter text to your text editor.'}
+            </p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -31,7 +39,7 @@ export function FutureSelfJournalSuggestions({
               <Check /> Use
             </Button>
 
-            <Button>
+            <Button onClick={openExamples}>
               <Sparkles /> Examples
             </Button>
 
