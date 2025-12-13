@@ -53,11 +53,9 @@ export const deleteUserInternal = internalMutation({
 
     const entries = entriesByJournal.flat()
 
-    await Promise.all([
-      ...entries.map((entry) => ctx.db.delete(entry._id)),
-      ...journals.map((journal) => ctx.db.delete(journal._id)),
-      ctx.db.delete(user._id),
-    ])
+    await Promise.all(entries.map((entry) => ctx.db.delete(entry._id)))
+    await Promise.all(journals.map((journal) => ctx.db.delete(journal._id)))
+    await ctx.db.delete(user._id)
   },
 })
 
@@ -81,11 +79,9 @@ export const deleteUser = mutation({
 
     const entries = entriesByJournal.flat()
 
-    await Promise.all([
-      ...entries.map((entry) => ctx.db.delete(entry._id)),
-      ...journals.map((journal) => ctx.db.delete(journal._id)),
-      ctx.db.delete(user._id),
-    ])
+    await Promise.all(entries.map((entry) => ctx.db.delete(entry._id)))
+    await Promise.all(journals.map((journal) => ctx.db.delete(journal._id)))
+    await ctx.db.delete(user._id)
   },
 })
 
