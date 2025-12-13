@@ -71,7 +71,7 @@ export const update = mutation({
     })
 
     await ctx.db.patch(entry._id, {
-      title: title || entry.title,
+      title: title ?? entry.title,
       content: content,
       updatedAt: Date.now(),
     })
