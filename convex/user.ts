@@ -1,6 +1,6 @@
 import { ConvexError, v } from 'convex/values'
 import { internalMutation, internalQuery, mutation, query } from './_generated/server'
-import { getAuthenticatedUser, getUserByClerkId } from './_utils'
+import { getAuthenticatedUser, getCurrentUserJournal, getUserByClerkId } from './_utils'
 
 export const createUser = internalMutation({
   args: {
@@ -37,7 +37,27 @@ export const deleteUserInternal = internalMutation({
   handler: async (ctx, { clerkId }) => {
     const user = await getUserByClerkId({ ctx, clerkId })
 
-    await ctx.db.delete(user._id)
+    const journals = await ctx.db
+      .query('journals')
+      .withIndex('by_userId', (q) => q.eq('userId', user._id))
+      .collect()
+
+    const entriesByJournal = await Promise.all(
+      journals.map((journal) =>
+        ctx.db
+          .query('entries')
+          .withIndex('by_journalId', (q) => q.eq('journalId', journal._id))
+          .collect(),
+      ),
+    )
+
+    const entries = entriesByJournal.flat()
+
+    await Promise.all([
+      ...entries.map((entry) => ctx.db.delete(entry._id)),
+      ...journals.map((journal) => ctx.db.delete(journal._id)),
+      ctx.db.delete(user._id),
+    ])
   },
 })
 
@@ -45,7 +65,27 @@ export const deleteUser = mutation({
   handler: async (ctx) => {
     const user = await getAuthenticatedUser(ctx)
 
-    await ctx.db.delete(user._id)
+    const journals = await ctx.db
+      .query('journals')
+      .withIndex('by_userId', (q) => q.eq('userId', user._id))
+      .collect()
+
+    const entriesByJournal = await Promise.all(
+      journals.map((journal) =>
+        ctx.db
+          .query('entries')
+          .withIndex('by_journalId', (q) => q.eq('journalId', journal._id))
+          .collect(),
+      ),
+    )
+
+    const entries = entriesByJournal.flat()
+
+    await Promise.all([
+      ...entries.map((entry) => ctx.db.delete(entry._id)),
+      ...journals.map((journal) => ctx.db.delete(journal._id)),
+      ctx.db.delete(user._id),
+    ])
   },
 })
 
