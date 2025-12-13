@@ -12,6 +12,7 @@ import { extensions, JournalTextEditor } from './JournalTextEditor'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
 import { z } from 'zod'
+import { format } from 'date-fns'
 
 export function JournalNewEntryEditor({ journalId }: JournalNewEntryEditorProps) {
   const [title, setTitle] = useState('')
@@ -33,7 +34,27 @@ export function JournalNewEntryEditor({ journalId }: JournalNewEntryEditorProps)
   })
 
   function handleSave(values: z.infer<typeof createEntrySchema>) {
-    executeSave(values)
+    const result = createEntrySchema.safeParse(values)
+
+    if (!result.success) {
+      const issue = result.error.issues?.[0]
+      const message = issue?.message || 'Invalid input.'
+      toast.error(message)
+      return
+    }
+
+    const parsed = result.data
+
+    if (!parsed.title) {
+      parsed.title = format(new Date(), 'M/d/yyyy @ h:mm a')
+    }
+
+    if (!parsed.content) {
+      toast.error('Cannot save an empty entry.')
+      return
+    }
+
+    executeSave(parsed)
   }
 
   return (

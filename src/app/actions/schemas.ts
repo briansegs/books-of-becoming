@@ -39,7 +39,13 @@ export const editJournalFormSchema = z.object({
 
 export const createEntrySchema = z.object({
   title: z.optional(z.string()),
-  content: z.string().trim().min(1, { message: "This field can't be empty" }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: "Entry body can't be empty" })
+    .refine((html) => html.replace(/<[^>]*>/g, '').trim().length > 0, {
+      message: "Entry body can't be empty",
+    }),
   journalId: z.string(),
 })
 
@@ -50,7 +56,13 @@ export const deleteEntrySchema = z.object({
 
 export const updateEntrySchema = z.object({
   entryId: z.string(),
-  title: z.optional(z.string()),
-  content: z.string().trim().min(1, { message: "This field can't be empty" }),
+  title: z.string().trim().min(1, { message: "Entry title can't be empty" }),
+  content: z
+    .string()
+    .trim()
+    .min(1, { message: "Entry body can't be empty" })
+    .refine((html) => html.replace(/<[^>]*>/g, '').trim().length > 0, {
+      message: "Entry body can't be empty",
+    }),
   journalId: z.string(),
 })
