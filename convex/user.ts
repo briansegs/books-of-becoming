@@ -1,6 +1,6 @@
 import { ConvexError, v } from 'convex/values'
 import { internalMutation, internalQuery, mutation, query } from './_generated/server'
-import { getAuthenticatedUser, getCurrentUserJournal, getUserByClerkId } from './_utils'
+import { getAuthenticatedUser, getUserByClerkId } from './_utils'
 
 export const createUser = internalMutation({
   args: {
