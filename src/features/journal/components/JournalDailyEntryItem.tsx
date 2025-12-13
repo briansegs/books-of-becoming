@@ -5,7 +5,6 @@ import { JournalDailyEntry } from './JournalDailyEntry'
 import { useState } from 'react'
 import { Badge } from '@/features/shared/components/ui/badge'
 import { Separator } from '@/features/shared/components/ui/separator'
-import { format } from 'date-fns'
 import { JournalEditEntryEditor } from './JournalEditEntryEditor'
 
 export function JournalDailyEntryItem({
@@ -21,11 +20,7 @@ export function JournalDailyEntryItem({
     <div className="space-y-4 px-8">
       <div className="mt-4 flex items-center gap-2">
         <Badge>{editorLabel}</Badge>
-        <p className="text-sm text-muted-foreground">
-          {entry.title
-            ? entry.title
-            : format(new Date(entry._creationTime), 'MMMM dd, yyyy @ h:mm aaa')}
-        </p>
+        <p className="text-sm text-muted-foreground">{entry.title}</p>
       </div>
 
       <JournalEditEntryEditor selectedEntry={entry} setEditMode={setEditMode} />
