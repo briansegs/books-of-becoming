@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { JournalContentNavProps } from '../types'
 
 export function JournalContentNav({
-  currentEntry,
+  currentEntryGroup,
   currentIndex,
   setCurrentIndex,
   dailyEntries,
@@ -31,19 +31,21 @@ export function JournalContentNav({
 
       <div className="flex flex-col items-center gap-2">
         <div className="text-center text-lg font-semibold">
-          {currentEntry
-            ? format(parseLocalDate(currentEntry.date), 'MMMM yyyy')
+          {currentEntryGroup
+            ? format(parseLocalDate(currentEntryGroup.date), 'MMMM yyyy')
             : format(todaysDate, 'MMMM yyyy')}
         </div>
 
         <div className="w-18 rounded-md border p-1 text-center text-lg">
-          {currentEntry ? format(parseLocalDate(currentEntry.date), 'd') : format(todaysDate, 'd')}
+          {currentEntryGroup
+            ? format(parseLocalDate(currentEntryGroup.date), 'd')
+            : format(todaysDate, 'd')}
         </div>
 
         <div className="text-muted-foreground">
           {isToday
             ? `Today | ${format(new Date(todaysDate), 'EEEE')}`
-            : format(parseLocalDate(currentEntry?.date || ''), 'EEEE')}
+            : format(parseLocalDate(currentEntryGroup?.date || ''), 'EEEE')}
         </div>
       </div>
 

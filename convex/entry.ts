@@ -18,7 +18,7 @@ export const create = mutation({
     })
 
     await ctx.db.insert('entries', {
-      title: title || '',
+      title: title ?? '',
       content: content,
       journalId: journalId,
       userId: currentUser._id,
@@ -45,6 +45,35 @@ export const remove = mutation({
       ctx,
       currentUser,
       id: entry.journalId,
+    })
+
+    await ctx.db.patch(journal._id, {
+      updatedAt: Date.now(),
+    })
+  },
+})
+
+export const update = mutation({
+  args: {
+    entryId: v.id('entries'),
+    title: v.optional(v.string()),
+    content: v.string(),
+  },
+  handler: async (ctx, { entryId, title, content }) => {
+    const currentUser = await getAuthenticatedUser(ctx)
+
+    const entry = await getCurrentUserEntry({ ctx, currentUser, id: entryId })
+
+    const journal = await getCurrentUserJournal({
+      ctx,
+      currentUser,
+      id: entry.journalId,
+    })
+
+    await ctx.db.patch(entry._id, {
+      title: title ?? entry.title,
+      content: content,
+      updatedAt: Date.now(),
     })
 
     await ctx.db.patch(journal._id, {

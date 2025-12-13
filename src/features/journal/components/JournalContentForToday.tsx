@@ -1,13 +1,12 @@
 import { Separator } from '@/features/shared/components/ui/separator'
 import { format } from 'date-fns'
 import { JournalContentForTodayProps } from '../types'
-import { JournalDailyEntry } from './JournalDailyEntry'
+import { JournalDailyEntryItem } from './JournalDailyEntryItem'
 
 export function JournalContentForToday({
   dailyEntries,
   todaysDate,
   setOpenDeleteDialog,
-  setSelectedEntry,
 }: JournalContentForTodayProps) {
   const todaysEntries = dailyEntries.find((g) => {
     const groupDate = g.date
@@ -21,13 +20,13 @@ export function JournalContentForToday({
 
       {todaysEntries?.entries.map((entry, index) => {
         return (
-          <JournalDailyEntry
+          <JournalDailyEntryItem
             key={entry._creationTime}
             entry={entry}
             index={index}
             setOpenDeleteDialog={setOpenDeleteDialog}
-            setSelectedEntry={setSelectedEntry}
-            currentEntry={todaysEntries}
+            currentEntryGroup={todaysEntries}
+            editorLabel="Editing Entry:"
           />
         )
       })}

@@ -28,10 +28,11 @@ export default defineSchema({
   }).index('by_userId', ['userId']),
 
   entries: defineTable({
-    title: v.optional(v.string()),
+    title: v.string(),
     content: v.string(),
     journalId: v.id('journals'),
     userId: v.id('users'),
+    updatedAt: v.optional(v.number()),
   })
     .index('by_journalId', ['journalId'])
     .index('by_userId', ['userId']),
