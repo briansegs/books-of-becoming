@@ -1,12 +1,22 @@
 import { Check, Lightbulb, Sparkles, X } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
-import { JournalSuggestionsProps } from '../types'
+import { FutureSelfJournalSuggestionsProps } from '../types'
 
-export function JournalSuggestions({
+const starterText =
+  '<p>Today I am practicing</br> I am grateful for</br> Today, I am</br> Change in this area allows me to feel</br> Today I am practicing when</p>'
+
+export function FutureSelfJournalSuggestions({
   type,
   showSuggestions,
   setShowSuggestions,
-}: JournalSuggestionsProps) {
+  editor,
+}: FutureSelfJournalSuggestionsProps) {
+  function insertStarterText() {
+    if (editor) {
+      editor.chain().focus().insertContent(starterText).run()
+    }
+  }
+
   if (type === 'future' && showSuggestions) {
     return (
       <div>
@@ -17,7 +27,7 @@ export function JournalSuggestions({
           </div>
 
           <div className="flex items-center gap-2">
-            <Button>
+            <Button onClick={insertStarterText}>
               <Check /> Use
             </Button>
 
