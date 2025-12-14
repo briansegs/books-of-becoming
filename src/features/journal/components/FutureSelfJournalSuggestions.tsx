@@ -3,7 +3,7 @@ import { Button } from '@/features/shared/components/ui/button'
 import { FutureSelfJournalSuggestionsProps } from '../types'
 
 const starterText =
-  '<p>Today I am practicing</br> I am grateful for</br> Today, I am</br> Change in this area allows me to feel</br> Today I am practicing when</p>'
+  '<p>Today I am practicing<br/> I am grateful for<br/> Today, I am<br/> Change in this area allows me to feel<br/> Today I am practicing when</p>'
 
 export function FutureSelfJournalSuggestions({
   type,
