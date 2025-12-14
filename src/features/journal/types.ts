@@ -126,6 +126,6 @@ export type JournalNewEntryProps = JournalItem & SuggestionsState
 
 export type FutureSelfJournalExamplesDialogProps = {
   open: boolean
-  setOpen: Dispatch<React.SetStateAction<boolean>>
+  setOpen: Dispatch<SetStateAction<boolean>>
   editor: Editor | null
 }
