@@ -30,7 +30,7 @@ export function FutureSelfJournalSuggestions({
             <Lightbulb className="text-muted-foreground" />
             <p className="font-semibold text-primary">Future Self Journal Starter:</p>{' '}
             <p className="text-sm text-muted-foreground">
-              {'Click "use" button to add the starter text to your text editor.'}
+              {'Click the "Use" button to add the starter text to your text editor.'}
             </p>
           </div>
 
