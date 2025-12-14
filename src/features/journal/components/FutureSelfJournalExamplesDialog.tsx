@@ -8,73 +8,13 @@ import {
   DialogTitle,
 } from '@/features/shared/components/ui/dialog'
 import { Separator } from '@/features/shared/components/ui/separator'
+import { futureSelfJournalExamples } from '../data/FSJExamples'
 
-// TODO: Refactor
-
-const ex1 = {
-  title: 'For those wanting to practice becoming conscious',
-  lines: [
-    'Today I am practicing living consciously.',
-    'I am grateful for another opportunity to practice being conscious.',
-    'Today, I am present.',
-    'Change in this area allows me to feel more connected with myself + others.',
-    'Today I am practicing when I practice noticing where my attention is + bring it back to the present moment.',
-  ],
-}
-
-const ex2 = {
-  title: 'For those wanting to work on emotional reactivity',
-  lines: [
-    'Today I am practicing using my breath to regulate my feelings.',
-    'I am grateful for another opportunity to practice a new way to regulate my feelings.',
-    'Today, I am calm + at peace.',
-    'Change in this area allows me to feel more in control of my responses to my feelings.',
-    'Today I am practicing when I use deep belly breaths to calm my feelings when I speak with my partner.',
-  ],
-}
-
-const ex3 = {
-  title: 'For those wanting to work on meeting the needs of their inner child',
-  lines: [
-    'Today I am practicing allowing myself to feel worthy of love.',
-    'I am grateful for another opportunity to practice allowing myself to feel worthy of love.',
-    'Today, I am worthy of love.',
-    'Change in this area allows me to feel more positive about myself in my relationships.',
-    'Today I am practicing when I use my affirmation ("I am worthy of love") when my mind tries to tell me otherwise.',
-  ],
-}
-
-function getExampleList(example: string[]) {
-  return (
-    <ul>
-      {example.map((line, index) => (
-        <li key={index}>{line}</li>
-      ))}
-    </ul>
-  )
-}
-
-function getExampleContent(example: string[]) {
-  return example.map((line) => `<p>${line}</p>`).join('')
-}
-
-const examples = [
-  {
-    title: ex1.title,
-    list: getExampleList(ex1.lines),
-    content: getExampleContent(ex1.lines),
-  },
-  {
-    title: ex2.title,
-    list: getExampleList(ex2.lines),
-    content: getExampleContent(ex2.lines),
-  },
-  {
-    title: ex3.title,
-    list: getExampleList(ex3.lines),
-    content: getExampleContent(ex3.lines),
-  },
-]
+const examples = futureSelfJournalExamples.map((ex) => ({
+  title: ex.title,
+  list: getExampleList(ex.lines),
+  content: getExampleContent(ex.lines),
+}))
 
 export function FutureSelfJournalExamplesDialog({
   open,
@@ -120,4 +60,18 @@ export function FutureSelfJournalExamplesDialog({
       </DialogContent>
     </Dialog>
   )
+}
+
+function getExampleList(example: string[]) {
+  return (
+    <ul>
+      {example.map((line, index) => (
+        <li key={index}>{line}</li>
+      ))}
+    </ul>
+  )
+}
+
+function getExampleContent(example: string[]) {
+  return example.map((line) => `<p>${line}</p>`).join('')
 }
