@@ -3,16 +3,14 @@
 import { useState } from 'react'
 
 import { JournalContentMenu } from './JournalContentMenu'
-import { JournalSuggestions } from './JournalSuggestions'
 import { format } from 'date-fns'
 
 import { JournalContentNav } from './JournalContentNav'
 import { JournalContentForToday } from './JournalContentForToday'
 import { JournalContentForSelectedDay } from './JournalContentForSelectedDay'
-import { JournalContentProps, JournalEntry, NewEntryEditorWithHeaderProps } from '../types'
+import { JournalContentProps, JournalEntry } from '../types'
 import { JournalEntryDeleteDialog } from './JournalEntryDeleteDialog'
-import { Badge } from '@/features/shared/components/ui/badge'
-import { JournalNewEntryEditor } from './JournalNewEntryEditor'
+import { JournalNewEntry } from './JournalNewEntry'
 
 export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
   const [currentIndex, setCurrentIndex] = useState(
@@ -52,13 +50,11 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
 
       {isToday ? (
         <div className="space-y-4">
-          <JournalSuggestions
+          <JournalNewEntry
+            journal={journal}
             showSuggestions={showSuggestions}
             setShowSuggestions={setShowSuggestions}
-            type={journal.type}
           />
-
-          <NewEntryEditorWithHeader journal={journal} />
 
           <JournalContentForToday
             dailyEntries={dailyEntries}
@@ -81,19 +77,6 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
         setOpen={setOpenDeleteDialog}
         selectedEntry={selectedEntry}
       />
-    </div>
-  )
-}
-
-function NewEntryEditorWithHeader({ journal }: NewEntryEditorWithHeaderProps) {
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2">
-        <Badge>New Entry</Badge>
-        <p className="text-sm text-muted-foreground">Add a journal entry for today</p>
-      </div>
-
-      <JournalNewEntryEditor journalId={journal._id} />
     </div>
   )
 }

@@ -5,16 +5,15 @@ import { createEntry } from '@/app/actions/entryActions'
 import { parseActionError } from '@/utilities/parseActionError'
 import { toast } from 'sonner'
 import { useState } from 'react'
-import { type Extension, useEditor } from '@tiptap/react'
 import { JournalNewEntryEditorProps } from '../types'
 import { createEntrySchema } from '@/app/actions/schemas'
-import { extensions, JournalTextEditor } from './JournalTextEditor'
+import { JournalTextEditor } from './JournalTextEditor'
 import { Button } from '@/features/shared/components/ui/button'
 import { Spinner } from '@/features/shared/components/ui/spinner'
 import { z } from 'zod'
 import { format } from 'date-fns'
 
-export function JournalNewEntryEditor({ journalId }: JournalNewEntryEditorProps) {
+export function JournalNewEntryEditor({ journalId, editor }: JournalNewEntryEditorProps) {
   const [title, setTitle] = useState('')
 
   const { execute: executeSave, isPending: saveIsPending } = useAction(createEntry, {
@@ -26,11 +25,6 @@ export function JournalNewEntryEditor({ journalId }: JournalNewEntryEditorProps)
     onError: (actionError) => {
       toast.error(parseActionError(actionError.error))
     },
-  })
-
-  const editor = useEditor({
-    extensions: extensions as Extension[],
-    immediatelyRender: false,
   })
 
   function handleSave(values: z.infer<typeof createEntrySchema>) {

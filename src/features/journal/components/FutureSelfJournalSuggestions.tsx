@@ -1,27 +1,45 @@
 import { Check, Lightbulb, Sparkles, X } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
-import { JournalSuggestionsProps } from '../types'
+import { FutureSelfJournalSuggestionsProps } from '../types'
 
-export function JournalSuggestions({
+const starterText =
+  '<p>Today I am practicing<br/> I am grateful for<br/> Today, I am<br/> Change in this area allows me to feel<br/> Today I am practicing when</p>'
+
+export function FutureSelfJournalSuggestions({
   type,
   showSuggestions,
   setShowSuggestions,
-}: JournalSuggestionsProps) {
+  editor,
+  setOpenExamplesDialog,
+}: FutureSelfJournalSuggestionsProps) {
+  function insertStarterText() {
+    if (editor) {
+      editor.chain().focus().insertContent(starterText).run()
+    }
+  }
+
+  function openExamples() {
+    setOpenExamplesDialog(true)
+  }
+
   if (type === 'future' && showSuggestions) {
     return (
       <div>
         <div className="flex w-full items-center justify-between bg-accent p-2">
           <div className="flex items-center gap-2">
             <Lightbulb className="text-muted-foreground" />
-            <p className="font-semibold text-primary">Future Self Journal Starter:</p>
+            <p className="font-semibold text-primary">Future Self Journal Starter:</p>{' '}
+            <p className="text-sm text-muted-foreground">
+              {'Click the "Use" button to add the starter text to your text editor.'}
+            </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <Button>
+            <Button onClick={insertStarterText}>
               <Check /> Use
             </Button>
 
-            <Button>
+            <Button onClick={openExamples}>
               <Sparkles /> Examples
             </Button>
 
