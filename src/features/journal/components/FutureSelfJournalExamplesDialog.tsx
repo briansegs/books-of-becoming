@@ -52,7 +52,7 @@ export function FutureSelfJournalExamplesDialog({
                   <Button onClick={() => insertExampleText(example.content)}>Use</Button>
                 </div>
 
-                {index < examples.length - 1 && <Separator className="" />}
+                {index < examples.length - 1 && <Separator />}
               </div>
             )
           })}
