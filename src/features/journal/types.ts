@@ -69,7 +69,7 @@ export type JournalDailyEntryItemProps = CurrentEntryGroup &
     editorLabel: string
   }
 
-export type JournalContentMenuProps = SuggestionsState & IsToday & JournalType
+export type JournalContentMenuProps = SuggestionsState & IsToday
 
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
@@ -103,6 +103,8 @@ export type JournalEditEntryEditorProps = SetEditMode & {
 export type JournalNewEntryEditorProps = {
   journalId: Id<'journals'>
   editor: Editor | null
+  title: string
+  setTitle: Dispatch<SetStateAction<string>>
 }
 
 export type JournalEntryDeleteDialogProps = {
@@ -129,3 +131,16 @@ export type FutureSelfJournalExamplesDialogProps = {
   setOpen: Dispatch<SetStateAction<boolean>>
   editor: Editor | null
 }
+
+export type JournalSuggestionsDialogProps = {
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  setTitle: Dispatch<SetStateAction<string>>
+}
+
+export type JournalSuggestionsProps = SuggestionsState &
+  JournalType & {
+    editor: Editor | null
+    setOpenSuggestionsDialog: Dispatch<SetStateAction<boolean>>
+    setTitle: Dispatch<SetStateAction<string>>
+  }

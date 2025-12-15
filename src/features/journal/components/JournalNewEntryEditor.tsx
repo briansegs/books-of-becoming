@@ -4,7 +4,6 @@ import { useAction } from 'next-safe-action/hooks'
 import { createEntry } from '@/app/actions/entryActions'
 import { parseActionError } from '@/utilities/parseActionError'
 import { toast } from 'sonner'
-import { useState } from 'react'
 import { JournalNewEntryEditorProps } from '../types'
 import { createEntrySchema } from '@/app/actions/schemas'
 import { JournalTextEditor } from './JournalTextEditor'
@@ -13,9 +12,12 @@ import { Spinner } from '@/features/shared/components/ui/spinner'
 import { z } from 'zod'
 import { format } from 'date-fns'
 
-export function JournalNewEntryEditor({ journalId, editor }: JournalNewEntryEditorProps) {
-  const [title, setTitle] = useState('')
-
+export function JournalNewEntryEditor({
+  journalId,
+  editor,
+  title,
+  setTitle,
+}: JournalNewEntryEditorProps) {
   const { execute: executeSave, isPending: saveIsPending } = useAction(createEntry, {
     onSuccess: () => {
       toast.success('Entry Saved!')

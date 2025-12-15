@@ -28,7 +28,7 @@ export function FutureSelfJournalSuggestions({
         <div className="flex w-full items-center justify-between bg-accent p-2">
           <div className="flex items-center gap-2">
             <Lightbulb className="text-muted-foreground" />
-            <p className="font-semibold text-primary">Future Self Journal Starter:</p>{' '}
+            <p className="font-semibold text-primary">Future Self Journal Starter:</p>
             <p className="text-sm text-muted-foreground">
               {'Click the "Use" button to add the starter text to your text editor.'}
             </p>
