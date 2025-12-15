@@ -2,11 +2,7 @@ import { Check, Lightbulb, Sparkles, X } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
 import { JournalSuggestionsProps } from '../types'
 import { journalSuggestions } from '../data/journalSuggestions'
-
-const flatItems = journalSuggestions.map((s) => s.items).flat()
-
-const randomSuggestion =
-  flatItems[Math.floor(Math.random() * flatItems.length)] || 'What are you grateful for today?'
+import { useState } from 'react'
 
 export function JournalSuggestions({
   type,
@@ -15,6 +11,13 @@ export function JournalSuggestions({
   setOpenSuggestionsDialog,
   setTitle,
 }: JournalSuggestionsProps) {
+  const [randomSuggestion] = useState(() => {
+    const flatItems = journalSuggestions.map((s) => s.items).flat()
+    return (
+      flatItems[Math.floor(Math.random() * flatItems.length)] || 'What are you grateful for today?'
+    )
+  })
+
   function insertSuggestedText() {
     setTitle(randomSuggestion)
   }
@@ -25,27 +28,25 @@ export function JournalSuggestions({
 
   if (type === 'default' && showSuggestions) {
     return (
-      <div>
-        <div className="flex w-full items-center justify-between bg-accent p-2">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="text-muted-foreground" />
-            <p className="font-semibold text-primary">Entry Suggestion:</p>
-            <p className="text-sm text-muted-foreground">{randomSuggestion}</p>
-          </div>
+      <div className="mb-6 flex w-full items-center justify-between bg-accent p-2">
+        <div className="flex items-center gap-2">
+          <Lightbulb className="text-muted-foreground" />
+          <p className="font-semibold text-primary">Entry Suggestion:</p>
+          <p className="text-sm text-muted-foreground">{randomSuggestion}</p>
+        </div>
 
-          <div className="flex items-center gap-2">
-            <Button onClick={insertSuggestedText}>
-              <Check /> Use
-            </Button>
+        <div className="flex items-center gap-2">
+          <Button onClick={insertSuggestedText}>
+            <Check /> Use
+          </Button>
 
-            <Button onClick={openSuggestions}>
-              <Sparkles /> See All
-            </Button>
+          <Button onClick={openSuggestions}>
+            <Sparkles /> See All
+          </Button>
 
-            <Button variant="ghost" onClick={() => setShowSuggestions(false)}>
-              <X />
-            </Button>
-          </div>
+          <Button variant="ghost" onClick={() => setShowSuggestions(false)}>
+            <X />
+          </Button>
         </div>
       </div>
     )
