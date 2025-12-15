@@ -8,13 +8,17 @@ import { JournalNewEntryEditor } from './JournalNewEntryEditor'
 import { FutureSelfJournalSuggestions } from './FutureSelfJournalSuggestions'
 import { useState } from 'react'
 import { FutureSelfJournalExamplesDialog } from './FutureSelfJournalExamplesDialog'
+import { JournalSuggestions } from './JournalSuggestions'
+import { JournalSuggestionsDialog } from './JournalSuggestionsDialog'
 
 export function JournalNewEntry({
   journal,
   showSuggestions,
   setShowSuggestions,
 }: JournalNewEntryProps) {
+  const [title, setTitle] = useState('')
   const [openExamplesDialog, setOpenExamplesDialog] = useState(false)
+  const [openSuggestionsDialog, setOpenSuggestionsDialog] = useState(false)
 
   const editor = useEditor({
     extensions: extensions as Extension[],
@@ -23,6 +27,15 @@ export function JournalNewEntry({
 
   return (
     <div className="space-y-4">
+      <JournalSuggestions
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+        type={journal.type}
+        editor={editor}
+        setOpenSuggestionsDialog={setOpenSuggestionsDialog}
+        setTitle={setTitle}
+      />
+
       <FutureSelfJournalSuggestions
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
@@ -36,7 +49,18 @@ export function JournalNewEntry({
         <p className="text-sm text-muted-foreground">Add a journal entry for today</p>
       </div>
 
-      <JournalNewEntryEditor journalId={journal._id} editor={editor} />
+      <JournalNewEntryEditor
+        journalId={journal._id}
+        editor={editor}
+        title={title}
+        setTitle={setTitle}
+      />
+
+      <JournalSuggestionsDialog
+        open={openSuggestionsDialog}
+        setOpen={setOpenSuggestionsDialog}
+        setTitle={setTitle}
+      />
 
       <FutureSelfJournalExamplesDialog
         open={openExamplesDialog}

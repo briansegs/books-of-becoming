@@ -5,12 +5,11 @@ import { JournalContentMenuProps } from '../types'
 export function JournalContentMenu({
   showSuggestions,
   setShowSuggestions,
-  type,
   isToday,
 }: JournalContentMenuProps) {
   return (
     <div className="absolute top-0 right-0 flex items-center gap-2">
-      {type === 'future' && isToday && (
+      {isToday && (
         <Button size="icon" onClick={() => setShowSuggestions((prev) => !prev)}>
           {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
         </Button>

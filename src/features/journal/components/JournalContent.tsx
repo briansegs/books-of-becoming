@@ -35,7 +35,6 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
       <JournalContentMenu
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
-        type={journal.type}
         isToday={isToday}
       />
 
