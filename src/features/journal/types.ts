@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react'
 import type { Editor } from '@tiptap/react'
 
 type Journal = Doc<'journals'>
+
 export type JournalEntry = Doc<'entries'>
 
 export type DailyEntryGroup = { date: string; entries: JournalEntry[] }
@@ -34,11 +35,13 @@ type JournalItem = {
   journal: Journal
 }
 
-export type JournalHeaderProps = JournalItem & {
+type EntriesCount = {
   entriesCount: number
 }
 
-export type JournalContentProps = DailyEntries & JournalItem
+export type JournalHeaderProps = JournalItem & EntriesCount & SuggestionsState
+
+export type JournalContentProps = DailyEntries & JournalItem & SuggestionsState
 
 type SetOpenDeleteDialog = {
   setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
@@ -62,14 +65,18 @@ export type JournalContentForSelectedDayProps = CurrentEntryGroup &
     todaysIndex: number
   }
 
+type EntryProp = {
+  entry: JournalEntry | null
+}
+
 export type JournalDailyEntryItemProps = CurrentEntryGroup &
-  SetOpenDeleteDialog & {
-    entry: JournalEntry | null
+  SetOpenDeleteDialog &
+  EntryProp & {
     index: number
     editorLabel: string
   }
 
-export type JournalContentMenuProps = SuggestionsState & IsToday
+export type JournalContentMenuProps = SuggestionsState
 
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
@@ -84,39 +91,45 @@ export type JournalContentForTodayProps = DailyEntries &
   SetOpenDeleteDialog &
   SetSelectedEntry
 
+type EditorItem = {
+  editor: Editor | null
+}
+
 export type FutureSelfJournalSuggestionsProps = SuggestionsState &
-  JournalType & {
-    editor: Editor | null
+  JournalType &
+  EditorItem & {
     setOpenExamplesDialog: Dispatch<SetStateAction<boolean>>
   }
 
-export type JournalTextEditorProps = {
-  editor: Editor | null
+type TitleState = {
   title: string
   setTitle: Dispatch<SetStateAction<string>>
 }
+
+export type JournalTextEditorProps = EditorItem & TitleState
 
 export type JournalEditEntryEditorProps = SetEditMode & {
   selectedEntry: JournalEntry
 }
 
-export type JournalNewEntryEditorProps = {
-  journalId: Id<'journals'>
-  editor: Editor | null
-  title: string
-  setTitle: Dispatch<SetStateAction<string>>
-}
+export type JournalNewEntryEditorProps = EditorItem &
+  TitleState & {
+    journalId: Id<'journals'>
+  }
 
-export type JournalEntryDeleteDialogProps = {
+type DialogOpenState = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export type JournalEntryDeleteDialogProps = DialogOpenState & {
   selectedEntry: JournalEntry | null
 }
 
 export type JournalDailyEntryProps = CurrentEntryGroup &
   SetOpenDeleteDialog &
-  SetEditMode & {
-    entry: JournalEntry | null
+  SetEditMode &
+  EntryProp & {
     index: number
   }
 
@@ -126,21 +139,17 @@ export type JournalStartNewEntryButtonProps = SetCurrentIndex & {
 
 export type JournalNewEntryProps = JournalItem & SuggestionsState
 
-export type FutureSelfJournalExamplesDialogProps = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  editor: Editor | null
-}
+export type FutureSelfJournalExamplesDialogProps = DialogOpenState & EditorItem
 
-export type JournalSuggestionsDialogProps = {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  setTitle: Dispatch<SetStateAction<string>>
-}
+export type JournalSuggestionsDialogProps = DialogOpenState & Pick<TitleState, 'setTitle'>
 
 export type JournalSuggestionsProps = SuggestionsState &
-  JournalType & {
-    editor: Editor | null
+  JournalType &
+  EditorItem &
+  Pick<TitleState, 'setTitle'> & {
     setOpenSuggestionsDialog: Dispatch<SetStateAction<boolean>>
-    setTitle: Dispatch<SetStateAction<string>>
   }
+
+export type JournalPageWrapperProps = JournalItem & DailyEntries & EntriesCount
+
+export type JournalShowSuggestionsToggleProps = SuggestionsState

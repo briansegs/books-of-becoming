@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 
-import { JournalContentMenu } from './JournalContentMenu'
 import { format } from 'date-fns'
 
 import { JournalContentNav } from './JournalContentNav'
@@ -12,11 +11,15 @@ import { JournalContentProps, JournalEntry } from '../types'
 import { JournalEntryDeleteDialog } from './JournalEntryDeleteDialog'
 import { JournalNewEntry } from './JournalNewEntry'
 
-export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
+export function JournalContent({
+  dailyEntries,
+  journal,
+  showSuggestions,
+  setShowSuggestions,
+}: JournalContentProps) {
   const [currentIndex, setCurrentIndex] = useState(
     dailyEntries.length > 0 ? dailyEntries.length - 1 : 0,
   )
-  const [showSuggestions, setShowSuggestions] = useState(true)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null)
 
@@ -32,12 +35,6 @@ export function JournalContent({ dailyEntries, journal }: JournalContentProps) {
 
   return (
     <div className="relative w-full space-y-4">
-      <JournalContentMenu
-        showSuggestions={showSuggestions}
-        setShowSuggestions={setShowSuggestions}
-        isToday={isToday}
-      />
-
       <JournalContentNav
         currentEntryGroup={currentEntryGroup}
         currentIndex={currentIndex}

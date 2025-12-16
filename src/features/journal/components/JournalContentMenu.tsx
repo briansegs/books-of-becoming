@@ -1,23 +1,30 @@
-import { Lightbulb, LightbulbOff, Settings } from 'lucide-react'
-import { Button } from '@/features/shared/components/ui/button'
 import { JournalContentMenuProps } from '../types'
+
+import { JournalCalendar } from './JournalCalendar'
+import { JournalSettingsMenu } from './JournalSettingsMenu'
+import { JournalSearch } from './JournalSearch'
+import { JournalShowSuggestionsToggle } from './JournalShowSuggestionsToggle'
+
+// TODO: Implement search functionality
+// TODO: Implement settings functionality
+// TODO: Implement calendar functionality
 
 export function JournalContentMenu({
   showSuggestions,
   setShowSuggestions,
-  isToday,
 }: JournalContentMenuProps) {
   return (
-    <div className="absolute top-0 right-0 flex items-center gap-2">
-      {isToday && (
-        <Button size="icon" onClick={() => setShowSuggestions((prev) => !prev)}>
-          {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
-        </Button>
-      )}
+    <div className="flex gap-2">
+      <JournalShowSuggestionsToggle
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+      />
 
-      <Button size="icon">
-        <Settings />
-      </Button>
+      <JournalSearch />
+
+      <JournalCalendar />
+
+      <JournalSettingsMenu />
     </div>
   )
 }

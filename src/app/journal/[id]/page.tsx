@@ -1,8 +1,4 @@
-import { JournalContent } from '@/features/journal/components/JournalContent'
-import { JournalHeader } from '@/features/journal/components/JournalHeader'
-
 import { Journal } from '@/features/journals/types'
-import { Separator } from '@/features/shared/components/ui/separator'
 import { auth } from '@clerk/nextjs/server'
 import { api } from 'convex/_generated/api'
 import { Id } from 'convex/_generated/dataModel'
@@ -10,6 +6,7 @@ import { fetchQuery } from 'convex/nextjs'
 import { redirect } from 'next/navigation'
 import { format } from 'date-fns'
 import { DailyEntryGroup } from '@/features/journal/types'
+import { JournalPageWrapper } from '@/features/journal/components/JournalPageWrapper'
 
 type Args = {
   params: Promise<{
@@ -94,12 +91,6 @@ export default async function JournalPage({ params }: Args) {
   }
 
   return (
-    <div className="min-h-screen w-full space-y-6 px-12 py-6">
-      <JournalHeader journal={journal} entriesCount={entriesCount} />
-
-      <Separator />
-
-      <JournalContent dailyEntries={dailyEntries} journal={journal} />
-    </div>
+    <JournalPageWrapper journal={journal} dailyEntries={dailyEntries} entriesCount={entriesCount} />
   )
 }
