@@ -13,7 +13,7 @@ export function JournalSearch() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="icon">
+        <Button size="icon" aria-label="Open search">
           <Search />
         </Button>
       </DialogTrigger>

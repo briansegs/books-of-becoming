@@ -9,7 +9,7 @@ export function JournalSettingsMenu() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="icon">
+        <Button size="icon" aria-label="Open settings">
           <Settings />
         </Button>
       </PopoverTrigger>

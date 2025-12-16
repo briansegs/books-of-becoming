@@ -12,7 +12,7 @@ export function JournalCalendar() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="icon">
+        <Button size="icon" aria-label="Open calendar">
           <CalendarIcon />
         </Button>
       </PopoverTrigger>
