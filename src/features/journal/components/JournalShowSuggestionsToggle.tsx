@@ -8,7 +8,7 @@ export function JournalShowSuggestionsToggle({
 }: JournalShowSuggestionsToggleProps) {
   return (
     <Button size="icon" onClick={() => setShowSuggestions((prev) => !prev)}>
-      {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
+      {showSuggestions ? <Lightbulb /> : <LightbulbOff />}
     </Button>
   )
 }
