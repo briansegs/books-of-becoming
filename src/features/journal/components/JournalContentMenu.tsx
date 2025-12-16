@@ -1,10 +1,11 @@
-import { Calendar, Lightbulb, LightbulbOff, Search, Settings } from 'lucide-react'
+import { Lightbulb, LightbulbOff, Search, Settings } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
 import { JournalContentMenuProps } from '../types'
 import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
 import { Label } from '@/features/shared/components/ui/label'
 import { Switch } from '@/features/shared/components/ui/switch'
 import { Separator } from '@/features/shared/components/ui/separator'
+import { JournalCalendar } from './JournalCalendar'
 
 export function JournalContentMenu({
   showSuggestions,
@@ -20,9 +21,7 @@ export function JournalContentMenu({
         <Search />
       </Button>
 
-      <Button size="icon">
-        <Calendar />
-      </Button>
+      <JournalCalendar />
 
       <JournalSettingsMenu />
     </div>
