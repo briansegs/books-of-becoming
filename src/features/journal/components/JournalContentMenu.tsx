@@ -1,4 +1,4 @@
-import { Lightbulb, LightbulbOff, Settings } from 'lucide-react'
+import { Calendar, CalendarDays, Lightbulb, LightbulbOff, Search, Settings } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
 import { JournalContentMenuProps } from '../types'
 
@@ -14,6 +14,14 @@ export function JournalContentMenu({
           {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
         </Button>
       )}
+
+      <Button size="icon">
+        <Search />
+      </Button>
+
+      <Button size="icon">
+        <Calendar />
+      </Button>
 
       <Button size="icon">
         <Settings />
