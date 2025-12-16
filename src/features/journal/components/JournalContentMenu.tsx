@@ -1,19 +1,20 @@
-import { Calendar, CalendarDays, Lightbulb, LightbulbOff, Search, Settings } from 'lucide-react'
+import { Calendar, Lightbulb, LightbulbOff, Search, Settings } from 'lucide-react'
 import { Button } from '@/features/shared/components/ui/button'
 import { JournalContentMenuProps } from '../types'
+import { Popover, PopoverContent, PopoverTrigger } from '@/features/shared/components/ui/popover'
+import { Label } from '@/features/shared/components/ui/label'
+import { Switch } from '@/features/shared/components/ui/switch'
+import { Separator } from '@/features/shared/components/ui/separator'
 
 export function JournalContentMenu({
   showSuggestions,
   setShowSuggestions,
-  isToday,
 }: JournalContentMenuProps) {
   return (
-    <div className="absolute top-0 right-0 flex items-center gap-2">
-      {isToday && (
-        <Button size="icon" onClick={() => setShowSuggestions((prev) => !prev)}>
-          {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
-        </Button>
-      )}
+    <div className="flex gap-2">
+      <Button size="icon" onClick={() => setShowSuggestions((prev) => !prev)}>
+        {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
+      </Button>
 
       <Button size="icon">
         <Search />
@@ -23,9 +24,36 @@ export function JournalContentMenu({
         <Calendar />
       </Button>
 
-      <Button size="icon">
-        <Settings />
-      </Button>
+      <JournalSettingsMenu />
     </div>
+  )
+}
+
+export function JournalSettingsMenu() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button size="icon">
+          <Settings />
+        </Button>
+      </PopoverTrigger>
+
+      <PopoverContent className="space-y-6">
+        <div className="space-y-2">
+          <h3 className="text-lg font-medium">Journal Settings</h3>
+          <Separator />
+        </div>
+
+        <div className="flex items-center justify-between gap-2">
+          <Label htmlFor="suggestions" className="text-base">
+            Show Suggestions
+          </Label>
+
+          <Switch id="suggestions" />
+        </div>
+
+        <Button>Save</Button>
+      </PopoverContent>
+    </Popover>
   )
 }

@@ -3,8 +3,14 @@ import { journalColors } from '@/features/journals/components/journalColors'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { JournalHeaderProps } from '../types'
+import { JournalContentMenu } from './JournalContentMenu'
 
-export function JournalHeader({ journal, entriesCount }: JournalHeaderProps) {
+export function JournalHeader({
+  journal,
+  entriesCount,
+  showSuggestions,
+  setShowSuggestions,
+}: JournalHeaderProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const background = journalBackgrounds[journal.background as keyof typeof journalBackgrounds]
   const textColors = selectedColor.textColors
@@ -15,7 +21,7 @@ export function JournalHeader({ journal, entriesCount }: JournalHeaderProps) {
   const updatedDate = format(new Date(journal.updatedAt || ''), 'M/d/yyyy @ h:mm a')
 
   return (
-    <div className="flex h-fit w-full">
+    <div className="flex h-fit w-full justify-between gap-2">
       <div className="flex w-full gap-6">
         <div
           className={cn(
@@ -52,6 +58,11 @@ export function JournalHeader({ journal, entriesCount }: JournalHeaderProps) {
           </div>
         </div>
       </div>
+
+      <JournalContentMenu
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+      />
     </div>
   )
 }
