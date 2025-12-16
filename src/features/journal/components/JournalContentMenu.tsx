@@ -5,6 +5,10 @@ import { JournalSettingsMenu } from './JournalSettingsMenu'
 import { JournalSearch } from './JournalSearch'
 import { JournalShowSuggestionsToggle } from './JournalShowSuggestionsToggle'
 
+// TODO: Impliment search functionality
+// TODO: Impliment settings functionality
+// TODO: Impliment calendar functionality
+
 export function JournalContentMenu({
   showSuggestions,
   setShowSuggestions,
