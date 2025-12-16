@@ -151,3 +151,5 @@ export type JournalSuggestionsProps = SuggestionsState &
   }
 
 export type JournalPageWrapperProps = JournalItem & DailyEntries & EntriesCount
+
+export type JournalShowSuggestionsToggleProps = SuggestionsState

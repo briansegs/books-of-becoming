@@ -1,10 +1,9 @@
-import { Lightbulb, LightbulbOff } from 'lucide-react'
-import { Button } from '@/features/shared/components/ui/button'
 import { JournalContentMenuProps } from '../types'
 
 import { JournalCalendar } from './JournalCalendar'
 import { JournalSettingsMenu } from './JournalSettingsMenu'
 import { JournalSearch } from './JournalSearch'
+import { JournalShowSuggestionsToggle } from './JournalShowSuggestionsToggle'
 
 export function JournalContentMenu({
   showSuggestions,
@@ -12,9 +11,10 @@ export function JournalContentMenu({
 }: JournalContentMenuProps) {
   return (
     <div className="flex gap-2">
-      <Button size="icon" onClick={() => setShowSuggestions((prev) => !prev)}>
-        {showSuggestions ? <LightbulbOff /> : <Lightbulb />}
-      </Button>
+      <JournalShowSuggestionsToggle
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+      />
 
       <JournalSearch />
 
