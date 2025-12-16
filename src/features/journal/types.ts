@@ -65,13 +65,13 @@ export type JournalContentForSelectedDayProps = CurrentEntryGroup &
     todaysIndex: number
   }
 
-type Entry = {
+type EntryProp = {
   entry: JournalEntry | null
 }
 
 export type JournalDailyEntryItemProps = CurrentEntryGroup &
   SetOpenDeleteDialog &
-  Entry & {
+  EntryProp & {
     index: number
     editorLabel: string
   }
@@ -129,7 +129,7 @@ export type JournalEntryDeleteDialogProps = DialogOpenState & {
 export type JournalDailyEntryProps = CurrentEntryGroup &
   SetOpenDeleteDialog &
   SetEditMode &
-  Entry & {
+  EntryProp & {
     index: number
   }
 
@@ -141,7 +141,7 @@ export type JournalNewEntryProps = JournalItem & SuggestionsState
 
 export type FutureSelfJournalExamplesDialogProps = DialogOpenState & EditorItem
 
-export type JournalSuggestionsDialogProps = DialogOpenState & Pick<TitleState, 'setTitle'> & {}
+export type JournalSuggestionsDialogProps = DialogOpenState & Pick<TitleState, 'setTitle'>
 
 export type JournalSuggestionsProps = SuggestionsState &
   JournalType &
