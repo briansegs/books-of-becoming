@@ -6,33 +6,41 @@ import { fetchMutation } from 'convex/nextjs'
 import { api } from 'convex/_generated/api'
 import { auth } from '@clerk/nextjs/server'
 import { actionClient } from '@/lib/safe-action'
-import { createJournalFormSchema, deleteJournalSchema, editJournalFormSchema } from './schemas'
+import {
+  createJournalFormSchema,
+  deleteJournalSchema,
+  editJournalFormSchema,
+  updateJournalSettingsSchema,
+} from './schemas'
 import { Id } from 'convex/_generated/dataModel'
 
 export const createJournal = actionClient
   .inputSchema(createJournalFormSchema)
-  .action(async ({ parsedInput: { title, type, color, background, textColor } }) => {
-    const { userId, getToken } = await auth()
-    if (!userId) throw new Error('No userId found')
+  .action(
+    async ({ parsedInput: { title, type, color, background, textColor, suggestionsEnabled } }) => {
+      const { userId, getToken } = await auth()
+      if (!userId) throw new Error('No userId found')
 
-    const token = await getToken({ template: 'convex' })
+      const token = await getToken({ template: 'convex' })
 
-    if (!token) throw new Error('No user token found')
+      if (!token) throw new Error('No user token found')
 
-    await fetchMutation(
-      api.journal.create,
-      {
-        title,
-        type,
-        color,
-        textColor,
-        background,
-      },
-      { token },
-    )
+      await fetchMutation(
+        api.journal.create,
+        {
+          title,
+          type,
+          color,
+          textColor,
+          background,
+          suggestionsEnabled,
+        },
+        { token },
+      )
 
-    revalidatePath(`/journals/${userId}`)
-  })
+      revalidatePath(`/journals/${userId}`)
+    },
+  )
 
 export const deleteJournal = actionClient
   .inputSchema(deleteJournalSchema)
@@ -51,7 +59,40 @@ export const deleteJournal = actionClient
 
 export const editJournal = actionClient
   .inputSchema(editJournalFormSchema)
-  .action(async ({ parsedInput: { id, title, type, color, background, textColor } }) => {
+  .action(
+    async ({
+      parsedInput: { id, title, type, color, background, textColor, suggestionsEnabled },
+    }) => {
+      const { userId, getToken } = await auth()
+      if (!userId) throw new Error('No userId found')
+
+      const token = await getToken({ template: 'convex' })
+
+      if (!token) throw new Error('No user token found')
+
+      await fetchMutation(
+        api.journal.update,
+        {
+          id: id as Id<'journals'>,
+          data: {
+            title,
+            type,
+            color,
+            textColor,
+            background,
+            suggestionsEnabled,
+          },
+        },
+        { token },
+      )
+
+      revalidatePath(`/journals/${userId}`)
+    },
+  )
+
+export const updateJournalSettings = actionClient
+  .inputSchema(updateJournalSettingsSchema)
+  .action(async ({ parsedInput: { id, suggestionsEnabled } }) => {
     const { userId, getToken } = await auth()
     if (!userId) throw new Error('No userId found')
 
@@ -60,19 +101,14 @@ export const editJournal = actionClient
     if (!token) throw new Error('No user token found')
 
     await fetchMutation(
-      api.journal.update,
+      api.journal.updateJournalSettings,
       {
         id: id as Id<'journals'>,
-        data: {
-          title,
-          type,
-          color,
-          textColor,
-          background,
-        },
+
+        suggestionsEnabled,
       },
       { token },
     )
 
-    revalidatePath(`/journals/${userId}`)
+    revalidatePath(`/journal/${id}`)
   })

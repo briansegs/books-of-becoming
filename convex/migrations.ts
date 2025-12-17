@@ -26,6 +26,15 @@ export const migrations = new Migrations<DataModel>(components.migrations)
 //   },
 // })
 
-// to run migrations, from CLI: npx convex run migrations:runIt '{fn: "migrations:removeEntriesCount"}'
+// export const addSuggestionsEnabled = migrations.define({
+//   table: 'journals',
+//   migrateOne: async (ctx, journal) => {
+//     if (journal.suggestionsEnabled === undefined) {
+//       await ctx.db.patch(journal._id, { suggestionsEnabled: true })
+//     }
+//   },
+// })
+
+// to run migrations, from CLI: npx convex run migrations:runIt '{fn: "migrations:addSuggestionsEnabled"}'
 
 export const runIt = migrations.runner()

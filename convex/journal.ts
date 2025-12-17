@@ -15,6 +15,7 @@ export const create = mutation({
     color: journalColors,
     textColor: journalTextColors,
     background: journalBackgrounds,
+    suggestionsEnabled: v.boolean(),
   },
   handler: async (ctx, args) => {
     const currentUser = await getAuthenticatedUser(ctx)
@@ -57,6 +58,7 @@ export const update = mutation({
       color: journalColors,
       textColor: journalTextColors,
       background: journalBackgrounds,
+      suggestionsEnabled: v.boolean(),
     }),
   },
   handler: async (ctx, { id, data }) => {
@@ -81,5 +83,21 @@ export const get = query({
     const journal = await getCurrentUserJournal({ ctx, currentUser, id })
 
     return journal
+  },
+})
+
+export const updateJournalSettings = mutation({
+  args: {
+    id: v.id('journals'),
+    suggestionsEnabled: v.optional(v.boolean()),
+  },
+  handler: async (ctx, { id, suggestionsEnabled }) => {
+    const currentUser = await getAuthenticatedUser(ctx)
+    const journal = await getCurrentUserJournal({ ctx, currentUser, id })
+
+    await ctx.db.patch(journal._id, {
+      suggestionsEnabled,
+      updatedAt: Date.now(),
+    })
   },
 })

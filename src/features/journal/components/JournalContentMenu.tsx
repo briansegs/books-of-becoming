@@ -10,6 +10,7 @@ import { JournalShowSuggestionsToggle } from './JournalShowSuggestionsToggle'
 // TODO: Implement calendar functionality
 
 export function JournalContentMenu({
+  journal,
   showSuggestions,
   setShowSuggestions,
 }: JournalContentMenuProps) {
@@ -24,7 +25,11 @@ export function JournalContentMenu({
 
       <JournalCalendar />
 
-      <JournalSettingsMenu />
+      <JournalSettingsMenu
+        journal={journal}
+        showSuggestions={showSuggestions}
+        setShowSuggestions={setShowSuggestions}
+      />
     </div>
   )
 }

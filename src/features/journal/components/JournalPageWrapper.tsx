@@ -12,7 +12,7 @@ export function JournalPageWrapper({
   dailyEntries,
   entriesCount,
 }: JournalPageWrapperProps) {
-  const [showSuggestions, setShowSuggestions] = useState(true)
+  const [showSuggestions, setShowSuggestions] = useState(journal.suggestionsEnabled)
 
   return (
     <div className="min-h-screen w-full space-y-6 px-12 py-6">

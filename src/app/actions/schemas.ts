@@ -14,6 +14,7 @@ export const createJournalFormSchema = z.object({
     'circuitBoard',
     'paperTexture',
   ]),
+  suggestionsEnabled: z.boolean(),
 })
 
 export const deleteJournalSchema = z.object({
@@ -35,6 +36,12 @@ export const editJournalFormSchema = z.object({
     'circuitBoard',
     'paperTexture',
   ]),
+  suggestionsEnabled: z.boolean(),
+})
+
+export const updateJournalSettingsSchema = z.object({
+  id: z.string(),
+  suggestionsEnabled: z.boolean(),
 })
 
 export const createEntrySchema = z.object({

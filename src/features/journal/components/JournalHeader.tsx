@@ -60,6 +60,7 @@ export function JournalHeader({
       </div>
 
       <JournalContentMenu
+        journal={journal}
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
       />
