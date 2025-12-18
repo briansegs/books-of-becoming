@@ -24,12 +24,16 @@ export function JournalContent({
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null)
 
   const todaysKey = format(new Date(), 'yyyy-MM-dd')
-  const foundEntryIndex = dailyEntries.findIndex((group) => group.date === todaysKey)
+  const ensuredDailyEntries = dailyEntries.some((group) => group.date === todaysKey)
+    ? dailyEntries
+    : [...dailyEntries, { date: todaysKey, entries: [] }]
+
+  const foundEntryIndex = ensuredDailyEntries.findIndex((group) => group.date === todaysKey)
   const todaysIndex = foundEntryIndex >= 0 ? foundEntryIndex : 0
 
   const isToday = currentIndex === todaysIndex
 
-  const currentEntryGroup = dailyEntries[currentIndex]
+  const currentEntryGroup = ensuredDailyEntries[currentIndex]
 
   const todaysDate = new Date()
 
@@ -39,7 +43,7 @@ export function JournalContent({
         currentEntryGroup={currentEntryGroup}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
-        dailyEntries={dailyEntries}
+        dailyEntries={ensuredDailyEntries}
         isToday={isToday}
         todaysDate={todaysDate}
       />
@@ -53,7 +57,7 @@ export function JournalContent({
           />
 
           <JournalContentForToday
-            dailyEntries={dailyEntries}
+            dailyEntries={ensuredDailyEntries}
             todaysDate={todaysDate}
             setOpenDeleteDialog={setOpenDeleteDialog}
             setSelectedEntry={setSelectedEntry}
