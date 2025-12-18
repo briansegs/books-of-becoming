@@ -209,7 +209,7 @@ export function JournalCreateDialog() {
               name="suggestionsEnabled"
               render={({ field }) => (
                 <FormItem className="flex items-center justify-between">
-                  <FormLabel htmlFor="showSuggestions">Show Suggestions</FormLabel>
+                  <FormLabel htmlFor="suggestionsEnabled">Show Suggestions</FormLabel>
                   <FormControl>
                     <Switch
                       id="suggestionsEnabled"
