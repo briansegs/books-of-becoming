@@ -92,15 +92,17 @@ export function JournalSettingsMenu({
               control={form.control}
               name="suggestionsEnabled"
               render={({ field }) => (
-                <FormItem className="flex items-center justify-between">
-                  <FormLabel htmlFor="suggestionsEnabled">Show Suggestions</FormLabel>
-                  <FormControl>
-                    <Switch
-                      id="suggestionsEnabled"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
+                <FormItem>
+                  <div className="flex items-center justify-between">
+                    <FormLabel htmlFor="suggestionsEnabled">Show Suggestions</FormLabel>
+                    <FormControl>
+                      <Switch
+                        id="suggestionsEnabled"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </div>
 
                   <FormMessage />
                 </FormItem>
