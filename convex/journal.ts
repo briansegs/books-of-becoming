@@ -89,7 +89,7 @@ export const get = query({
 export const updateJournalSettings = mutation({
   args: {
     id: v.id('journals'),
-    suggestionsEnabled: v.optional(v.boolean()),
+    suggestionsEnabled: v.boolean(),
   },
   handler: async (ctx, { id, suggestionsEnabled }) => {
     const currentUser = await getAuthenticatedUser(ctx)
