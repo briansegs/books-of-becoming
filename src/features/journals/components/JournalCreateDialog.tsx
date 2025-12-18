@@ -41,6 +41,7 @@ import { cn } from '@/lib/utils'
 import { journalColors } from './journalColors'
 import { journalBackgrounds } from './journalBackgrounds'
 import { JournalDialogSelectField } from './JournalDialogSelectField'
+import { Switch } from '@/features/shared/components/ui/switch'
 
 export const journalBackgroundsLabelMap = {
   none: 'None',
@@ -78,6 +79,7 @@ export function JournalCreateDialog() {
       color: 'white',
       textColor: 'black',
       background: 'none',
+      suggestionsEnabled: true,
     },
   })
 
@@ -199,6 +201,25 @@ export function JournalCreateDialog() {
                 <div className="relative size-12 rounded-md border bg-zinc-100">
                   {journalBackgrounds[key as JournalBackgrounds]}
                 </div>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="suggestionsEnabled"
+              render={({ field }) => (
+                <FormItem className="flex items-center justify-between">
+                  <FormLabel htmlFor="suggestionsEnabled">Show Suggestions</FormLabel>
+                  <FormControl>
+                    <Switch
+                      id="suggestionsEnabled"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
               )}
             />
 

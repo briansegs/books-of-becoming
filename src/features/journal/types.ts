@@ -76,7 +76,7 @@ export type JournalDailyEntryItemProps = CurrentEntryGroup &
     editorLabel: string
   }
 
-export type JournalContentMenuProps = SuggestionsState
+export type JournalContentMenuProps = SuggestionsState & JournalItem
 
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
@@ -153,3 +153,5 @@ export type JournalSuggestionsProps = SuggestionsState &
 export type JournalPageWrapperProps = JournalItem & DailyEntries & EntriesCount
 
 export type JournalShowSuggestionsToggleProps = SuggestionsState
+
+export type JournalSettingsMenuProps = JournalItem & SuggestionsState
