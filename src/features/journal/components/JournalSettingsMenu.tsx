@@ -23,13 +23,9 @@ import { parseActionError } from '@/utilities/parseActionError'
 import { updateJournalSettings } from '@/app/actions/journalActions'
 import { useState } from 'react'
 import { JournalSettingsMenuProps } from '../types'
+import { updateJournalSettingsSchema } from '@/app/actions/schemas'
 
-export const changeJournalSettingsFormSchema = z.object({
-  id: z.string(),
-  suggestionsEnabled: z.boolean(),
-})
-
-type changeJournalSettingsFormData = z.infer<typeof changeJournalSettingsFormSchema>
+type updateJournalSettingsFormData = z.infer<typeof updateJournalSettingsSchema>
 
 export function JournalSettingsMenu({
   journal,
@@ -38,8 +34,8 @@ export function JournalSettingsMenu({
 }: JournalSettingsMenuProps) {
   const [open, setOpen] = useState(false)
 
-  const form = useForm<changeJournalSettingsFormData>({
-    resolver: zodResolver(changeJournalSettingsFormSchema),
+  const form = useForm<updateJournalSettingsFormData>({
+    resolver: zodResolver(updateJournalSettingsSchema),
     defaultValues: {
       id: journal._id,
       suggestionsEnabled: journal.suggestionsEnabled,
@@ -66,7 +62,7 @@ export function JournalSettingsMenu({
     },
   })
 
-  function handleSubmit(values: z.infer<typeof changeJournalSettingsFormSchema>) {
+  function handleSubmit(values: z.infer<typeof updateJournalSettingsSchema>) {
     if (values.suggestionsEnabled === journal.suggestionsEnabled) {
       toast.info('No changes made to settings')
       setOpen(false)
