@@ -45,8 +45,9 @@ export default async function JournalPage({ params }: Args) {
     )
   }
 
-  let dailyEntries: DailyEntryGroup[] = []
   let entriesCount: number = 0
+
+  const dailyEntryGroups: DailyEntryGroup[] = []
 
   try {
     const ungroupedEntries = await fetchQuery(
@@ -56,8 +57,6 @@ export default async function JournalPage({ params }: Args) {
     )
 
     entriesCount = ungroupedEntries.length
-
-    const dailyEntryGroups: DailyEntryGroup[] = []
 
     ungroupedEntries.forEach((entry) => {
       const dateKey = format(new Date(entry._creationTime), 'yyyy-MM-dd')
@@ -71,10 +70,6 @@ export default async function JournalPage({ params }: Args) {
 
       entryGroup.entries.push(entry)
     })
-
-    dailyEntries = dailyEntryGroups.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    )
   } catch (error) {
     console.error('Failed to fetch journal entries:', error)
 
@@ -86,6 +81,10 @@ export default async function JournalPage({ params }: Args) {
   }
 
   return (
-    <JournalPageWrapper journal={journal} dailyEntries={dailyEntries} entriesCount={entriesCount} />
+    <JournalPageWrapper
+      journal={journal}
+      dailyEntryGroups={dailyEntryGroups}
+      entriesCount={entriesCount}
+    />
   )
 }

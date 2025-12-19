@@ -11,6 +11,11 @@ export type DailyEntryGroup = { date: string; entries: JournalEntry[] }
 type DailyEntries = {
   dailyEntries: DailyEntryGroup[]
 }
+
+type DailyEntriesGroup = {
+  dailyEntryGroups: DailyEntryGroup[]
+}
+
 type CurrentEntryGroup = {
   currentEntryGroup?: DailyEntryGroup
 }
@@ -41,7 +46,7 @@ type EntriesCount = {
 
 export type JournalHeaderProps = JournalItem & EntriesCount & SuggestionsState
 
-export type JournalContentProps = DailyEntries & JournalItem & SuggestionsState
+export type JournalContentProps = JournalItem & SuggestionsState & DailyEntriesGroup
 
 type SetOpenDeleteDialog = {
   setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
@@ -150,7 +155,7 @@ export type JournalSuggestionsProps = SuggestionsState &
     setOpenSuggestionsDialog: Dispatch<SetStateAction<boolean>>
   }
 
-export type JournalPageWrapperProps = JournalItem & DailyEntries & EntriesCount
+export type JournalPageWrapperProps = JournalItem & EntriesCount & DailyEntriesGroup
 
 export type JournalShowSuggestionsToggleProps = SuggestionsState
 

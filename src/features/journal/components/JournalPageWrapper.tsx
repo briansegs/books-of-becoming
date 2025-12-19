@@ -9,8 +9,8 @@ import { JournalPageWrapperProps } from '../types'
 
 export function JournalPageWrapper({
   journal,
-  dailyEntries,
   entriesCount,
+  dailyEntryGroups,
 }: JournalPageWrapperProps) {
   const [showSuggestions, setShowSuggestions] = useState(journal.suggestionsEnabled)
 
@@ -26,10 +26,10 @@ export function JournalPageWrapper({
       <Separator />
 
       <JournalContent
-        dailyEntries={dailyEntries}
         journal={journal}
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
+        dailyEntryGroups={dailyEntryGroups}
       />
     </div>
   )
