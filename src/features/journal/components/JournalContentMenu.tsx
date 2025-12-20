@@ -13,6 +13,8 @@ export function JournalContentMenu({
   journal,
   showSuggestions,
   setShowSuggestions,
+  dailyEntries,
+  setCurrentIndex,
 }: JournalContentMenuProps) {
   return (
     <div className="flex gap-2">
@@ -23,7 +25,7 @@ export function JournalContentMenu({
 
       <JournalSearch />
 
-      <JournalCalendar />
+      <JournalCalendar dailyEntries={dailyEntries} setCurrentIndex={setCurrentIndex} />
 
       <JournalSettingsMenu
         journal={journal}

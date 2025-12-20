@@ -2,8 +2,6 @@
 
 import { useMemo, useState } from 'react'
 
-import { format } from 'date-fns'
-
 import { JournalContentNav } from './JournalContentNav'
 import { JournalContentForToday } from './JournalContentForToday'
 import { JournalContentForSelectedDay } from './JournalContentForSelectedDay'
@@ -15,25 +13,12 @@ export function JournalContent({
   journal,
   showSuggestions,
   setShowSuggestions,
-  dailyEntryGroups,
+  dailyEntries,
+  currentIndex,
+  setCurrentIndex,
+  today,
+  todaysKey,
 }: JournalContentProps) {
-  const today = useMemo(() => new Date(), [])
-  const todaysKey = format(today, 'yyyy-MM-dd')
-
-  const dailyEntries = useMemo(() => {
-    const hasToday = dailyEntryGroups.some((g) => g.date === todaysKey)
-
-    const withToday = hasToday
-      ? dailyEntryGroups
-      : [...dailyEntryGroups, { date: todaysKey, entries: [] }]
-
-    return [...withToday].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-  }, [dailyEntryGroups, todaysKey])
-
-  const [currentIndex, setCurrentIndex] = useState(() =>
-    dailyEntries.length > 0 ? dailyEntries.length - 1 : 0,
-  )
-
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null)
 
