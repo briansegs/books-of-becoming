@@ -44,9 +44,20 @@ type EntriesCount = {
   entriesCount: number
 }
 
-export type JournalHeaderProps = JournalItem & EntriesCount & SuggestionsState
+export type JournalHeaderProps = JournalItem &
+  EntriesCount &
+  SuggestionsState &
+  DailyEntries &
+  SetCurrentIndex
 
-export type JournalContentProps = JournalItem & SuggestionsState & DailyEntriesGroup
+export type JournalContentProps = JournalItem &
+  SuggestionsState &
+  DailyEntries &
+  SetCurrentIndex & {
+    currentIndex: number
+    today: Date
+    todaysKey: string
+  }
 
 type SetOpenDeleteDialog = {
   setOpenDeleteDialog: Dispatch<SetStateAction<boolean>>
@@ -81,7 +92,10 @@ export type JournalDailyEntryItemProps = CurrentEntryGroup &
     editorLabel: string
   }
 
-export type JournalContentMenuProps = SuggestionsState & JournalItem
+export type JournalContentMenuProps = SuggestionsState &
+  JournalItem &
+  DailyEntries &
+  SetCurrentIndex
 
 export type JournalContentNavProps = DailyEntries &
   TodaysDate &
@@ -160,3 +174,5 @@ export type JournalPageWrapperProps = JournalItem & EntriesCount & DailyEntriesG
 export type JournalShowSuggestionsToggleProps = SuggestionsState
 
 export type JournalSettingsMenuProps = JournalItem & SuggestionsState
+
+export type JournalCalendarProps = DailyEntries & SetCurrentIndex
