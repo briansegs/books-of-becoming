@@ -52,11 +52,19 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
   const results = useMemo(() => {
     if (!debouncedQuery.trim()) return []
 
-    const q = debouncedQuery.toLowerCase()
+    const tokens = tokenize(debouncedQuery)
 
-    return allEntries.filter(
-      (entry) => entry.title?.toLowerCase().includes(q) || entry.date.includes(q),
-    )
+    return allEntries.filter((entry) => {
+      const title = entry.title?.toLowerCase() ?? ''
+
+      const titleMatch = tokens.every((t) => title.includes(t))
+
+      const dateMatch = getDateSearchStrings(entry.date).some((dateStr) =>
+        tokens.every((t) => dateStr.includes(t)),
+      )
+
+      return titleMatch || dateMatch
+    })
   }, [debouncedQuery, allEntries])
 
   function handleClick(entry: JournalEntry & { date: string }) {
@@ -161,4 +169,30 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
       </DialogContent>
     </Dialog>
   )
+}
+
+function getDateSearchStrings(dateISO: string) {
+  const d = new Date(dateISO)
+
+  const formats = [
+    dateISO,
+    format(d, 'MM/dd/yyyy'),
+    format(d, 'M/d/yyyy'),
+    format(d, 'MM/dd/yy'),
+    format(d, 'M/d/yy'),
+    format(d, 'MM-dd-yyyy'),
+    format(d, 'M-d-yyyy'),
+    format(d, 'M d yyyy'),
+  ]
+
+  return formats.map((s) => s.toLowerCase().replace(/[\s./-]+/g, ' '))
+}
+
+function tokenize(query: string) {
+  return query
+    .toLowerCase()
+    .trim()
+    .replace(/[\s./-]+/g, ' ')
+    .split(' ')
+    .filter(Boolean)
 }
