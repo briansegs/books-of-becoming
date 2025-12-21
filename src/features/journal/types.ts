@@ -176,3 +176,5 @@ export type JournalShowSuggestionsToggleProps = SuggestionsState
 export type JournalSettingsMenuProps = JournalItem & SuggestionsState
 
 export type JournalCalendarProps = DailyEntries & SetCurrentIndex
+
+export type JournalSearchProps = DailyEntries & SetCurrentIndex
