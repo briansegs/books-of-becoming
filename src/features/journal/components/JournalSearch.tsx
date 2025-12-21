@@ -172,7 +172,8 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
 }
 
 function getDateSearchStrings(dateISO: string) {
-  const d = new Date(dateISO)
+  const [year, month, day] = dateISO.split('-').map(Number)
+  const d = new Date(year ?? 1, (month ?? 1) - 1, day ?? 1)
 
   const formats = [
     dateISO,
