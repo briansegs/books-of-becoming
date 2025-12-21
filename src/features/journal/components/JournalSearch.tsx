@@ -126,7 +126,7 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
           )}
 
           <Accordion type="single" collapsible className="w-full">
-            {results.map((entry: JournalEntry & { date: string }) => {
+            {results.map((entry) => {
               const date = format(new Date(entry._creationTime), 'MM/dd/yyyy')
 
               return (
