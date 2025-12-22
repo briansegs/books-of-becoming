@@ -127,9 +127,9 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
           </div>
         </div>
 
-        <div className="h-96 space-y-2 overflow-y-auto [scrollbar-gutter:stable]">
-          <div className="space-y-1">
-            <div className="flex justify-between pr-10 pl-8 text-sm">
+        <div className="w-full max-w-[460px]">
+          <div className="mb-0 space-y-1">
+            <div className="flex justify-between pr-13 pl-8 text-sm">
               <div>Title</div>
               <div>Date Created</div>
             </div>
@@ -137,42 +137,44 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
             <Separator />
           </div>
 
-          {results.length === 0 && debouncedQuery && (
-            <div className="text-sm text-muted-foreground">No results</div>
-          )}
+          <div className="h-96 space-y-2 overflow-y-auto [scrollbar-gutter:stable]">
+            {results.length === 0 && debouncedQuery && (
+              <div className="mt-4 ml-4 text-sm text-muted-foreground">No results...</div>
+            )}
 
-          <Accordion type="single" collapsible className="w-full">
-            {results.map((entry) => {
-              const date = format(new Date(entry._creationTime), 'MM/dd/yyyy')
+            <Accordion type="single" collapsible className="w-full">
+              {results.map((entry) => {
+                const date = format(new Date(entry._creationTime), 'MM/dd/yyyy')
 
-              return (
-                <AccordionItem
-                  key={entry._id}
-                  value={entry._id}
-                  className="w-full px-4 hover:bg-accent"
-                >
-                  <AccordionTrigger className="w-full min-w-0 gap-4 overflow-hidden hover:no-underline">
-                    <div className="flex w-full min-w-0 cursor-pointer items-center gap-2 hover:underline">
-                      <div className="min-w-0 flex-1 truncate text-base font-medium">
-                        {entry.title ?? date}
+                return (
+                  <AccordionItem
+                    key={entry._id}
+                    value={entry._id}
+                    className="w-full px-4 hover:bg-accent"
+                  >
+                    <AccordionTrigger className="w-full min-w-0 gap-4 overflow-hidden hover:no-underline">
+                      <div className="flex w-full min-w-0 cursor-pointer items-center gap-2 hover:underline">
+                        <div className="min-w-0 flex-1 truncate text-base font-medium">
+                          {entry.title ?? date}
+                        </div>
+                        <div className="shrink-0 text-xs text-muted-foreground">{date}</div>
                       </div>
-                      <div className="shrink-0 text-xs text-muted-foreground">{date}</div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-4">
-                    <div className="line-clamp-2 text-xs">
-                      <SafeHtml
-                        html={entry.content}
-                        className="prose prose-sm max-w-none dark:prose-invert"
-                      />
-                    </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4">
+                      <div className="line-clamp-2 text-xs">
+                        <SafeHtml
+                          html={entry.content}
+                          className="prose prose-sm max-w-none dark:prose-invert"
+                        />
+                      </div>
 
-                    <Button onClick={() => handleClick(entry)}>Go To Entry</Button>
-                  </AccordionContent>
-                </AccordionItem>
-              )
-            })}
-          </Accordion>
+                      <Button onClick={() => handleClick(entry)}>Go To Entry</Button>
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              })}
+            </Accordion>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
