@@ -21,6 +21,7 @@ import {
 import { format } from 'date-fns'
 import { Separator } from '@/features/shared/components/ui/separator'
 import { SafeHtml } from '@/utilities/SafeHtml'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
 
 export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchProps) {
   const [open, setOpen] = useState(false)
@@ -95,11 +96,18 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
         }
       }}
     >
-      <DialogTrigger asChild>
-        <Button size="icon" aria-label="Open search">
-          <Search />
-        </Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button size="icon" aria-label="Open search">
+              <Search />
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Search Journal Entries</p>
+        </TooltipContent>
+      </Tooltip>
 
       <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>

@@ -7,6 +7,7 @@ import { CalendarIcon } from 'lucide-react'
 import { Calendar } from '@/features/shared/components/ui/calendar'
 import { format } from 'date-fns'
 import { JournalCalendarProps } from '../types'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
 
 function toDateKey(date: Date) {
   return format(date, 'yyyy-MM-dd')
@@ -48,11 +49,18 @@ export function JournalCalendar({ dailyEntries, setCurrentIndex }: JournalCalend
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button size="icon" aria-label="Open calendar">
-          <CalendarIcon />
-        </Button>
-      </PopoverTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <PopoverTrigger asChild>
+            <Button size="icon" aria-label="Open calendar">
+              <CalendarIcon />
+            </Button>
+          </PopoverTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Find Entries By Date</p>
+        </TooltipContent>
+      </Tooltip>
 
       <PopoverContent className="space-y-6">
         <Calendar

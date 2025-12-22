@@ -24,6 +24,7 @@ import { updateJournalSettings } from '@/app/actions/journalActions'
 import { useState } from 'react'
 import { JournalSettingsMenuProps } from '../types'
 import { updateJournalSettingsSchema } from '@/app/actions/schemas'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
 
 type updateJournalSettingsFormData = z.infer<typeof updateJournalSettingsSchema>
 
@@ -74,11 +75,18 @@ export function JournalSettingsMenu({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button size="icon" aria-label="Open settings">
-          <Settings />
-        </Button>
-      </PopoverTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <PopoverTrigger asChild>
+            <Button size="icon" aria-label="Open settings">
+              <Settings />
+            </Button>
+          </PopoverTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Journal Settings</p>
+        </TooltipContent>
+      </Tooltip>
 
       <PopoverContent className="space-y-6">
         <div className="space-y-2">
