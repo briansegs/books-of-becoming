@@ -4,7 +4,7 @@ import { JournalContent } from '@/features/journal/components/JournalContent'
 import { JournalHeader } from '@/features/journal/components/JournalHeader'
 
 import { Separator } from '@/features/shared/components/ui/separator'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { JournalPageWrapperProps } from '../types'
 import { format } from 'date-fns'
 
@@ -16,10 +16,8 @@ export function JournalPageWrapper({
   const [showSuggestions, setShowSuggestions] = useState(journal.suggestionsEnabled)
   const [today, setToday] = useState(() => new Date())
 
-  // Compute todaysKey
   const todaysKey = useMemo(() => format(today, 'yyyy-MM-dd'), [today])
 
-  // Build dailyEntries with today ensured
   const dailyEntries = useMemo(() => {
     const hasToday = dailyEntryGroups.some((g) => g.date === todaysKey)
     const withToday = hasToday
@@ -44,7 +42,6 @@ export function JournalPageWrapper({
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
   }, [])
 
-  // Cleaned-up currentIndex logic
   const currentIndex = useMemo(() => {
     if (dailyEntries.length === 0) return 0
     let idx = Math.min(requestedIndex, dailyEntries.length - 1)
@@ -56,10 +53,8 @@ export function JournalPageWrapper({
     return idx
   }, [requestedIndex, dailyEntries, todaysKey])
 
-  // Midnight rollover + next-day jump
+  // Midnight rollover
   useEffect(() => {
-    if (dailyEntries.length === 0) return
-
     const scheduleMidnightUpdate = () => {
       const now = new Date()
       const nextMidnight = new Date(
@@ -75,16 +70,6 @@ export function JournalPageWrapper({
 
       const timeoutId = setTimeout(() => {
         setToday(new Date())
-
-        const idx = requestedIndex
-        const current = dailyEntries[idx]
-        if (
-          current?.date === format(new Date(), 'yyyy-MM-dd') &&
-          (current.entries.length ?? 0) === 0
-        ) {
-          setRequestedIndex(Math.min(idx + 1, dailyEntries.length - 1))
-        }
-
         scheduleMidnightUpdate()
       }, msUntilNext)
 
@@ -93,10 +78,26 @@ export function JournalPageWrapper({
 
     const cleanup = scheduleMidnightUpdate()
     return cleanup
-  }, [dailyEntries, requestedIndex])
+  }, [])
+
+  const prevTodaysKeyRef = useRef(todaysKey)
+  useEffect(() => {
+    // Only run navigation logic when todaysKey actually changes
+    if (prevTodaysKeyRef.current !== todaysKey) {
+      const current = dailyEntries[requestedIndex]
+      if (current?.date === todaysKey && (current.entries.length ?? 0) === 0) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional navigation when date changes at midnight
+        setRequestedIndex((prev) => Math.min(prev + 1, dailyEntries.length - 1))
+      }
+      prevTodaysKeyRef.current = todaysKey
+    }
+  }, [todaysKey, dailyEntries, requestedIndex])
 
   return (
     <div className="min-h-screen w-full space-y-6 px-12 py-6">
+      <button onClick={() => setToday(new Date(today.getTime() + 24 * 60 * 60 * 1000))}>
+        Simulate next day
+      </button>
       <JournalHeader
         journal={journal}
         entriesCount={entriesCount}
