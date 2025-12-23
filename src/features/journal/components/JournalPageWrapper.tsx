@@ -81,6 +81,7 @@ export function JournalPageWrapper({
   }, [])
 
   const prevTodaysKeyRef = useRef(todaysKey)
+
   useEffect(() => {
     // Only run navigation logic when todaysKey actually changes
     if (prevTodaysKeyRef.current !== todaysKey) {
@@ -95,9 +96,6 @@ export function JournalPageWrapper({
 
   return (
     <div className="min-h-screen w-full space-y-6 px-12 py-6">
-      <button onClick={() => setToday(new Date(today.getTime() + 24 * 60 * 60 * 1000))}>
-        Simulate next day
-      </button>
       <JournalHeader
         journal={journal}
         entriesCount={entriesCount}
