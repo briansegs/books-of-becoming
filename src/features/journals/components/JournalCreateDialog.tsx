@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 import { useState } from 'react'
 import { createJournal } from '@/app/actions/journalActions'
 import { useAction } from 'next-safe-action/hooks'
-import { createJournalFormSchema } from '@/app/actions/schemas'
+import { createJournalFormSchema, JOURNAL_TITLE_MAX } from '@/app/actions/schemas'
 import { parseActionError } from '@/utilities/parseActionError'
 import { Spinner } from '@/features/shared/components/ui/spinner'
 import {
@@ -130,7 +130,18 @@ export function JournalCreateDialog() {
                   <FormLabel>Title</FormLabel>
 
                   <FormControl>
-                    <Input {...field} />
+                    <div className="flex items-center rounded-md border border-input shadow-sm">
+                      <Input className="border-none shadow-none focus-visible:ring-0" {...field} />
+
+                      <p className="pr-3 text-sm text-muted-foreground">
+                        <span
+                          className={cn(field.value.length > JOURNAL_TITLE_MAX && 'text-red-400')}
+                        >
+                          {field.value.length}
+                        </span>
+                        /{JOURNAL_TITLE_MAX}
+                      </p>
+                    </div>
                   </FormControl>
 
                   <FormMessage />

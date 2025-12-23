@@ -1,7 +1,15 @@
 import { z } from 'zod'
 
+export const JOURNAL_TITLE_MAX = 50
+
 export const createJournalFormSchema = z.object({
-  title: z.string().trim().min(1, { message: "This field can't be empty" }),
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: "This field can't be empty" })
+    .max(JOURNAL_TITLE_MAX, {
+      message: `Journal title must be ${JOURNAL_TITLE_MAX} characters or fewer`,
+    }),
   type: z.enum(['default', 'future']),
   color: z.enum(['red', 'blue', 'green', 'pink', 'yellow', 'slate', 'black', 'white']),
   textColor: z.enum(['gold', 'silver', 'black', 'white']),
@@ -23,7 +31,13 @@ export const deleteJournalSchema = z.object({
 
 export const editJournalFormSchema = z.object({
   id: z.string(),
-  title: z.string().trim().min(1, { message: "This field can't be empty" }),
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: "This field can't be empty" })
+    .max(JOURNAL_TITLE_MAX, {
+      message: `Journal title must be ${JOURNAL_TITLE_MAX} characters or fewer`,
+    }),
   type: z.enum(['default', 'future']),
   color: z.enum(['red', 'blue', 'green', 'pink', 'yellow', 'slate', 'black', 'white']),
   textColor: z.enum(['gold', 'silver', 'black', 'white']),
