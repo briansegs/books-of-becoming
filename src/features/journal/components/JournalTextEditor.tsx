@@ -18,6 +18,8 @@ import StarterKit from '@tiptap/starter-kit'
 import { Input } from '@/features/shared/components/ui/input'
 import { Placeholder } from '@tiptap/extensions'
 import { JournalTextEditorProps } from '../types'
+import { cn } from '@/lib/utils'
+import { ENTRY_TITLE_MAX } from '@/app/actions/schemas'
 
 export const extensions = [
   StarterKit.configure({
@@ -94,6 +96,13 @@ export function JournalTextEditor({ editor, title, setTitle }: JournalTextEditor
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+
+          <p className="pr-4 text-sm text-muted-foreground">
+            <span className={cn(title.length > ENTRY_TITLE_MAX && 'text-red-400')}>
+              {title.length}
+            </span>
+            /{ENTRY_TITLE_MAX}
+          </p>
         </div>
 
         <div

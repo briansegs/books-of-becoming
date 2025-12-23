@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const JOURNAL_TITLE_MAX = 50
+export const ENTRY_TITLE_MAX = 100
 
 export const createJournalFormSchema = z.object({
   title: z
@@ -59,7 +60,11 @@ export const updateJournalSettingsSchema = z.object({
 })
 
 export const createEntrySchema = z.object({
-  title: z.optional(z.string()),
+  title: z.optional(
+    z.string().max(ENTRY_TITLE_MAX, {
+      message: `Entry title must be ${ENTRY_TITLE_MAX} characters or fewer`,
+    }),
+  ),
   content: z
     .string()
     .trim()
@@ -77,7 +82,13 @@ export const deleteEntrySchema = z.object({
 
 export const updateEntrySchema = z.object({
   entryId: z.string(),
-  title: z.string().trim().min(1, { message: "Entry title can't be empty" }),
+  title: z
+    .string()
+    .trim()
+    .min(1, { message: "Entry title can't be empty" })
+    .max(ENTRY_TITLE_MAX, {
+      message: `Entry title must be ${ENTRY_TITLE_MAX} characters or fewer`,
+    }),
   content: z
     .string()
     .trim()
