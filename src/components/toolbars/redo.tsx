@@ -15,10 +15,12 @@ const RedoToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const canRedo = useEditorState({
       editor,
-      selector: ({ editor }) => editor.can().redo(),
-    })
+      selector: ({ editor }) => {
+        if (!editor) return null
 
-    if (!editor) return null
+        return editor.can().redo()
+      },
+    })
 
     return (
       <Tooltip>

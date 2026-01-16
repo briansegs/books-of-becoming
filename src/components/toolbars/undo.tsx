@@ -14,10 +14,12 @@ const UndoToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const canUndo = useEditorState({
       editor,
-      selector: ({ editor }) => editor.can().undo(),
-    })
+      selector: ({ editor }) => {
+        if (!editor) return null
 
-    if (!editor) return null
+        return editor.can().undo()
+      },
+    })
 
     return (
       <Tooltip>
