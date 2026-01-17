@@ -7,22 +7,32 @@ import { Button, type ButtonProps } from '@/features/shared/components/ui/button
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { useToolbar } from '@/components/toolbars/toolbar-provider'
+import { useEditorIsActive } from '@/hooks/useEditorIsActive'
+import { useEditorState } from '@tiptap/react'
 
 const BoldToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, onClick, children, ...props }, ref) => {
     const { editor } = useToolbar()
+
+    const isBoldActive = useEditorIsActive(editor, 'bold')
+
+    const canToggleBold = useEditorState({
+      editor,
+      selector: ({ editor }) => (editor ? editor.can().toggleBold() : false),
+    })
+
     return (
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            className={cn('h-8 w-8', editor?.isActive('bold') && 'bg-accent', className)}
+            className={cn('h-8 w-8', isBoldActive && 'bg-accent', className)}
             onClick={(e) => {
               editor?.chain().focus().toggleBold().run()
               onClick?.(e)
             }}
-            disabled={!editor?.can().chain().focus().toggleBold().run()}
+            disabled={!canToggleBold}
             ref={ref}
             {...props}
           >
