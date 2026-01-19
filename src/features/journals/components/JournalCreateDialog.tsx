@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/features/shared/components/ui/dialog'
 import { Button } from '@/features/shared/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Book, Plus } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -109,8 +109,11 @@ export function JournalCreateDialog() {
       }}
     >
       <DialogTrigger asChild>
-        <Button>
-          <Plus /> Create a Journal
+        <Button className="sm:w-[180px]">
+          <Plus /> <span className="hidden sm:block">Create a Journal</span>
+          <span className="flex items-center gap-1 sm:hidden">
+            New <Book />
+          </span>
         </Button>
       </DialogTrigger>
 

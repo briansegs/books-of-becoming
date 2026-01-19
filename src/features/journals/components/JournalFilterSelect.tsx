@@ -29,7 +29,7 @@ export function JournalFilterSelect({ journals, filter, setFilter }: JournalFilt
       value={filter}
       onValueChange={(value) => setFilter(value as JournalFilterOptions)}
     >
-      <SelectTrigger className="w-[180px] bg-muted">
+      <SelectTrigger className="bg-muted sm:w-[180px]">
         <SelectValue placeholder="Select Filter" />
       </SelectTrigger>
       <SelectContent className="bg-muted">
