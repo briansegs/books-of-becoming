@@ -16,7 +16,7 @@ export function JournalsList({ journals }: JournalsListProps) {
   return (
     <>
       {journals?.length !== 0 ? (
-        <Card className="w-full px-6 py-10">
+        <Card className="px-auto w-full py-10 sm:px-6">
           <div className="mx-auto grid w-full [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))] justify-items-center gap-6">
             {journals.map((journal) => {
               return (
