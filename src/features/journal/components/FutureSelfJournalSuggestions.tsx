@@ -51,8 +51,9 @@ export function FutureSelfJournalSuggestions({
             className="absolute right-1"
             variant="ghost"
             onClick={() => setShowSuggestions(false)}
+            aria-label="Dismiss suggestions"
           >
-            <X />
+            <X aria-hidden="true" />
           </Button>
         </div>
 
