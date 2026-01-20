@@ -23,8 +23,8 @@ export function JournalHeader({
   const updatedDate = format(new Date(journal.updatedAt || ''), 'M/d/yyyy @ h:mm a')
 
   return (
-    <div className="flex h-fit w-full justify-between gap-2">
-      <div className="flex w-full gap-6">
+    <div className="flex h-fit w-full flex-col items-center gap-2 sm:flex-row sm:items-start sm:justify-between">
+      <div className="flex w-full flex-col items-center gap-6 sm:flex-row sm:items-stretch">
         <div
           className={cn(
             'relative flex h-48 w-36 shrink-0 rounded-md border shadow-xl',
