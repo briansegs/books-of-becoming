@@ -69,7 +69,7 @@ export function JournalTextEditor({ editor, title, setTitle }: JournalTextEditor
   return (
     <div className="space-y-4">
       <div className="relative w-full overflow-hidden rounded-md border pb-3">
-        <div className="sticky top-0 left-0 z-20 flex w-full items-center justify-between border-b bg-background px-2 py-2">
+        <div className="sticky top-0 left-0 z-20 flex w-full items-center justify-between overflow-x-auto border-b bg-background px-2 py-2">
           <ToolbarProvider editor={editor}>
             <div className="flex items-center gap-2">
               <UndoToolbar />

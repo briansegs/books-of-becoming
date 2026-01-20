@@ -25,16 +25,19 @@ export function FutureSelfJournalSuggestions({
   if (type === 'future' && showSuggestions) {
     return (
       <div className="mb-6">
-        <div className="flex w-full items-center justify-between bg-accent p-2">
-          <div className="flex items-center gap-2">
-            <Lightbulb className="text-muted-foreground" />
-            <p className="font-semibold text-primary">Future Self Journal Starter:</p>
-            <p className="text-sm text-muted-foreground">
+        <div className="relative flex w-full flex-col items-start justify-between gap-2 bg-accent p-2 pr-14 lg:flex-row lg:items-center lg:gap-0">
+          <div className="flex flex-col items-start gap-1 md:flex-row md:items-center md:gap-0">
+            <div className="flex items-center gap-1">
+              <Lightbulb className="text-muted-foreground" />
+              <p className="font-semibold text-primary">Future Self Journal Starter:</p>
+            </div>
+
+            <p className="ml-2 text-sm text-muted-foreground">
               {'Click the "Use" button to add the starter text to your text editor.'}
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="ml-2 flex items-center gap-2">
             <Button onClick={insertStarterText}>
               <Check /> Use
             </Button>
@@ -42,11 +45,16 @@ export function FutureSelfJournalSuggestions({
             <Button onClick={openExamples}>
               <Sparkles /> Examples
             </Button>
-
-            <Button variant="ghost" onClick={() => setShowSuggestions(false)}>
-              <X />
-            </Button>
           </div>
+
+          <Button
+            className="absolute right-1"
+            variant="ghost"
+            onClick={() => setShowSuggestions(false)}
+            aria-label="Dismiss suggestions"
+          >
+            <X aria-hidden="true" />
+          </Button>
         </div>
 
         <div className="border border-t-0">

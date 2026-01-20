@@ -95,7 +95,7 @@ export function JournalPageWrapper({
   }, [todaysKey, dailyEntries, requestedIndex])
 
   return (
-    <div className="min-h-screen w-full space-y-6 px-12 py-6">
+    <div className="min-h-screen w-full space-y-6 px-4 py-6 sm:px-12">
       <JournalHeader
         journal={journal}
         entriesCount={entriesCount}
