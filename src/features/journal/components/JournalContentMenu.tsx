@@ -4,6 +4,7 @@ import { JournalCalendar } from './JournalCalendar'
 import { JournalSettingsMenu } from './JournalSettingsMenu'
 import { JournalSearch } from './JournalSearch'
 import { JournalShowSuggestionsToggle } from './JournalShowSuggestionsToggle'
+import { JournalBookmarksList } from './JournalBookmarksList'
 
 export function JournalContentMenu({
   journal,
@@ -18,6 +19,8 @@ export function JournalContentMenu({
         showSuggestions={showSuggestions}
         setShowSuggestions={setShowSuggestions}
       />
+
+      <JournalBookmarksList />
 
       <JournalSearch dailyEntries={dailyEntries} setCurrentIndex={setCurrentIndex} />
 
