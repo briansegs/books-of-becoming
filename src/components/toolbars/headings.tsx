@@ -18,6 +18,8 @@ const HeadingToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const isH2Active = useEditorIsActive(editor, 'heading', { level: 2 })
     const isH3Active = useEditorIsActive(editor, 'heading', { level: 3 })
 
+    const activeHeading = isH1Active ? 'h1' : isH2Active ? 'h2' : isH3Active ? 'h3' : ''
+
     return (
       <Popover>
         <PopoverTrigger>
@@ -32,7 +34,7 @@ const HeadingToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
             e.preventDefault()
           }}
         >
-          <ToggleGroup type="single">
+          <ToggleGroup type="single" value={activeHeading}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <ToggleGroupItem
@@ -71,7 +73,7 @@ const HeadingToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value="h3"
-                  aria-label="Toggle heanding 3"
+                  aria-label="Toggle heading 3"
                   onClick={(e) => {
                     editor?.chain().focus().toggleHeading({ level: 3 }).run()
                     onClick?.(e)
