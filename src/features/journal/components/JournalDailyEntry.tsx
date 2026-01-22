@@ -25,7 +25,7 @@ export function JournalDailyEntry({
           <h2 className="text-2xl">{entry.title}</h2>
 
           {/* Todo: Connect bookmark actions to button */}
-          <Button variant="outline" className="size-12 rounded-full">
+          <Button variant="outline" className="size-12 rounded-full" aria-label="Toggle bookmark">
             <Bookmark className="size-5" />
           </Button>
         </div>

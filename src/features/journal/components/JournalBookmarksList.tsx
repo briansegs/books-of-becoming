@@ -17,7 +17,7 @@ export function JournalBookmarksList() {
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger asChild>
-            <Button size="icon" aria-label="Open search">
+            <Button size="icon" aria-label="Open Bookmarks">
               <BookMarked />
             </Button>
           </DialogTrigger>
