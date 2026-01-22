@@ -20,6 +20,7 @@ import { Placeholder } from '@tiptap/extensions'
 import { JournalTextEditorProps } from '../types'
 import { cn } from '@/lib/utils'
 import { ENTRY_TITLE_MAX } from '@/app/actions/schemas'
+import { HeadingToolbar } from '@/components/toolbars/headings'
 
 export const extensions = [
   StarterKit.configure({
@@ -74,6 +75,8 @@ export function JournalTextEditor({ editor, title, setTitle }: JournalTextEditor
             <div className="flex items-center gap-2">
               <UndoToolbar />
               <RedoToolbar />
+              <Separator orientation="vertical" className="h-7" />
+              <HeadingToolbar className="cursor-pointer" />
               <Separator orientation="vertical" className="h-7" />
               <BoldToolbar />
               <ItalicToolbar />
