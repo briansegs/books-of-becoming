@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/features/shared/components/ui/button'
 import {
   Dialog,
@@ -9,9 +11,16 @@ import {
 } from '@/features/shared/components/ui/dialog'
 import { Separator } from '@/features/shared/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
+import { api } from 'convex/_generated/api'
+import { useMutation, useQuery } from 'convex/react'
 import { Bookmark, BookMarked } from 'lucide-react'
+import { JournalBookmarksListProps } from '../types'
 
-export function JournalBookmarksList() {
+// Todo: Add toast on remove bookmark
+export function JournalBookmarksList({ journal }: JournalBookmarksListProps) {
+  const toggleBookmark = useMutation(api.entry.toggleBookmark)
+  const bookmarks = useQuery(api.entry.getBookmarkedByJournal, { journalId: journal._id })
+
   return (
     <Dialog>
       <Tooltip>
@@ -37,14 +46,14 @@ export function JournalBookmarksList() {
         <Separator />
 
         <div className="h-96 overflow-y-auto pl-3 [scrollbar-gutter:stable]">
-          {bookmarks.length === 0 && (
+          {bookmarks?.length === 0 && (
             <div className="ml-4 text-sm text-muted-foreground">No bookmarks yet...</div>
           )}
 
-          {bookmarks.map((bookmark) => {
+          {bookmarks?.map((bookmark) => {
             return (
               <div
-                key={bookmark.id}
+                key={bookmark._id}
                 className="flex items-center justify-between py-2 pr-4 pl-0 hover:bg-accent"
               >
                 {/* Todo: Go to entry on click */}
@@ -55,7 +64,11 @@ export function JournalBookmarksList() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     {/* Todo: Remove Bookmark */}
-                    <Button size="icon" variant="destructive">
+                    <Button
+                      size="icon"
+                      variant="destructive"
+                      onClick={() => toggleBookmark({ entryId: bookmark._id })}
+                    >
                       <Bookmark />
                     </Button>
                   </TooltipTrigger>
@@ -72,54 +85,3 @@ export function JournalBookmarksList() {
     </Dialog>
   )
 }
-
-const bookmarks = [
-  { id: 1, title: 'First Bookmark', bookmarked: true },
-  {
-    id: 2,
-    title: 'Second Bookmark Second Bookmark Second Bookmark Second Bookmark',
-    bookmarked: true,
-  },
-  {
-    id: 3,
-    title: 'Third Bookmark',
-    bookmarked: true,
-  },
-  {
-    id: 4,
-    title: 'Fourth Bookmark',
-    bookmarked: true,
-  },
-  { id: 1, title: 'First Bookmark', bookmarked: true },
-  {
-    id: 2,
-    title: 'Second Bookmark',
-    bookmarked: true,
-  },
-  {
-    id: 3,
-    title: 'Third Bookmark',
-    bookmarked: true,
-  },
-  {
-    id: 4,
-    title: 'Fourth Bookmark',
-    bookmarked: true,
-  },
-  { id: 1, title: 'First Bookmark', bookmarked: true },
-  {
-    id: 2,
-    title: 'Second Bookmark',
-    bookmarked: true,
-  },
-  {
-    id: 3,
-    title: 'Third Bookmark',
-    bookmarked: true,
-  },
-  {
-    id: 4,
-    title: 'Fourth Bookmark',
-    bookmarked: true,
-  },
-]

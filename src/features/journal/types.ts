@@ -178,3 +178,7 @@ export type JournalSettingsMenuProps = JournalItem & SuggestionsState
 export type JournalCalendarProps = DailyEntries & SetCurrentIndex
 
 export type JournalSearchProps = DailyEntries & SetCurrentIndex
+
+export type JournalBookmarksListProps = {
+  journal: Journal
+}
