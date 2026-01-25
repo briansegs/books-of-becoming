@@ -20,7 +20,11 @@ export function JournalContentMenu({
         setShowSuggestions={setShowSuggestions}
       />
 
-      <JournalBookmarksList journal={journal} />
+      <JournalBookmarksList
+        journal={journal}
+        dailyEntries={dailyEntries}
+        setCurrentIndex={setCurrentIndex}
+      />
 
       <JournalSearch dailyEntries={dailyEntries} setCurrentIndex={setCurrentIndex} />
 

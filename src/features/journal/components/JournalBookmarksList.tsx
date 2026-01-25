@@ -15,15 +15,23 @@ import { api } from 'convex/_generated/api'
 import { useConvexAuth, useMutation, useQuery } from 'convex/react'
 import { Bookmark, BookMarked } from 'lucide-react'
 import { JournalBookmarksListProps } from '../types'
-import { Id } from 'convex/_generated/dataModel'
+import { Doc, Id } from 'convex/_generated/dataModel'
 import { toast } from 'sonner'
 import { ConvexError } from 'convex/values'
-
-// Todo: Go to entry on click
+import { useState } from 'react'
+import { useGoToJournalEntry } from '@/hooks/useGoToJournalEntry'
 
 // This list only contains bookmarked entries,
 // so toggleBookmark acts as a remove here
-export function JournalBookmarksList({ journal }: JournalBookmarksListProps) {
+export function JournalBookmarksList({
+  journal,
+  setCurrentIndex,
+  dailyEntries,
+}: JournalBookmarksListProps) {
+  const [open, setOpen] = useState(false)
+
+  const { goToEntry } = useGoToJournalEntry(dailyEntries, setCurrentIndex)
+
   const { isAuthenticated } = useConvexAuth()
 
   const removeBookmark = useMutation(api.entry.toggleBookmark)
@@ -41,8 +49,13 @@ export function JournalBookmarksList({ journal }: JournalBookmarksListProps) {
     }
   }
 
+  function handleGoToEntry(entry: Doc<'entries'>) {
+    setOpen(false)
+    goToEntry(entry)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger asChild>
@@ -76,8 +89,12 @@ export function JournalBookmarksList({ journal }: JournalBookmarksListProps) {
                 key={entry._id}
                 className="flex items-center justify-between py-2 pr-4 pl-0 hover:bg-accent"
               >
-                {/* Todo: Go to entry on click */}
-                <Button variant="link" className="max-w-[250px] justify-start sm:max-w-[350px]">
+                <Button
+                  variant="link"
+                  className="max-w-[250px] justify-start sm:max-w-[350px]"
+                  aria-label="Go to bookmarked entry"
+                  onClick={() => handleGoToEntry(entry)}
+                >
                   <span className="block truncate">{entry.title}</span>
                 </Button>
 

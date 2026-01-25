@@ -39,7 +39,8 @@ export function JournalToggleBookmarkButton({ entry }: ToggleBookmarkButtonProps
         <Button
           variant="outline"
           className="size-12 rounded-full"
-          aria-label="Toggle bookmarked"
+          aria-label={bookmarkedEntry.bookmarked ? 'Remove bookmark' : 'Add bookmark'}
+          aria-pressed={bookmarkedEntry.bookmarked}
           onClick={handleToggleBookmark}
         >
           <Bookmark
