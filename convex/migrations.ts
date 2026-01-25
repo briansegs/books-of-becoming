@@ -35,6 +35,15 @@ export const migrations = new Migrations<DataModel>(components.migrations)
 //   },
 // })
 
-// to run migrations, from CLI: npx convex run migrations:runIt '{fn: "migrations:addSuggestionsEnabled"}'
+// export const addBookmarkedFalse = migrations.define({
+//   table: 'entries',
+//   migrateOne: async (ctx, entry) => {
+//     if (entry.bookmarked === undefined) {
+//       await ctx.db.patch(entry._id, { bookmarked: false })
+//     }
+//   },
+// })
+
+// to run migrations, from CLI: npx convex run migrations:runIt '{fn: "migrations:addBookmarkedFalse"}'
 
 export const runIt = migrations.runner()

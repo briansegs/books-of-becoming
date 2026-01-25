@@ -3,6 +3,7 @@ import { Separator } from '@/features/shared/components/ui/separator'
 import { SafeHtml } from '@/utilities/SafeHtml'
 import { JournalDailyEntryProps } from '../types'
 import { format } from 'date-fns'
+import { JournalToggleBookmarkButton } from './JournalToggleBookmarkButton'
 
 export function JournalDailyEntry({
   entry,
@@ -20,7 +21,11 @@ export function JournalDailyEntry({
   return (
     <div key={entry._creationTime} id={entry._id} className="px-8">
       <div className="space-y-6 pt-6 pb-8">
-        <h2 className="text-2xl">{entry.title}</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-2xl">{entry.title}</h2>
+
+          <JournalToggleBookmarkButton entry={entry} />
+        </div>
 
         <SafeHtml html={entry.content} className="prose prose-sm max-w-none dark:prose-invert" />
 

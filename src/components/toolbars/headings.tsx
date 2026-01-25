@@ -22,7 +22,7 @@ const HeadingToolbar = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Popover>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button ref={ref} variant="ghost">
             Headings
           </Button>

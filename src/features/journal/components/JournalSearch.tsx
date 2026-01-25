@@ -22,17 +22,14 @@ import { format } from 'date-fns'
 import { Separator } from '@/features/shared/components/ui/separator'
 import { SafeHtml } from '@/utilities/SafeHtml'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
+import { useGoToJournalEntry } from '@/hooks/useGoToJournalEntry'
 
 export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchProps) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
 
-  const entryDateToIndex = useMemo(() => {
-    const map = new Map<string, number>()
-    dailyEntries.forEach((g, i) => map.set(g.date, i))
-    return map
-  }, [dailyEntries])
+  const { goToEntry } = useGoToJournalEntry(dailyEntries, setCurrentIndex)
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(query), 300)
@@ -69,21 +66,9 @@ export function JournalSearch({ dailyEntries, setCurrentIndex }: JournalSearchPr
   }, [debouncedQuery, allEntries])
 
   function handleClick(entry: JournalEntry & { date: string }) {
-    const index = entryDateToIndex.get(entry.date)
-    if (index !== undefined) {
-      setCurrentIndex(index)
-    }
-
     setQuery('')
     setOpen(false)
-
-    requestAnimationFrame(() => {
-      const el = document.getElementById(entry._id)
-      el?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    })
+    goToEntry(entry)
   }
 
   return (
