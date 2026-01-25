@@ -38,5 +38,5 @@ export default defineSchema({
   })
     .index('by_journalId', ['journalId'])
     .index('by_userId', ['userId'])
-    .index('by_bookmarked', ['userId', 'bookmarked']),
+    .index('by_user_journal_bookmarked', ['userId', 'journalId', 'bookmarked']),
 })

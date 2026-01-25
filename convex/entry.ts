@@ -108,8 +108,26 @@ export const getBookmarkedByJournal = query({
 
     return ctx.db
       .query('entries')
-      .withIndex('by_bookmarked', (q) => q.eq('userId', user._id).eq('bookmarked', true))
-      .filter((q) => q.eq(q.field('journalId'), journalId))
+      .withIndex('by_user_journal_bookmarked', (q) =>
+        q.eq('userId', user._id).eq('journalId', journalId).eq('bookmarked', true),
+      )
       .collect()
+  },
+})
+
+export const getEntryById = query({
+  args: {
+    entryId: v.id('entries'),
+  },
+  handler: async (ctx, { entryId }) => {
+    const user = await getAuthenticatedUser(ctx)
+
+    const entry = await ctx.db.get(entryId)
+
+    if (!entry || entry.userId !== user._id) {
+      return null
+    }
+
+    return entry
   },
 })

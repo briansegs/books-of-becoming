@@ -12,14 +12,34 @@ import {
 import { Separator } from '@/features/shared/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
 import { api } from 'convex/_generated/api'
-import { useMutation, useQuery } from 'convex/react'
+import { useConvexAuth, useMutation, useQuery } from 'convex/react'
 import { Bookmark, BookMarked } from 'lucide-react'
 import { JournalBookmarksListProps } from '../types'
+import { Id } from 'convex/_generated/dataModel'
+import { toast } from 'sonner'
+import { ConvexError } from 'convex/values'
 
-// Todo: Add toast on remove bookmark
+// Todo: Go to entry on click
+
+// This list only contains bookmarked entries,
+// so toggleBookmark acts as a remove here
 export function JournalBookmarksList({ journal }: JournalBookmarksListProps) {
-  const toggleBookmark = useMutation(api.entry.toggleBookmark)
-  const bookmarks = useQuery(api.entry.getBookmarkedByJournal, { journalId: journal._id })
+  const { isAuthenticated } = useConvexAuth()
+
+  const removeBookmark = useMutation(api.entry.toggleBookmark)
+  const bookmarkedEntries = useQuery(
+    api.entry.getBookmarkedByJournal,
+    isAuthenticated ? { journalId: journal._id } : 'skip',
+  )
+
+  async function handleRemoveBookmark(entryId: Id<'entries'>) {
+    try {
+      await removeBookmark({ entryId })
+      toast.success('Removed bookmark')
+    } catch (error) {
+      toast.error(error instanceof ConvexError ? error.data : 'Unexpected error occurred')
+    }
+  }
 
   return (
     <Dialog>
@@ -46,28 +66,28 @@ export function JournalBookmarksList({ journal }: JournalBookmarksListProps) {
         <Separator />
 
         <div className="h-96 overflow-y-auto pl-3 [scrollbar-gutter:stable]">
-          {bookmarks?.length === 0 && (
+          {bookmarkedEntries?.length === 0 && (
             <div className="ml-4 text-sm text-muted-foreground">No bookmarks yet...</div>
           )}
 
-          {bookmarks?.map((bookmark) => {
+          {bookmarkedEntries?.map((entry) => {
             return (
               <div
-                key={bookmark._id}
+                key={entry._id}
                 className="flex items-center justify-between py-2 pr-4 pl-0 hover:bg-accent"
               >
                 {/* Todo: Go to entry on click */}
                 <Button variant="link" className="max-w-[250px] justify-start sm:max-w-[350px]">
-                  <span className="block truncate">{bookmark.title}</span>
+                  <span className="block truncate">{entry.title}</span>
                 </Button>
 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    {/* Todo: Remove Bookmark */}
                     <Button
                       size="icon"
                       variant="destructive"
-                      onClick={() => toggleBookmark({ entryId: bookmark._id })}
+                      aria-label="Remove bookmark"
+                      onClick={() => handleRemoveBookmark(entry._id)}
                     >
                       <Bookmark />
                     </Button>

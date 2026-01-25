@@ -179,6 +179,8 @@ export type JournalCalendarProps = DailyEntries & SetCurrentIndex
 
 export type JournalSearchProps = DailyEntries & SetCurrentIndex
 
-export type JournalBookmarksListProps = {
-  journal: Journal
+export type JournalBookmarksListProps = JournalItem
+
+export type ToggleBookmarkButtonProps = {
+  entry: JournalEntry
 }
