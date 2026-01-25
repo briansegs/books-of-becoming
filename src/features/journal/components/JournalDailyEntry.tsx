@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { ConvexError } from 'convex/values'
 import { useState } from 'react'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/features/shared/components/ui/tooltip'
 
 export function JournalDailyEntry({
   entry,
@@ -48,15 +49,20 @@ export function JournalDailyEntry({
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-2xl">{entry.title}</h2>
 
-          {/* Todo: Add Tooltip "Add/Remove Bookmark" */}
-          <Button
-            variant="outline"
-            className="size-12 rounded-full"
-            aria-label="Toggle bookmark"
-            onClick={handleToggleBookmark}
-          >
-            <Bookmark className={cn('size-5', isBookmarked && 'fill-accent-foreground')} />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                className="size-12 rounded-full"
+                aria-label="Toggle bookmark"
+                onClick={handleToggleBookmark}
+              >
+                <Bookmark className={cn('size-5', isBookmarked && 'fill-accent-foreground')} />
+              </Button>
+            </TooltipTrigger>
+
+            <TooltipContent>{isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}</TooltipContent>
+          </Tooltip>
         </div>
 
         <SafeHtml html={entry.content} className="prose prose-sm max-w-none dark:prose-invert" />
