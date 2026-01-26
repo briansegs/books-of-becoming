@@ -44,7 +44,7 @@ export function JournalNewEntry({
         setOpenExamplesDialog={setOpenExamplesDialog}
       />
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2" id="new-entry">
         <Badge>New Entry</Badge>
         <p className="text-sm text-muted-foreground">Add a journal entry for today</p>
       </div>
