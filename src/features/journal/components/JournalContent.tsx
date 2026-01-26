@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { JournalContentNav } from './JournalContentNav'
 import { JournalContentForToday } from './JournalContentForToday'
@@ -17,15 +17,10 @@ export function JournalContent({
   currentIndex,
   setCurrentIndex,
   today,
-  todaysKey,
+  todaysIndex,
 }: JournalContentProps) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [selectedEntry, setSelectedEntry] = useState<JournalEntry | null>(null)
-
-  const todaysIndex = useMemo(
-    () => dailyEntries.findIndex((g) => g.date === todaysKey),
-    [dailyEntries, todaysKey],
-  )
 
   const isToday = currentIndex === todaysIndex
   const currentEntryGroup = dailyEntries[currentIndex]

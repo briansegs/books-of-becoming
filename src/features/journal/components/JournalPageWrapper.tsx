@@ -94,6 +94,11 @@ export function JournalPageWrapper({
     }
   }, [todaysKey, dailyEntries, requestedIndex])
 
+  const todaysIndex = useMemo(
+    () => dailyEntries.findIndex((g) => g.date === todaysKey),
+    [dailyEntries, todaysKey],
+  )
+
   return (
     <div className="min-h-screen w-full space-y-6 px-4 py-6 sm:px-12">
       <JournalHeader
@@ -103,6 +108,7 @@ export function JournalPageWrapper({
         setShowSuggestions={setShowSuggestions}
         dailyEntries={dailyEntries}
         setCurrentIndex={setRequestedIndex}
+        todaysIndex={todaysIndex}
       />
 
       <Separator />
@@ -115,7 +121,7 @@ export function JournalPageWrapper({
         currentIndex={currentIndex}
         setCurrentIndex={setRequestedIndex}
         today={today}
-        todaysKey={todaysKey}
+        todaysIndex={todaysIndex}
       />
     </div>
   )

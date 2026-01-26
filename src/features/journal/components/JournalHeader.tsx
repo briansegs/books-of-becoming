@@ -12,6 +12,7 @@ export function JournalHeader({
   setShowSuggestions,
   dailyEntries,
   setCurrentIndex,
+  todaysIndex,
 }: JournalHeaderProps) {
   const selectedColor = journalColors[journal.color as keyof typeof journalColors]
   const background = journalBackgrounds[journal.background as keyof typeof journalBackgrounds]
@@ -67,6 +68,7 @@ export function JournalHeader({
         setShowSuggestions={setShowSuggestions}
         dailyEntries={dailyEntries}
         setCurrentIndex={setCurrentIndex}
+        todaysIndex={todaysIndex}
       />
     </div>
   )
