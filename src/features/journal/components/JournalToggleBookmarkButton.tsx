@@ -38,7 +38,7 @@ export function JournalToggleBookmarkButton({ entry }: ToggleBookmarkButtonProps
       <TooltipTrigger asChild>
         <Button
           variant="outline"
-          className="size-12 rounded-full"
+          className="h-12 rounded-full"
           aria-label={bookmarkedEntry.bookmarked ? 'Remove bookmark' : 'Add bookmark'}
           aria-pressed={bookmarkedEntry.bookmarked}
           onClick={handleToggleBookmark}
@@ -46,6 +46,7 @@ export function JournalToggleBookmarkButton({ entry }: ToggleBookmarkButtonProps
           <Bookmark
             className={cn('size-5', bookmarkedEntry.bookmarked && 'fill-accent-foreground')}
           />
+          <span className="hidden sm:block">{bookmarkedEntry.bookmarked ? 'Remove' : 'Save'}</span>
         </Button>
       </TooltipTrigger>
 

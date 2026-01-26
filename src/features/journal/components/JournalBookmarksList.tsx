@@ -106,7 +106,7 @@ export function JournalBookmarksList({
                       aria-label="Remove bookmark"
                       onClick={() => handleRemoveBookmark(entry._id)}
                     >
-                      <Bookmark />
+                      <Bookmark className="fill-accent-foreground" />
                     </Button>
                   </TooltipTrigger>
 
