@@ -5,7 +5,6 @@ import { JournalSettingsMenu } from './JournalSettingsMenu'
 import { JournalSearch } from './JournalSearch'
 import { JournalShowSuggestionsToggle } from './JournalShowSuggestionsToggle'
 import { JournalBookmarksList } from './JournalBookmarksList'
-import { Button } from '@/features/shared/components/ui/button'
 import { JournalStartNewEntryButton } from './JournalStartNewEntryButton'
 
 export function JournalContentMenu({
