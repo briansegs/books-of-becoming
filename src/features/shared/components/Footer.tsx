@@ -17,7 +17,7 @@ function FooterLink({ children }: { children: React.ReactNode }) {
 
 export function Footer() {
   return (
-    <footer className="w-full border-t px-2 py-6 sm:px-12">
+    <footer className="w-full border-t px-0 py-6 sm:px-12">
       <div className="flex flex-col gap-6">
         <a href="#" className="px-6 text-primary hover:text-primary/90">
           <Logo />

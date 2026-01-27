@@ -19,7 +19,7 @@ export function JournalDailyEntry({
   const createdTime = format(new Date(entry._creationTime), 'h:mm aaaa')
 
   return (
-    <div key={entry._creationTime} id={entry._id} className="px-8">
+    <div key={entry._creationTime} id={entry._id} className="px-0 sm:px-8">
       <div className="space-y-6 pt-6 pb-8">
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-2xl">{entry.title}</h2>
