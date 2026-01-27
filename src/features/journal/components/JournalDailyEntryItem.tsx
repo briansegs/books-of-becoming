@@ -17,7 +17,7 @@ export function JournalDailyEntryItem({
   const [editMode, setEditMode] = useState(false)
 
   return editMode && entry ? (
-    <div className="space-y-4 px-8">
+    <div className="space-y-4 px-0 sm:px-8">
       <div className="mt-4 flex items-center gap-2">
         <Badge>{editorLabel}</Badge>
         <p className="text-sm text-muted-foreground">{entry.title}</p>

@@ -20,7 +20,7 @@ export function JournalContentNav({
   }
 
   return (
-    <div className="flex items-center justify-around">
+    <div className="flex items-center justify-between sm:justify-around">
       <Button
         onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
         disabled={!canGoBack}
